@@ -3,16 +3,18 @@
 """
 Tests unitarios para la clase Task.
 total de pruebas: 9.
+- [x] black
+- [x] flake8
+- [x] mypy
 """
 
 import pytest
-from typing import Literal
 from pydantic import ValidationError
-from models.model_task import Task
+from models.model_task import Status, Tag, Priority, Task
 
 
 # TEST: 01
-def test_task_creation_with_defaults():
+def test_task_creation_with_defaults() -> None:
     """Comprueba la creación de una instancia Tarea con valores defaults.
 
     El test verifica que la creación de una instancia de Task especificando
@@ -30,7 +32,7 @@ def test_task_creation_with_defaults():
 
 
 # TEST: 02
-def test_task_creation_with_no_defaults():
+def test_task_creation_with_no_defaults() -> None:
     """Comprueba la creación de una instancia de Tarea con valores distintos a
     los defaults.
 
@@ -39,27 +41,27 @@ def test_task_creation_with_no_defaults():
     se crea correctamente. Los valores aceptados se especifican en
     models/model_task.py en las listas Literal [Status, Tag, Priority].
     """
-    diferent_status: str = "completed"
-    diferent_tag: str = "trabajo"
-    diferent_priority: str = "alta"
+    diferent_status: Status = "completed"
+    diferent_tag: Tag = "trabajo"
+    diferent_priority: Priority = "alta"
     content_text: str = "Contenido de prueba: creación con valores diferentes"
 
     test_instance = Task(
-                            status=diferent_status,
-                            content=content_text,
-                            tag=diferent_tag,
-                            priority=diferent_priority
-                        )
+        status=diferent_status,
+        content=content_text,
+        tag=diferent_tag,
+        priority=diferent_priority,
+    )
 
     assert test_instance.id is None
-    assert test_instance.status ==diferent_status
+    assert test_instance.status == diferent_status
     assert test_instance.content == content_text
     assert test_instance.tag == diferent_tag
     assert test_instance.priority == diferent_priority
 
 
 # TEST: 03
-def test_task_creation_with_invalid_status():
+def test_task_creation_with_invalid_status() -> None:
     """Comprueba error con un status inválido.
 
     Este test verifica que si la tarea es creada con un valor de status no
@@ -72,12 +74,12 @@ def test_task_creation_with_invalid_status():
     status_invalid: str = "invalid"
     content_text: str = "Contenido de prueba: status inválido"
 
-    with pytest.raises(ValidationError) as excinfo:
-        test_instance = Task(status=status_invalid, content=content_text)
+    with pytest.raises(ValidationError):
+        Task(status=status_invalid, content=content_text)  # type: ignore[arg-type] # noqa: E501
 
 
 # TEST: 04
-def test_task_creation_with_invalid_tag():
+def test_task_creation_with_invalid_tag() -> None:
     """Comprueba error con un tag inválido.
 
     El test verifica que si el valor de tag (etiqueta) es un valor distinto a
@@ -90,12 +92,12 @@ def test_task_creation_with_invalid_tag():
     tag_invalid: str = "invalid"
     content_text: str = "Contenido de prueba: tag inválido"
 
-    with pytest.raises(ValidationError) as excinfo:
-        test_instance = Task(tag=tag_invalid, content=content_text)
+    with pytest.raises(ValidationError):
+        Task(tag=tag_invalid, content=content_text)  # type: ignore[arg-type] # noqa: E501
 
 
 # TEST: 05
-def test_task_creation_with_invalid_content_type_integer():
+def test_task_creation_with_invalid_content_type_integer() -> None:
     """Comprueba error generado con content tipo entero.
 
     Este test verifica que si el tipo de valor para la propiedad content
@@ -106,12 +108,12 @@ def test_task_creation_with_invalid_content_type_integer():
     """
     content_invalid: int = 1234567890
 
-    with pytest.raises(ValidationError) as excinfo:
-        test_instance = Task(content=content_invalid)
+    with pytest.raises(ValidationError):
+        Task(content=content_invalid)  # type: ignore[arg-type] # noqa: E501
 
 
 # TEST: 06
-def test_task_creation_with_invalid_content_type_float():
+def test_task_creation_with_invalid_content_type_float() -> None:
     """Comprueba error generado con content tipo float.
 
     El presente test verifica que si una tarea se crea usando un valor de tipo
@@ -122,12 +124,12 @@ def test_task_creation_with_invalid_content_type_float():
     """
     content_invalid: float = 1.234567890
 
-    with pytest.raises(ValidationError) as excinfo:
-        test_instance = Task(content=content_invalid)
+    with pytest.raises(ValidationError):
+        Task(content=content_invalid)  # type: ignore[arg-type] # noqa: E501
 
 
 # TEST: 07
-def test_task_creation_with_invalid_content_type_boolean():
+def test_task_creation_with_invalid_content_type_boolean() -> None:
     """Comprueba error generado con content tipo booleano.
 
     El test verifica que si una tarea es generada con un valor de tipo boleano
@@ -138,12 +140,12 @@ def test_task_creation_with_invalid_content_type_boolean():
     """
     content_invalid: bool = True
 
-    with pytest.raises(ValidationError) as excinfo:
-        test_instance = Task(content=content_invalid)
+    with pytest.raises(ValidationError):
+        Task(content=content_invalid)  # type: ignore[arg-type] # noqa: E501
 
 
 # TEST: 08
-def test_task_creation_with_missing_content():
+def test_task_creation_with_missing_content() -> None:
     """Comprueba error generado al no definir content.
 
     El test verifica que si una tarea es generada sin hacer la definición
@@ -153,15 +155,15 @@ def test_task_creation_with_missing_content():
         ValidationError: Cuando no se define la propiedad content.
     """
     with pytest.raises(ValidationError):
-        test_instance = Task(status="pending", tag="personal", priority="baja")
+        Task(status="pending", tag="personal", priority="baja")  # type: ignore # noqa: E501
 
 
 # TEST: 09
-def test_task_creation_with_invalid_priority():
+def test_task_creation_with_invalid_priority() -> None:
     """Comprueba error generado con valor de prioridad inválida.
 
     El test verifica que si la tarea contiene un valor no permitido en la
-    propiedad priority, no será generada. Los valores permitidos están 
+    propiedad priority, no será generada. Los valores permitidos están
     definidos en el módulo models/model_task.py en el objeto Literal Priority.
 
     Raises:
@@ -171,5 +173,5 @@ def test_task_creation_with_invalid_priority():
     priority_invalid: str = "invalid"
     content_text: str = "Contenido de prueba: prioridad inválida"
 
-    with pytest.raises(ValidationError) as excinfo:
-        test_instance = Task(content=content_text, priority=priority_invalid)
+    with pytest.raises(ValidationError):
+        Task(content=content_text, priority=priority_invalid)  # type: ignore[arg-type] # noqa: E501
