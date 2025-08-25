@@ -27,6 +27,37 @@ class RepositoryDB:
         project_dir = Path(__file__).parent.parent
         self.db_path = project_dir / db_name
 
+    def task_format_list(self, rows_list: list) -> List[Task]:
+        """Convierte filas crudas de la BD en una lista de objetos Task.
+
+        Esta función es un método de ayuda crucial que actúa como una capa de
+        traducción. Su propósito es tomar los datos "crudos" que devuelve la
+        base de datos (una lista de tuplas) y transformarlos en una lista de
+        objetos `Task` estructurados y seguros.
+
+        Al centralizar esta lógica aquí, nos aseguramos de que el resto de la
+        aplicación no tenga que preocuparse por el orden de las columnas de la
+        base de datos, sino que pueda trabajar directamente con objetos `Task`
+        claros y predecibles.
+
+        Args:
+            - rows_list (list): La lista de filas (tuplas) obtenida de la base
+                de datos tras una consulta a la tabla `tasks_table`.
+
+        Returns:
+            - list[Task]: Una lista de objetos `Task` completamente formados.
+        """
+        return [
+            Task(
+                id=row[0],
+                status=row[1],
+                tag=row[2], 
+                content=row[3], 
+                priority=row[4])
+                for row in rows_list
+        ]
+
+
     # FUNC:
     # .. ......................................... create_table
     @connection_manager
@@ -75,8 +106,8 @@ class RepositoryDB:
     # .. ................................... filter_task_status
     @connection_manager
     def filter_task_status(
-        self, status_task: str, cursor: sqlite3.Cursor
-    ) -> List[Tuple[Any, ...]]:
+        self, status: str, cursor: sqlite3.Cursor
+    ) -> List[Task]:
         """Filtar una tarea por status.
 
         Args:
@@ -89,17 +120,24 @@ class RepositoryDB:
             - List[Tuple[Any, ...]]: Una lista de tuplas, donde cada tupla
                 representauna fila de la tarea encontrada.
         """
-        cursor.execute(sql.FILTER_TASK_STATUS, (status_task,))
-        task_list_filter_by_status = cursor.fetchall()
+        cursor.execute(sql.FILTER_TASK_STATUS, (status,))
+        filtered_rows = cursor.fetchall()
 
-        return task_list_filter_by_status
+        task_list = self.task_format_list(filtered_rows)
+
+        # WARN: linea de test provisional .> la impresión se eliminra.
+        for tarea_objeto in task_list:
+        # Imprimirá el objeto Task bien formateado
+            print(f"  -> {tarea_objeto}")
+
+        return task_list
 
     # FUNC:
     # .. ...................................... filter_task_tag
     @connection_manager
     def filter_task_tag(
-        self, tag_task: str, cursor: sqlite3.Cursor
-    ) -> List[Tuple[Any, ...]]:
+        self, tag: str, cursor: sqlite3.Cursor
+    ) -> List[Task]:
         """Filtar una tarea por tag.
 
         Args:
@@ -112,21 +150,30 @@ class RepositoryDB:
             - List[Tuple[Any, ...]]: Una lista de tuplas, donde cada tupla
                 representauna fila de la tarea encontrada.
         """
-        cursor.execute(sql.FILTER_TASK_TAG, (tag_task,))
-        task_list_filter_by_tag = cursor.fetchall()
+        cursor.execute(sql.FILTER_TASK_TAG, (tag,))
+        filtered_rows = cursor.fetchall()
 
-        return task_list_filter_by_tag
+        task_list = self.task_format_list(filtered_rows)
+
+        # WARN: linea de test provisional .> la impresión se eliminra.
+        for tarea_objeto in task_list:
+        # Imprimirá el objeto Task bien formateado
+            print(f"  -> {tarea_objeto}")
+
+
+        return task_list
+
 
     # FUNC:
     # .. ................................. filter_task_priority
     @connection_manager
     def filter_task_priority(
-        self, priority_task: str, cursor: sqlite3.Cursor
-    ) -> List[Tuple[Any, ...]]:
+        self, priority: str, cursor: sqlite3.Cursor
+    ) -> List[Task]:
         """Filtar una tarea por prioridad.
 
         Args:
-            - priority_task (Status): La prioridad por la cual filtrar las
+            - priority (Status): La prioridad por la cual filtrar las
                 tareas (e.g., "baja", "media", "alta").
             - cursor (sqlite3.Cursor): Objeto cursor de la base de datos,
                 proporcionado automáticamente por el decorador.
@@ -135,10 +182,17 @@ class RepositoryDB:
             - List[Tuple[Any, ...]]: Una lista de tuplas, donde cada tupla
                 representauna fila de la tarea encontrada.
         """
-        cursor.execute(sql.FILTER_TASK_PRIORITY, (priority_task,))
-        task_list_filter_by_priority = cursor.fetchall()
+        cursor.execute(sql.FILTER_TASK_PRIORITY, (priority,))
+        filtered_rows = cursor.fetchall()
 
-        return task_list_filter_by_priority
+        task_list = self.task_format_list(filtered_rows)
+
+        # WARN: linea de test provisional .> la impresión se eliminra.
+        for tarea_objeto in task_list:
+        # Imprimirá el objeto Task bien formateado
+            print(f"  -> {tarea_objeto}")
+
+        return task_list
 
     # FUNC:
     # .. .......................................... update_task
@@ -221,8 +275,12 @@ class RepositoryDB:
         cursor.execute(sql.DELETE_TASK, (id_task,))
 
 
+
+
+
 # TEST:
 repo = RepositoryDB("data_dev.db")
 repo.create_table()
-tarea = Task(content="GUScode nuevo contenido")
-repo.new_task(tarea)
+#tarea = Task(content="GUScode nuevo contenido")
+#repo.new_task(tarea)
+repo.filter_task_status("completed")
