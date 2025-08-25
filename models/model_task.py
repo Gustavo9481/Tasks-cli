@@ -6,12 +6,9 @@ Se usa pydantic para asegurar el tipo de datos.
 Los objetos Literal(typing) contienen los valores permitidos para dichas
 propiedades.
 ïconos de uso a futuro 󰗠 
-- [x] black
-- [x] flake8
-- [x] mypy
 """
 
-from typing import Literal
+from typing import Optional, Literal
 from pydantic import BaseModel
 
 # NOTE: Restricción de datos.
@@ -29,27 +26,30 @@ class Task(BaseModel):
     base de datos como renderizado en interfaz.
 
     Attributes:
-        id (int | None): Identificador opcional, generado por la base de datos.
-        status (Status): Estado de la tarea. Valores válidos definidos en
-        `Status` (Literal).
-        tag (Tag): Etiqueta de la tarea. Valores válidos definidos en
-        `Tag` (Literal).
-        content (str): Contenido o descripción de la tarea.
-        priority (Priority): Prioridad de la tarea. Valores válidos definidos
-        en `Priority` (Literal).
+        - id (Optional[str]): Identificador opcional, generado por la base de
+            datos.
+        - status (Status): Estado de la tarea. Valores válidos definidos en
+            `Status` (Literal).
+        - tag (Tag): Etiqueta de la tarea. Valores válidos definidos en
+            `Tag` (Literal).
+        - content (str): Contenido o descripción de la tarea.
+        - priority (Priority): Prioridad de la tarea. Valores válidos definidos
+            en `Priority` (Literal).
+        - details (Optional[str]): Detalles o notas extensas para la tarea.
     """
 
-    id: int | None = None
+    id: Optional[int] = None
     status: Status = "pending"
     tag: Tag = "personal"
     content: str
     priority: Priority = "baja"
+    details: Optional[str] = None
 
     def __str__(self) -> str:
         """Devuelve una representación en cadena de la tarea para facilitar su
-        3     lectura.
-        4
-        5     Returns:
-        6         str: Cadena de caracteres con la información de la tarea.
-        7"""
+        lectura.
+
+        Returns:
+            - str: Cadena de caracteres con la información de la tarea.
+        """
         return f"{self.status} - {self.tag} | {self.content} | {self.priority}"

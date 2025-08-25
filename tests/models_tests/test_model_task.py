@@ -2,10 +2,7 @@
 # .. .......................... model_task_tests .......................... ..󰌠
 """
 Tests unitarios para la clase Task.
-total de pruebas: 9.
-- [x] black
-- [x] flake8
-- [x] mypy
+total de pruebas: 10.
 """
 
 import pytest
@@ -29,6 +26,7 @@ def test_task_creation_with_defaults() -> None:
     assert test_instance.tag == "personal"
     assert test_instance.content == content_text
     assert test_instance.priority == "baja"
+    assert test_instance.details is None
 
 
 # TEST: 02
@@ -43,14 +41,16 @@ def test_task_creation_with_no_defaults() -> None:
     """
     diferent_status: Status = "completed"
     diferent_tag: Tag = "trabajo"
-    diferent_priority: Priority = "alta"
     content_text: str = "Contenido de prueba: creación con valores diferentes"
+    diferent_priority: Priority = "alta"
+    diferent_details: str = "Detalles de prueba: creación con valores diferentes"
 
     test_instance = Task(
         status=diferent_status,
         content=content_text,
         tag=diferent_tag,
         priority=diferent_priority,
+        details=diferent_details,
     )
 
     assert test_instance.id is None
@@ -58,6 +58,7 @@ def test_task_creation_with_no_defaults() -> None:
     assert test_instance.content == content_text
     assert test_instance.tag == diferent_tag
     assert test_instance.priority == diferent_priority
+    assert test_instance.details == diferent_details
 
 
 # TEST: 03
@@ -75,7 +76,7 @@ def test_task_creation_with_invalid_status() -> None:
     content_text: str = "Contenido de prueba: status inválido"
 
     with pytest.raises(ValidationError):
-        Task(status=status_invalid, content=content_text)  # type: ignore[arg-type] # noqa: E501
+        Task(status=status_invalid, content=content_text)
 
 
 # TEST: 04
@@ -93,7 +94,7 @@ def test_task_creation_with_invalid_tag() -> None:
     content_text: str = "Contenido de prueba: tag inválido"
 
     with pytest.raises(ValidationError):
-        Task(tag=tag_invalid, content=content_text)  # type: ignore[arg-type] # noqa: E501
+        Task(tag=tag_invalid, content=content_text)
 
 
 # TEST: 05
@@ -109,7 +110,7 @@ def test_task_creation_with_invalid_content_type_integer() -> None:
     content_invalid: int = 1234567890
 
     with pytest.raises(ValidationError):
-        Task(content=content_invalid)  # type: ignore[arg-type] # noqa: E501
+        Task(content=content_invalid)
 
 
 # TEST: 06
@@ -125,7 +126,7 @@ def test_task_creation_with_invalid_content_type_float() -> None:
     content_invalid: float = 1.234567890
 
     with pytest.raises(ValidationError):
-        Task(content=content_invalid)  # type: ignore[arg-type] # noqa: E501
+        Task(content=content_invalid)
 
 
 # TEST: 07
@@ -141,7 +142,7 @@ def test_task_creation_with_invalid_content_type_boolean() -> None:
     content_invalid: bool = True
 
     with pytest.raises(ValidationError):
-        Task(content=content_invalid)  # type: ignore[arg-type] # noqa: E501
+        Task(content=content_invalid)
 
 
 # TEST: 08
@@ -155,7 +156,7 @@ def test_task_creation_with_missing_content() -> None:
         ValidationError: Cuando no se define la propiedad content.
     """
     with pytest.raises(ValidationError):
-        Task(status="pending", tag="personal", priority="baja")  # type: ignore # noqa: E501
+        Task(status="pending", tag="personal", priority="baja")
 
 
 # TEST: 09
@@ -174,4 +175,39 @@ def test_task_creation_with_invalid_priority() -> None:
     content_text: str = "Contenido de prueba: prioridad inválida"
 
     with pytest.raises(ValidationError):
-        Task(content=content_text, priority=priority_invalid)  # type: ignore[arg-type] # noqa: E501
+        Task(content=content_text, priority=priority_invalid)
+
+
+# TEST: 10
+def test_task_creation_with_and_without_details() -> None:
+    """Comprueba la creación de una instancia Tarea con y sin detalles.
+
+    Verifica que el campo 'details' se asigna correctamente cuando se
+    proporciona y que su valor por defecto es None cuando no se especifica.
+    """
+    # Caso 1: Tarea con detalles proporcionados
+    content_with_details: str = "Tarea para el proyecto X"
+    details_text: str = (
+        "Detalles extensos: Reunión con el equipo, definir alcance, etc."
+    )
+
+    task_with_details = Task(
+        content=content_with_details,
+        details=details_text,
+        tag="proyecto",
+        priority="alta",
+    )
+
+    assert task_with_details.id is None
+    assert task_with_details.tag == "proyecto"
+    assert task_with_details.content == content_with_details
+    assert task_with_details.priority == "alta"
+    assert task_with_details.details == details_text
+
+    # Caso 2: Tarea sin detalles (debe ser None por defecto)
+    content_no_details: str = "Tarea simple sin más"
+    task_no_details = Task(content=content_no_details)
+
+    assert task_no_details.status == "pending"
+    assert task_no_details.content == content_no_details
+    assert task_no_details.details is None

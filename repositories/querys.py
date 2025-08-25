@@ -15,7 +15,8 @@ CREATE_TABLE: str = """
         status TEXT NOT NULL,
         tag TEXT NOT NULL,
         content TEXT NOT NULL,
-        priority TEXT NOT NULL
+        priority TEXT NOT NULL,
+        details TEXT
     );
 """
 
@@ -24,8 +25,8 @@ CREATE_TABLE: str = """
 # Inserta un nuevo registro (tarea) en la tabla tasks_table.
 NEW_TASK: str = """
     INSERT INTO tasks_table (
-        status, tag, content, priority
-    ) VALUES (?, ?, ?, ?);
+        status, tag, content, priority, details
+    ) VALUES (?, ?, ?, ?, ?);
 """
 
 
@@ -46,12 +47,6 @@ FILTER_TASK_PRIORITY: str = "SELECT * FROM tasks_table WHERE priority = ?;"
 
 # .. .......................................................... update_task ..󰌠
 # Actualiza un registro seleccionado por id de la tabla tasks_table.
-'''
-UPDATE_TASK: str = """
-    UPDATE tasks_table SET status = ?, tag = ?, content = ?, priority = ?
-    WHERE id = ?;
-"""
-'''
 UPDATE_TASK: str = "UPDATE tasks_table SET"
 
 # .. ................................................ check_or_uncheck_task ..󰌠
@@ -62,6 +57,9 @@ SELECT_TASK: str = "SELECT * FROM tasks_table WHERE id = ?"
 # la tabla tasks_table.
 UPDATE_STATUS: str = "UPDATE tasks_table SET status = ? WHERE id = ?;"
 
+# Consulta dinámica. La consukta CASE perimite condicionar el valor
+# seleccionado (pending | completed) y lo cambiara por su contrario usando la
+# sentencia WHEN - THEN - ELSE.
 UPDATE_STATUS_TOGGLE = """
     UPDATE tasks_table
     SET status = CASE
@@ -71,6 +69,13 @@ UPDATE_STATUS_TOGGLE = """
     WHERE id = ?;
 """
 
+# .. ....................................................... get_task_by_id ..󰌠
+# Selecciona registros de la tabla tasks_table identificados por un id.
+GET_TASK_BY_ID = """
+    SELECT id, status, tag, content, priority, details 
+    FROM tasks_table 
+    WHERE id = ?;
+"""
 
 # .. .......................................................... delete_task ..󰌠
 # Elimina el registro seleccionado por id de la tabla tasks_table.

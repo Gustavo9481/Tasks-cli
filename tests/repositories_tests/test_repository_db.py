@@ -82,7 +82,8 @@ def test_new_task(test_repo: RepositoryDB) -> None:
     task_to_insert = Task(
         tag="personal",
         content="Contenido test_new_task ->",
-        priority="alta"
+        priority="alta",
+        details="Detalles de prueba: test_new_task"
     )
 
     test_repo.new_task(task_instance=task_to_insert)
@@ -92,7 +93,7 @@ def test_new_task(test_repo: RepositoryDB) -> None:
 
     # 01
     cursor.execute("""
-            SELECT status, tag, content, priority
+            SELECT status, tag, content, priority, details
             FROM tasks_table;
     """)
 
@@ -106,6 +107,7 @@ def test_new_task(test_repo: RepositoryDB) -> None:
     assert inserted_row[1] == task_to_insert.tag
     assert inserted_row[2] == task_to_insert.content
     assert inserted_row[3] == task_to_insert.priority
+    assert inserted_row[4] == task_to_insert.details
 
     # 01: consulta para extraer la única línea que debe existir en la tabla.
     # 02: verifica si inserted_row no está vacía, NO debe ser 'None'.
@@ -179,9 +181,6 @@ def test_filter_task_by_tag(test_repo: RepositoryDB) -> None:
     assert "Tarea proyecto 2" in contents
 
 
-
-
-
 # TEST: 05
 def test_filter_task_by_priority(test_repo: RepositoryDB) -> None:
 
@@ -212,3 +211,99 @@ def test_filter_task_by_priority(test_repo: RepositoryDB) -> None:
     contents = {task.content for task in filtered_tasks}
     assert "Tarea Alta 1" in contents
     assert "Tarea Alta 2" in contents
+
+
+# TEST: 06
+def test_update_task(test_repo: RepositoryDB) -> None:
+    """Comprueba la correcta actualización de los campos de una tarea, 
+    incluyendo el campo 'details'.
+    """
+    # --- Preparar ---
+    # 1. Creamos una tarea inicial con algunos datos.
+    original_task = Task(
+        content="Tarea para actualizar",
+        tag="personal",
+        priority="baja",
+        details="Detalles originales de la tarea."
+    )
+    # 2. La insertamos y obtenemos su ID.
+    task_id = test_repo.new_task(original_task)
+    assert task_id is not None # Aseguramos que se insertó y tiene ID
+
+    # --- Actuar ---
+    # Definimos los nuevos datos, incluyendo el campo 'details'.
+    new_data = {
+        "content": "Contenido actualizado de la tarea",
+        "priority": "alta",
+        "details": "Nuevos detalles extensos para la tarea actualizada."
+    }
+    test_repo.update_task(task_id, new_data)
+
+    # --- Verificar ---
+    # 1. Recuperamos la tarea actualizada de la base de datos.
+    updated_task = test_repo.get_task_by_id(task_id)
+
+    # 2. Comprobamos que la tarea existe y que los campos se actualizaron correctamente.
+    assert updated_task is not None
+    assert updated_task.id == task_id
+    assert updated_task.content == new_data["content"]
+    assert updated_task.priority == new_data["priority"]
+    assert updated_task.details == new_data["details"]
+    # Los campos no actualizados deben mantener sus valores originales
+    assert updated_task.status == original_task.status # Status no se actualizó
+    assert updated_task.tag == original_task.tag       # Tag no se actualizó
+
+
+# TEST: 07
+def test_check_or_uncheck_task(test_repo: RepositoryDB) -> None:
+    """
+    Comprueba que el método check_or_uncheck_task alterna correctamente
+    el estado de una tarea entre 'pending' y 'completed'.
+    """
+    # --- Preparar ---
+    # 1. Creamos una tarea con estado inicial 'pending'.
+    initial_task = Task(content="Tarea para marcar/desmarcar", status="pending")
+    task_id = test_repo.new_task(initial_task)
+    assert task_id is not None
+
+    # --- Actuar (Primera vez: de pending a completed) ---
+    test_repo.check_or_uncheck_task(task_id)
+
+    # --- Verificar (Primera vez) ---
+    updated_task = test_repo.get_task_by_id(task_id)
+    assert updated_task is not None
+    assert updated_task.id == task_id
+    assert updated_task.status == "completed" # Debería haber cambiado a 'completed'
+
+    # --- Actuar (Segunda vez: de completed a pending) ---
+    test_repo.check_or_uncheck_task(task_id)
+
+    # --- Verificar (Segunda vez) ---
+    re_updated_task = test_repo.get_task_by_id(task_id)
+    assert re_updated_task is not None
+    assert re_updated_task.id == task_id
+    assert re_updated_task.status == "pending" # Debería haber cambiado de nuevo a 'pending'
+
+
+# TEST: 08
+def test_delete_task(test_repo: RepositoryDB) -> None:
+    """
+    Comprueba que el método delete_task elimina correctamente una tarea
+    de la base de datos.
+    """
+    # --- Preparar ---
+    # 1. Creamos una tarea que vamos a eliminar.
+    task_to_delete = Task(content="Tarea para eliminar", priority="baja")
+    task_id = test_repo.new_task(task_to_delete)
+    assert task_id is not None # Aseguramos que se insertó y tiene ID
+
+    # --- Actuar ---
+    # 2. Llamamos al método delete_task.
+    test_repo.delete_task(task_id)
+
+    # --- Verificar ---
+    # 3. Intentamos recuperar la tarea eliminada.
+    deleted_task = test_repo.get_task_by_id(task_id)
+
+    # 4. Comprobamos que la tarea ya no existe en la base de datos.
+    assert deleted_task is None # Debería ser None si se eliminó correctamente

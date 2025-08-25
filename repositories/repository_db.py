@@ -4,10 +4,10 @@
 Contiene la clase RepositoryDB, la cual posee los métodos de consultas a la
 base de datos.
 """
+
 import sqlite3
 import repositories.querys as sql
 from pathlib import Path
-from typing import List, Tuple, Any
 from repositories.connection_manager import connection_manager
 from models.model_task import Task
 
@@ -20,14 +20,14 @@ class RepositoryDB:
 
     Args:
         - db_name (str): El nombre del archivo de la base de datos
-            (ej. "tasks-cli.db").
+          (ej. "tasks-cli.db").
     """
 
     def __init__(self, db_name: str):
         project_dir = Path(__file__).parent.parent
         self.db_path = project_dir / db_name
 
-    def task_format_list(self, rows_list: list) -> List[Task]:
+    def task_format_list(self, rows_list: list) -> list[Task]:
         """Convierte filas crudas de la BD en una lista de objetos Task.
 
         Esta función es un método de ayuda crucial que actúa como una capa de
@@ -42,7 +42,7 @@ class RepositoryDB:
 
         Args:
             - rows_list (list): La lista de filas (tuplas) obtenida de la base
-                de datos tras una consulta a la tabla `tasks_table`.
+              de datos tras una consulta a la tabla `tasks_table`.
 
         Returns:
             - list[Task]: Una lista de objetos `Task` completamente formados.
@@ -51,12 +51,13 @@ class RepositoryDB:
             Task(
                 id=row[0],
                 status=row[1],
-                tag=row[2], 
-                content=row[3], 
-                priority=row[4])
-                for row in rows_list
+                tag=row[2],
+                content=row[3],
+                priority=row[4],
+                details=row[5],
+            )
+            for row in rows_list
         ]
-
 
     # FUNC:
     # .. ......................................... create_table
@@ -79,14 +80,14 @@ class RepositoryDB:
     # FUNC:
     # .. ............................................. new_task
     @connection_manager
-    def new_task(self, task_instance: Task, cursor: sqlite3.Cursor) -> None:
+    def new_task(self, task_instance: Task, cursor: sqlite3.Cursor) -> int:
         """Crea una nueva tarea en la base de datos.
 
         Args:
             - task_instance (Task): Objeto Task que contiene los datos de la
-                nueva tarea.
+              nueva tarea.
             - cursor (sqlite3.Cursor): Objeto cursor de la base de datos,
-                proporcionado automáticamente por el decorador.
+              proporcionado automáticamente por el decorador.
 
         Returns:
             - int: El ID de la tarea recién creada en la base de datos.
@@ -96,29 +97,31 @@ class RepositoryDB:
             task_instance.tag,
             task_instance.content,
             task_instance.priority,
+            task_instance.details,
         )
 
         cursor.execute(sql.NEW_TASK, values)
-        # return cursor.lastrowid
-        return
+
+        new_id = cursor.lastrowid
+        # Le aseguramos a mypy (y a nosotros mismos) que new_id no será None.
+        assert new_id is not None, "No se pudo obtener el ID de la nueva tarea."
+        return new_id
 
     # FUNC:
     # .. ................................... filter_task_status
     @connection_manager
-    def filter_task_status(
-        self, status: str, cursor: sqlite3.Cursor
-    ) -> List[Task]:
+    def filter_task_status(self, status: str, cursor: sqlite3.Cursor) -> list[Task]:
         """Filtar una tarea por status.
 
         Args:
             - status_task (Status): El estado por el cual filtrar las tareas
-                (e.g., "pending", "completed").
+              (e.g., "pending", "completed").
             - cursor (sqlite3.Cursor): Objeto cursor de la base de datos,
-                proporcionado automáticamente por el decorador.
+              proporcionado automáticamente por el decorador.
 
         Returns:
             - List[Tuple[Any, ...]]: Una lista de tuplas, donde cada tupla
-                representauna fila de la tarea encontrada.
+              representauna fila de la tarea encontrada.
         """
         cursor.execute(sql.FILTER_TASK_STATUS, (status,))
         filtered_rows = cursor.fetchall()
@@ -127,7 +130,7 @@ class RepositoryDB:
 
         # WARN: linea de test provisional .> la impresión se eliminra.
         for tarea_objeto in task_list:
-        # Imprimirá el objeto Task bien formateado
+            # Imprimirá el objeto Task bien formateado
             print(f"  -> {tarea_objeto}")
 
         return task_list
@@ -135,20 +138,18 @@ class RepositoryDB:
     # FUNC:
     # .. ...................................... filter_task_tag
     @connection_manager
-    def filter_task_tag(
-        self, tag: str, cursor: sqlite3.Cursor
-    ) -> List[Task]:
+    def filter_task_tag(self, tag: str, cursor: sqlite3.Cursor) -> list[Task]:
         """Filtar una tarea por tag.
 
         Args:
             - tag_task (Status): El tag por el cual filtrar las tareas
-                (e.g., "personal", "proyecto", "trabajo", "calendario").
+              (e.g., "personal", "proyecto", "trabajo", "calendario").
             - cursor (sqlite3.Cursor): Objeto cursor de la base de datos,
-                proporcionado automáticamente por el decorador.
+              proporcionado automáticamente por el decorador.
 
         Returns:
             - List[Tuple[Any, ...]]: Una lista de tuplas, donde cada tupla
-                representauna fila de la tarea encontrada.
+              representauna fila de la tarea encontrada.
         """
         cursor.execute(sql.FILTER_TASK_TAG, (tag,))
         filtered_rows = cursor.fetchall()
@@ -157,30 +158,26 @@ class RepositoryDB:
 
         # WARN: linea de test provisional .> la impresión se eliminra.
         for tarea_objeto in task_list:
-        # Imprimirá el objeto Task bien formateado
+            # Imprimirá el objeto Task bien formateado
             print(f"  -> {tarea_objeto}")
 
-
         return task_list
-
 
     # FUNC:
     # .. ................................. filter_task_priority
     @connection_manager
-    def filter_task_priority(
-        self, priority: str, cursor: sqlite3.Cursor
-    ) -> List[Task]:
+    def filter_task_priority(self, priority: str, cursor: sqlite3.Cursor) -> list[Task]:
         """Filtar una tarea por prioridad.
 
         Args:
             - priority (Status): La prioridad por la cual filtrar las
-                tareas (e.g., "baja", "media", "alta").
+              tareas (e.g., "baja", "media", "alta").
             - cursor (sqlite3.Cursor): Objeto cursor de la base de datos,
-                proporcionado automáticamente por el decorador.
+              proporcionado automáticamente por el decorador.
 
         Returns:
             - List[Tuple[Any, ...]]: Una lista de tuplas, donde cada tupla
-                representauna fila de la tarea encontrada.
+              representauna fila de la tarea encontrada.
         """
         cursor.execute(sql.FILTER_TASK_PRIORITY, (priority,))
         filtered_rows = cursor.fetchall()
@@ -189,7 +186,7 @@ class RepositoryDB:
 
         # WARN: linea de test provisional .> la impresión se eliminra.
         for tarea_objeto in task_list:
-        # Imprimirá el objeto Task bien formateado
+            # Imprimirá el objeto Task bien formateado
             print(f"  -> {tarea_objeto}")
 
         return task_list
@@ -205,8 +202,8 @@ class RepositoryDB:
         Args:
             - id_task (int): El ID de la tarea a actualizar.
             - new_data (dict[str, str]): Un diccionario con los campos a
-                actualizar y sus nuevos valores.
-                Ejemplo: {"content": "Nuevo contenido", "priority": "alta"}
+              actualizar y sus nuevos valores.
+              Ejemplo: {"content": "Nuevo contenido", "priority": "alta"}
             - cursor (sqlite3.Cursor): Cursor de la base de datos.
 
         Returns:
@@ -227,25 +224,16 @@ class RepositoryDB:
 
         cursor.execute(query, values)
 
-        """
-        data: List = [status_task, tag_task, content_task, priority_task]
-        select_task = cursor.execute(sql.SELECT_TASK,(id_task,)).fetchone()
-        cursor.execute(sql.UPDATE_TASK, (*data, id_task))
-        """
-
     # FUNC:
     # .. ................................ check_or_uncheck_task
     @connection_manager
-    def check_or_uncheck_task(
-            self,
-            id_task: int,
-            cursor: sqlite3.Cursor) -> None:
+    def check_or_uncheck_task(self, id_task: int, cursor: sqlite3.Cursor) -> None:
         """Marcar como completada o desmaracar como pendiente una tarea.
 
         Args:
             - id_task (int): número de identificación de la tarea.
             - cursor (sqlite3.Cursor): Objeto cursor de la base de datos,
-                proporcionado automáticamente por el decorador.
+              proporcionado automáticamente por el decorador.
 
         Returns:
             - None.
@@ -259,6 +247,28 @@ class RepositoryDB:
         cursor.execute(sql.UPDATE_STATUS_TOGGLE, (id_task,))
 
     # FUNC:
+    # .. ....................................... get_task_by_id
+    @connection_manager
+    def get_task_by_id(self, id_task: int, cursor: sqlite3.Cursor) -> Task | None:
+        """Selecciona una tarea existente por su id.
+
+        Args:
+            - id_task (int): número de identificación de la tarea.
+            - cursor (sqlite3.Cursor): Objeto cursor de la base de datos,
+              proporcionado automáticamente por el decorador.
+
+        Returns:
+            - Task | None.
+        """
+        cursor.execute(sql.GET_TASK_BY_ID, (id_task,))
+        row = cursor.fetchone()
+
+        if row:
+            return self.task_format_list([row])[0]
+        else:
+            return None
+
+    # FUNC:
     # .. .......................................... delete_task
     @connection_manager
     def delete_task(self, id_task: int, cursor: sqlite3.Cursor) -> None:
@@ -267,20 +277,9 @@ class RepositoryDB:
         Args:
             - id_task (int): número de identificación de la tarea.
             - cursor (sqlite3.Cursor): Objeto cursor de la base de datos,
-                proporcionado automáticamente por el decorador.
+              proporcionado automáticamente por el decorador.
 
         Returns:
             - None.
         """
         cursor.execute(sql.DELETE_TASK, (id_task,))
-
-
-
-
-
-# TEST:
-repo = RepositoryDB("data_dev.db")
-repo.create_table()
-#tarea = Task(content="GUScode nuevo contenido")
-#repo.new_task(tarea)
-repo.filter_task_status("completed")
