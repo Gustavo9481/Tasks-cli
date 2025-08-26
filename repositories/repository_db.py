@@ -128,11 +128,6 @@ class RepositoryDB:
 
         task_list = self.task_format_list(filtered_rows)
 
-        # WARN: linea de test provisional .> la impresión se eliminra.
-        for tarea_objeto in task_list:
-            # Imprimirá el objeto Task bien formateado
-            print(f"  -> {tarea_objeto}")
-
         return task_list
 
     # FUNC:
@@ -156,11 +151,6 @@ class RepositoryDB:
 
         task_list = self.task_format_list(filtered_rows)
 
-        # WARN: linea de test provisional .> la impresión se eliminra.
-        for tarea_objeto in task_list:
-            # Imprimirá el objeto Task bien formateado
-            print(f"  -> {tarea_objeto}")
-
         return task_list
 
     # FUNC:
@@ -183,11 +173,6 @@ class RepositoryDB:
         filtered_rows = cursor.fetchall()
 
         task_list = self.task_format_list(filtered_rows)
-
-        # WARN: linea de test provisional .> la impresión se eliminra.
-        for tarea_objeto in task_list:
-            # Imprimirá el objeto Task bien formateado
-            print(f"  -> {tarea_objeto}")
 
         return task_list
 
@@ -213,16 +198,18 @@ class RepositoryDB:
             print("No hay datos para actualizar la tarea.")
             return
 
-        # Crea un string como: "content = ?, priority = ?, etc...
+        # 01
         set_clause = ", ".join([f"{key} = ?" for key in new_data.keys()])
-
-        # Crea una tupla como: ('Nuevo contenido', 'alta', 5)
+        # 02
         values = tuple(new_data.values()) + (id_task,)
-
-        # Se arma el string de la consulta.
+        # 03
         query = f"{sql.UPDATE_TASK} {set_clause} WHERE id = ?;"
 
         cursor.execute(query, values)
+
+        # 01: Crea un str ej.: "content = ?, priority = ?, etc...".
+        # 02: Crea una tupla como: ('Nuevo contenido', 'alta', 5).
+        # 03: Se arma el string de la consulta.
 
     # FUNC:
     # .. ................................ check_or_uncheck_task

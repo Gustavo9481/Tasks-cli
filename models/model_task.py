@@ -27,14 +27,14 @@ class Task(BaseModel):
 
     Attributes:
         - id (Optional[str]): Identificador opcional, generado por la base de
-            datos.
+          datos.
         - status (Status): Estado de la tarea. Valores válidos definidos en
-            `Status` (Literal).
+          `Status` (Literal).
         - tag (Tag): Etiqueta de la tarea. Valores válidos definidos en
-            `Tag` (Literal).
+          `Tag` (Literal).
         - content (str): Contenido o descripción de la tarea.
         - priority (Priority): Prioridad de la tarea. Valores válidos definidos
-            en `Priority` (Literal).
+          en `Priority` (Literal).
         - details (Optional[str]): Detalles o notas extensas para la tarea.
     """
 
