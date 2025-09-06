@@ -1,0 +1,78 @@
+/* MODULO: controllers
+ * Creación de interfaces para terminal.
+ * Estilos generales para la interfaz.
+ *
+ * DataTable: Para estilizar el contenedor principal de la tabla (bordes, márgenes, fondo general).
+ * .datatable--header: Para la fila de la cabecera.
+ * .datatable--cell: Para las celdas individuales.
+ * .datatable--cursor: Para la celda o fila que está actualmente seleccionada por el cursor.
+ * .datatable--highlighted: Para la fila resaltada.
+ * .datatable--striped: Para crear el efecto "cebra" de colores alternos en las filas y mejorar la legibilidad.
+ * */
+
+$background_normal: #16161A;
+$background_dark: #0C0C0F;
+$orange_flu: #FF9E64;
+$dark_grey: #32344A;
+$blue_sky: #A9B1D6;
+
+Screen {
+    background: $background_normal;
+    layout: vertical;
+    padding: 1 2;
+}
+
+Header {
+    background: $background_normal;
+    margin-bottom: 1;
+}
+
+#leyenda, #prioridad {
+    padding: 0 2 1 2; /* Un poco de padding para que no esté pegado a los bordes */
+    color: $blue_sky; /* Un color que combine y sea legible */
+    height: auto; /* La altura se ajusta al contenido */
+}
+
+DataTable {
+    margin-top: 1;
+    background: $background_dark;
+    padding: 1 2;
+}
+
+DataTable > .datatable--header {
+    margin-bottom: 2;
+    background: #000000;
+    color: $blue_sky;
+    text-style: bold;
+    padding: 1 4;
+}
+
+DataTable > .datatable--cell {
+    background: $background_normal;
+    tint: black 0%;
+}
+
+DataTable > .datatable--cursor {
+    background: $orange_flu;
+    color: $background_dark;
+    text-style: bold;
+}
+
+Footer {
+    padding: 0 3;
+    background: $dark_grey;
+    text-align: center;
+}
+
+AskIdScreen {
+    align: center middle;
+}
+
+AskIdScreen > Label, AskIdScreen > Input {
+    width: 30%;
+}
+
+AskIdScreen > Input {
+    background: $background_dark;
+    border: round $orange_flu;
+}

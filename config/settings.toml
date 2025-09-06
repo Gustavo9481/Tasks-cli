@@ -1,0 +1,20 @@
+# Archivo de configuración para la aplicación Tasks-CLI
+
+# --- Configuración de la Base de Datos ---
+# En el futuro, aquí podríamos poner más cosas, como el timeout, etc.
+database_name = "data_dev2.db"
+
+# --- Configuración de la Interfaz ---
+[ui.colors]
+red = "#FF7A93"
+blue = "#7AA2F7"
+green = "#B9F27C"
+orange = "#FF9E64"
+
+[ui.icons]
+pendiente = " "
+en_proceso = " "
+completada = " "
+baja = " "
+media = " "
+alta = " "

@@ -20,6 +20,8 @@ CREATE_TABLE: str = """
     );
 """
 
+# todas las tareas.
+GET_ALL_TASKS = "SELECT id, status, tag, content, priority, details FROM tasks_table;"
 
 # .. ............................................................. new_task ..󰌠
 # Inserta un nuevo registro (tarea) en la tabla tasks_table.

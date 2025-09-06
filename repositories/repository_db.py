@@ -77,6 +77,24 @@ class RepositoryDB:
         """
         cursor.execute(sql.CREATE_TABLE)
 
+
+
+    # FUNC:
+    @connection_manager
+    def get_all_tasks(self, cursor: sqlite3.Cursor) -> list[Task]:
+        """Recupera todas las tareas de la base de datos.
+
+        Args:
+            - cursor (sqlite3.Cursor): Proporcionado por el decorador.
+
+        Returns:
+            - list[Task]: Una lista de todos los objetos Task en la base de datos.
+        """
+        cursor.execute(sql.GET_ALL_TASKS)
+        all_rows = cursor.fetchall()
+        return self.task_format_list(all_rows)
+
+
     # FUNC:
     # .. ............................................. new_task
     @connection_manager
