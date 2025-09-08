@@ -1,4 +1,30 @@
+# Archivos de configuración personal y de la herramienta Gemini
 GEMINI.md
 TO-DO.md
+
+# Directorio de notas de Obsidian
+.obsidian/
+
+# Entornos Virtuales de Python
+# Directorios que contienen las librerías instaladas, no son parte del código.
+.venv/
+venv/
+ENV/
+
+# Cachés de herramientas de Python
+# Archivos temporales para acelerar herramientas como pytest y mypy.
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Archivos de bases de datos de SQLite
 *.db
-.obsidian
+*.sqlite
+*.sqlite3
+
+# Archivos compilados de Python
+# Se generan automáticamente al ejecutar el código.
+*.pyc
+*.pyo
+*.pyd
