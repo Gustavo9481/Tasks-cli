@@ -1,0 +1,10 @@
+/.makemd/
+/.mypy_cache/
+/.obsidian/
+/.pytest_cache/
+/.ropeproject/
+/.ruff_cache/
+/.space/
+/.venv/
+__pycache__/
+*.db

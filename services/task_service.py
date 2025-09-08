@@ -42,10 +42,16 @@ class TaskService:
             )
         return formatted_tasks
 
+
+    def get_task_by_id_service(self, task_id: int) -> Task | None:
+        """Busca una tarea por su ID a través del repositorio."""
+        return self.repository.get_task_by_id(task_id)
+
+
     # FUNC: marcar | desmarcar tarea 
     def check_or_uncheck_task_service(self, task_id: int) -> None:
         """Marca o desmarca una tarea usando su ID. 
-        
+
         Args:
             - task_id (int): El ID de la tarea a marcar o desmarcar (status) 
         """

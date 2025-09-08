@@ -9,6 +9,7 @@ from textual.app import App, ComposeResult
 from textual.screen import ModalScreen
 from textual.widgets import Header, Static, DataTable, Footer, Input, Label
 from services.task_service import TaskService
+from decorators import require_valid_id
 from dinamic_colors import get_status_style, get_priority_style, dinamic_status_colors, dinamic_priority_colors
 
 # --- La Pantalla Modal (sin cambios) ---
@@ -106,7 +107,21 @@ class Interface(App):
     def action_check_or_uncheck_task(self) -> None:
         self.push_screen(AskIdScreen(), self.notification_check_or_uncheck_task)
 
+    @require_valid_id
     def notification_check_or_uncheck_task(self, task_id: str) -> None:
+
+        service = TaskService()
+        service.check_or_uncheck_task_service(task_id)
+        
+        self.app.notify(
+            f"Tarea ID: {task_id} Status modificado",
+            title="Actualizado el status...󰙏 ",
+            severity="information",
+            timeout=3
+        )
+        self._update_table()
+
+        '''
         try:
             id_to_check_or_uncheck = int(task_id)
             service = TaskService()
@@ -126,6 +141,7 @@ class Interface(App):
                 severity="error",
                 timeout=3
             )
+        '''
 
 
 
@@ -134,29 +150,21 @@ class Interface(App):
         """Muestra la pantalla modal para pedir el ID a eliminar. """
         self.push_screen(AskIdScreen(), self.notification_delete_task)
 
-
+    @require_valid_id
     def notification_delete_task(self, task_id: str) -> None:
         """Notofocación para la eliminación de tarea. """
-        try:
-            id_to_delete = int(task_id)
-            service = TaskService()
-            service.delete_task_service(id_to_delete)
+        service = TaskService()
+        service.delete_task_service(task_id)
 
-            self.app.notify(
-                f"Tarea ID: '{id_to_delete}' Eliminada",                   # 01
-                title="Eliminar tarea...󰙏 ",                               # 02
-                severity="error",                                          # 03
-                timeout=4                                                  # 04
-            )
-            self._update_table()
+        self.app.notify(
+            f"Tarea ID: {task_id} Eliminada",
+            title="Eliminar tarea...󰙏 ",
+            severity="information",
+            timeout=3
+        )
+        self._update_table()
 
-        except ValueError:
-            self.app.notify(
-                f"El ID {task_id} no es un número válido.",
-                title="Erroer de entrada.",
-                severity="error",
-                timeout=3
-            )
+
 
 
 

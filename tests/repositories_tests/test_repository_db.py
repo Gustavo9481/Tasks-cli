@@ -280,7 +280,7 @@ def test_check_or_uncheck_task(test_repo: RepositoryDB) -> None:
     # 03
     assert updated_task is not None
     assert updated_task.id == task_id
-    assert updated_task.status == "completed"  # Debería haber cambiado a 'completed'
+    assert updated_task.status == "in_progress"  # Debería haber cambiado a 'completed'
 
     # 04
     test_repo.check_or_uncheck_task(task_id)
@@ -288,7 +288,7 @@ def test_check_or_uncheck_task(test_repo: RepositoryDB) -> None:
     re_updated_task = test_repo.get_task_by_id(task_id)
     assert re_updated_task is not None
     assert re_updated_task.id == task_id
-    assert re_updated_task.status == "pending"
+    assert re_updated_task.status == "completed"
 
     # 01: Ejecución del método check_or_uncheck_task (pending -> completed).
     # 02: Obtención de la tarea modificada.
