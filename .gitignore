@@ -28,3 +28,7 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+# Archivos generados por herramientas desconocidas
+.makemd
+.space
