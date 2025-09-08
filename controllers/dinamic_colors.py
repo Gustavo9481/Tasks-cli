@@ -42,12 +42,12 @@ def get_priority_style(prioridad_texto: str) -> Text | str:
 # FUNC:
 def dinamic_status_colors(leyenda_texto: Text) -> Text | str:
     # 2. Usamos .append() para añadir cada parte con su propio estilo.
-    leyenda_texto.append("Status: ")
-    leyenda_texto.append("  Pendiente", style=UI_COLORS['red'])
+    leyenda_texto.append("Status:    ")
+    leyenda_texto.append(f"{UI_ICONS['pendiente']} pendiente", style=UI_COLORS['red'])
     leyenda_texto.append(" | ", style="dim") # El separador un poco atenuado
-    leyenda_texto.append("  En Proceso", style=UI_COLORS['blue'])
+    leyenda_texto.append(f"{UI_ICONS['en_proceso']} en proceso", style=UI_COLORS['blue'])
     leyenda_texto.append(" | ", style="dim")
-    leyenda_texto.append("  Completada", style=UI_COLORS['green'])
+    leyenda_texto.append(f"{UI_ICONS['completada']} completada", style=UI_COLORS['green'])
 
     return leyenda_texto
 

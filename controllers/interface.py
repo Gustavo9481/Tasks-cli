@@ -30,13 +30,14 @@ class Interface(App):
         ("q", "quit", "salir  "),
         ("n", "add_task", "nueva tarea   "),
         ("d", "delete_task", "borrar   "),
+        ("m", "check_or_uncheck_task", "cambiar status"),
         ("e", "edit_task", "editar   "),
         ("s", "filtrar_status", "filtrar status   "),
         ("t", "filtrar_tag", "filtrar tag   "),
         ("p", "filtrar_prioridad", "filtrar prioridad   ")
     ]
     CSS_PATH = "styles.css"
-    TITLE = "Tabla de Tareas"
+    TITLE = "TASKS CLI - Tabla de Tareas"
 
     def compose(self) -> ComposeResult:
 
@@ -100,6 +101,34 @@ class Interface(App):
         self._update_table()
 
 
+
+    # FUNC: marcar o desmarcar tarea.
+    def action_check_or_uncheck_task(self) -> None:
+        self.push_screen(AskIdScreen(), self.notification_check_or_uncheck_task)
+
+    def notification_check_or_uncheck_task(self, task_id: str) -> None:
+        try:
+            id_to_check_or_uncheck = int(task_id)
+            service = TaskService()
+            service.check_or_uncheck_task_service(id_to_check_or_uncheck)
+            self.app.notify(
+                f"Tarea ID: {id_to_check_or_uncheck} STATUS modificado",
+                title="Modificación de Status",
+                severity="information",
+                timeout=4
+            )
+            self._update_table()
+        
+        except ValueError:
+            self.app.notify(
+                f"El ID {task_id} no es un número válido.",
+                title="Erroer de entrada.",
+                severity="error",
+                timeout=3
+            )
+
+
+
     # FUNC: delete_task y notificación.
     def action_delete_task(self) -> None:
         """Muestra la pantalla modal para pedir el ID a eliminar. """
@@ -109,9 +138,9 @@ class Interface(App):
     def notification_delete_task(self, task_id: str) -> None:
         """Notofocación para la eliminación de tarea. """
         try:
-            id_to_delete = int(task_id)   # BUG: chequear si la conversión es necesaria.
+            id_to_delete = int(task_id)
             service = TaskService()
-            service.delete_task_by_id(id_to_delete)
+            service.delete_task_service(id_to_delete)
 
             self.app.notify(
                 f"Tarea ID: '{id_to_delete}' Eliminada",                   # 01

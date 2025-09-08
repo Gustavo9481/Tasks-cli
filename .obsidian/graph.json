@@ -1,0 +1,51 @@
+{
+  "collapse-filter": true,
+  "search": "",
+  "showTags": true,
+  "showAttachments": true,
+  "hideUnresolved": true,
+  "showOrphans": true,
+  "collapse-color-groups": true,
+  "colorGroups": [
+    {
+      "query": "música",
+      "color": {
+        "a": 1,
+        "rgb": 14701138
+      }
+    },
+    {
+      "query": "salud",
+      "color": {
+        "a": 1,
+        "rgb": 12648258
+      }
+    },
+    {
+      "query": "linux",
+      "color": {
+        "a": 1,
+        "rgb": 61183
+      }
+    },
+    {
+      "query": "programación",
+      "color": {
+        "a": 1,
+        "rgb": 14745855
+      }
+    }
+  ],
+  "collapse-display": true,
+  "showArrow": false,
+  "textFadeMultiplier": -1.1,
+  "nodeSizeMultiplier": 1.95026041666667,
+  "lineSizeMultiplier": 0.21484375,
+  "collapse-forces": false,
+  "centerStrength": 0.0703125,
+  "repelStrength": 9.42708333333333,
+  "linkStrength": 0.2578125,
+  "linkDistance": 75,
+  "scale": 0.07072167496085909,
+  "close": true
+}

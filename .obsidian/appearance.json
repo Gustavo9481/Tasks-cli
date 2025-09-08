@@ -1,0 +1,12 @@
+{
+  "theme": "obsidian",
+  "cssTheme": "Minimal",
+  "accentColor": "#b9f2c7",
+  "textFontFamily": "Inter",
+  "monospaceFontFamily": "JetBrainsMono Nerd Font",
+  "baseFontSize": 14,
+  "enabledCssSnippets": [],
+  "showRibbon": true,
+  "showViewHeader": false,
+  "nativeMenus": false
+}

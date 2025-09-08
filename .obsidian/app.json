@@ -1,0 +1,17 @@
+{
+  "defaultViewMode": "preview",
+  "readableLineLength": true,
+  "showIndentGuide": false,
+  "spellcheck": false,
+  "alwaysUpdateLinks": true,
+  "showUnsupportedFiles": true,
+  "propertiesInDocument": "source",
+  "livePreview": true,
+  "pdfExportSettings": {
+    "pageSize": "Letter",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  },
+  "showInlineTitle": true
+}

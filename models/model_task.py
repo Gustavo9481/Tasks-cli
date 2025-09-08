@@ -1,11 +1,10 @@
-# MODULO: models/
+# MODULO: models
 # .. ............................. model_task ............................. ..󰌠
 """
 Data Tranfer Object -> class Task: objeto contenedor de la data de una tarea
 Se usa pydantic para asegurar el tipo de datos.
 Los objetos Literal(typing) contienen los valores permitidos para dichas
 propiedades.
-ïconos de uso a futuro 󰗠 
 """
 
 from typing import Optional, Literal
@@ -14,7 +13,7 @@ from pydantic import BaseModel
 # NOTE: Restricción de datos.
 # Los objetos Literal contienen una lista de los valores admitidos para las
 # propiedades de Task.
-Status = Literal["pending", "completed"]
+Status = Literal["pending", "in_progress", "completed"]
 Tag = Literal["personal", "proyecto", "trabajo", "calendario"]
 Priority = Literal["baja", "media", "alta"]
 

@@ -62,6 +62,7 @@ UPDATE_STATUS: str = "UPDATE tasks_table SET status = ? WHERE id = ?;"
 # Consulta dinámica. La consukta CASE perimite condicionar el valor
 # seleccionado (pending | completed) y lo cambiara por su contrario usando la
 # sentencia WHEN - THEN - ELSE.
+'''
 UPDATE_STATUS_TOGGLE = """
     UPDATE tasks_table
     SET status = CASE
@@ -70,6 +71,18 @@ UPDATE_STATUS_TOGGLE = """
     END
     WHERE id = ?;
 """
+'''
+UPDATE_STATUS_TOGGLE = """
+    UPDATE tasks_table
+    SET status = CASE
+        WHEN status = 'pending' THEN 'in_progress'
+        WHEN status = 'in_progress' THEN 'completed'
+        WHEN status = 'completed' THEN 'pending'
+        ELSE status
+    END
+    WHERE id = ?;
+"""
+
 
 # .. ....................................................... get_task_by_id ..󰌠
 # Selecciona registros de la tabla tasks_table identificados por un id.

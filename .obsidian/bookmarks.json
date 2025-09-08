@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "type": "file",
+      "ctime": 1749335491470,
+      "path": "Webs_IA.md",
+      "title": ""
+    },
+    {
+      "type": "group",
+      "ctime": 1749335656176,
+      "items": [
+        {
+          "type": "file",
+          "ctime": 1749335663923,
+          "path": "Proyecto Calculadora Python/Proyecto Calculadora Python.md"
+        }
+      ],
+      "title": "proyectos"
+    },
+    {
+      "type": "file",
+      "ctime": 1749662771073,
+      "path": "markdown_chuleta.md"
+    },
+    {
+      "type": "group",
+      "ctime": 1749698105683,
+      "items": [
+        {
+          "type": "file",
+          "ctime": 1749698125146,
+          "path": "Proceso de Construcción App Web.md",
+          "title": ""
+        }
+      ],
+      "title": "Desarrollo"
+    }
+  ]
+}

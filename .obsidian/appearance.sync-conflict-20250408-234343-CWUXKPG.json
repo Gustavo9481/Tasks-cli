@@ -1,0 +1,13 @@
+{
+  "theme": "obsidian",
+  "cssTheme": "AnuPpuccin",
+  "accentColor": "#4d40b5",
+  "textFontFamily": "Inter",
+  "monospaceFontFamily": "JetBrainsMono Nerd Font",
+  "baseFontSize": 15,
+  "enabledCssSnippets": [
+    "guscode"
+  ],
+  "showRibbon": true,
+  "showViewHeader": true
+}
