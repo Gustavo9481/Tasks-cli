@@ -76,3 +76,18 @@ AskIdScreen > Input {
     background: $background_dark;
     border: round $orange_flu;
 }
+
+AddTaskScreen .dialog {
+    align: center middle;
+    width: 60;
+    height: auto;
+    padding: 1 2;
+    border: thick $orange_flu;
+    background: $background_dark;
+}
+
+AddTaskScreen .buttons {
+    align: center middle;
+    height: auto;
+    margin-top: 1;
+}

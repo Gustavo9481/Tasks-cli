@@ -48,7 +48,13 @@ class TaskService:
         return self.repository.get_task_by_id(task_id)
 
 
-    # FUNC: marcar | desmarcar tarea 
+    # FUNC: nueva tarea.
+    def new_task_service(self, task_instance: Task) -> None:
+        """Servicio para crear una nueva tarea. """
+        self.repository.new_task(task_instance)
+
+
+    # FUNC: marcar | desmarcar tarea.
     def check_or_uncheck_task_service(self, task_id: int) -> None:
         """Marca o desmarca una tarea usando su ID. 
 
@@ -56,6 +62,13 @@ class TaskService:
             - task_id (int): El ID de la tarea a marcar o desmarcar (status) 
         """
         self.repository.check_or_uncheck_task(task_id)
+
+
+    # FUNC: editar trea.
+    def update_task_service(self, task_id: int, new_data: dict[str, str]) -> None:
+        """Servicio para actualizar una tarea existente."""
+        self.repository.update_task(task_id, new_data)
+
 
     # FUNC: eliminar tarea
     def delete_task_service(self, task_id: int) -> None:

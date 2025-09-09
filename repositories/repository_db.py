@@ -198,7 +198,7 @@ class RepositoryDB:
     # .. .......................................... update_task
     @connection_manager
     def update_task(
-        self, id_task: int, new_data: dict[str, str], cursor: sqlite3.Cursor
+        self, task_id: int, new_data: dict[str, str], cursor: sqlite3.Cursor
     ) -> None:
         """Actualizar status, tag, contenido o prioridad de una tarea.
 
@@ -219,7 +219,7 @@ class RepositoryDB:
         # 01
         set_clause = ", ".join([f"{key} = ?" for key in new_data.keys()])
         # 02
-        values = tuple(new_data.values()) + (id_task,)
+        values = tuple(new_data.values()) + (task_id,)
         # 03
         query = f"{sql.UPDATE_TASK} {set_clause} WHERE id = ?;"
 
