@@ -5,7 +5,7 @@ Pantallas de textual específicas para solicitar datos al usuario.
 """
 from textual.screen import ModalScreen
 from textual.app import ComposeResult
-from textual.widgets import Button, Input, Label
+from textual.widgets import Button, Input, Label, Markdown, TextArea
 from textual.containers import Vertical, Horizontal
 from models.model_task import Task
 
@@ -72,7 +72,7 @@ class AddTaskScreen(ModalScreen):
             yield Label("Prioridad (baja, media, alta):")
             yield Input(id="priority_input", value="baja")
             yield Label("Detalles (opcional):")
-            yield Input(id="details_input", placeholder="Notas adicionales...")
+            yield TextArea(id="details_input", placeholder="Notas adicionales...")
             with Horizontal(classes="buttons"):
                 yield Button("Crear Tarea", variant="primary", id="submit")
                 yield Button("Cancelar", id="cancel")
@@ -85,7 +85,7 @@ class AddTaskScreen(ModalScreen):
                 "content": self.query_one("#content_input", Input).value,
                 "tag": self.query_one("#tag_input", Input).value,
                 "priority": self.query_one("#priority_input", Input).value,
-                "details": self.query_one("#details_input", Input).value,
+                "details": self.query_one("#details_input", TextArea).text,
             }
             self.dismiss(new_task_data)
         else:
@@ -114,10 +114,9 @@ class AskTaskEdit(ModalScreen):
             yield Label("Prioridad (baja, media, alta):")
             yield Input(id="priority_input", value=self.task_to_edit.priority)
             yield Label("Detalles (opcional):")
-            yield Input(
-                id="details_input",
-                value=self.task_to_edit.details if self.task_to_edit.details else ""
-            )
+            initial_text = self.task_to_edit.details if self.task_to_edit.details else ""
+            yield TextArea(initial_text, id="details_input")
+
             with Horizontal(classes="buttons"):
                 yield Button("Guardar Cambios", variant="primary", id="submit")
                 yield Button("Cancelar", id="cancel")
@@ -130,10 +129,74 @@ class AskTaskEdit(ModalScreen):
                 "content": self.query_one("#content_input", Input).value,
                 "tag": self.query_one("#tag_input", Input).value,
                 "priority": self.query_one("#priority_input", Input).value,
-                "details": self.query_one("#details_input", Input).value,
+                "details": self.query_one("#details_input", TextArea).text,
             }
             if self.task_to_edit:
                 updated_data["id"] = self.task_to_edit.id
             self.dismiss(updated_data)
         else:
             self.dismiss(None)
+
+
+
+# CLASS:
+class FilterTasksScreen(ModalScreen):
+    """Pantalla modal para filtrar tareas."""
+
+    # FUNC:
+    def compose(self) -> ComposeResult:
+        with Vertical(classes="dialog"):
+            yield Label("Filtrar Tareas (deja en blanco para no usar un filtro)")
+
+            yield Label("Filtrar por Status (pending, in_progress, completed):")
+            yield Input(id="status_filter", placeholder="E.g., pending")
+
+            yield Label("Filtrar por Tag:")
+            yield Input(id="tag_filter", placeholder="E.g., personal")
+
+            yield Label("Filtrar por Prioridad (baja, media, alta):")
+            yield Input(id="priority_filter", placeholder="E.g., alta")
+
+            with Horizontal(classes="buttons"):
+                yield Button("Filtrar", variant="primary", id="submit")
+                yield Button("Cancelar", id="cancel")
+
+
+    # FUNC:
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        if event.button.id == "submit":
+            # Recopilamos los criterios de filtro en un diccionario
+            filter_data = {
+                "status": self.query_one("#status_filter", Input).value,
+                "tag": self.query_one("#tag_filter", Input).value,
+                "priority": self.query_one("#priority_filter", Input).value,
+            }
+            # Cerramos la pantalla y pasamos los criterios
+            self.dismiss(filter_data)
+        else:
+            self.dismiss(None)
+
+
+
+class ViewDetailsScreen(ModalScreen):
+    """Pantalla modal para mostrar los detalles de una tarea en Markdown."""
+
+    def __init__(self, details_content: str, task_id: int):
+        super().__init__()
+        self.details_content = details_content
+        self.task_id = task_id
+
+    def compose(self) -> ComposeResult:
+        with Vertical(classes="dialog"):
+            yield Label(f"Detalles de la Tarea ID: {self.task_id}")
+
+            # El widget de Markdown renderizará el texto.
+            # Si no hay detalles, muestra un mensaje por defecto.
+            markdown_text = self.details_content if self.details_content else "*No hay detalles para esta tarea.*"
+            yield Markdown(markdown_text)
+
+            yield Button("Cerrar", variant="primary", id="close_details")
+
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        """Cierra la pantalla modal cuando se presiona el botón."""
+        self.dismiss()

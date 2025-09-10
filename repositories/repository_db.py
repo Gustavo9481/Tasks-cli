@@ -126,6 +126,54 @@ class RepositoryDB:
         return new_id
 
     # FUNC:
+    # filter_task (general)
+    @connection_manager
+    def filter_tasks(
+            self,
+            cursor: sqlite3.Cursor,
+            status: str | None = None,
+            tag: str | None = None,
+            priority: str | None = None
+    ) -> list[Task]:
+        """Filtra las tareas por los campos status, tag, priority.
+        Usa un patrón Strategy para seleccionar la consulta sql adecuada.
+        """
+        # El diccionario mapea una clave de filtros activos a una estrategia
+        strategy_map = {
+        # (tiene_status, tiene_tag, tiene_prioridad): (consulta, [orden_parametros])
+            (True, False, False): (sql.FILTER_BY_STATUS, ['status']),
+            (False, True, False): (sql.FILTER_BY_TAG, ['tag']),
+            (False, False, True): (sql.FILTER_BY_PRIORITY, ['priority']),
+            (True, True, False): (sql.FILTER_BY_STATUS_AND_TAG, ['status', 'tag']),
+            (True, False, True): (sql.FILTER_BY_STATUS_AND_PRIORITY, ['status', 'priority']),
+            (False, True, True): (sql.FILTER_BY_TAG_AND_PRIORITY, ['tag', 'priority']),
+            (True, True, True): (sql.FILTER_BY_ALL, ['status', 'tag', 'priority']),
+        }
+
+        # 1. Creamos la clave para el diccionario
+        key = (bool(status), bool(tag), bool(priority))
+
+        # 2. Seleccionamos la estrategia
+        if not any(key):
+            # Caso especial: no hay filtros, obtener todo
+            query = sql.GET_ALL_TASKS
+            params = []
+        else:
+            query, param_names = strategy_map[key]
+
+            # 3. Construimos la lista de parámetros en el orden correcto
+            all_params = {'status': status, 'tag': tag, 'priority': priority}
+            params = [all_params[name] for name in param_names]
+
+        # 4. Ejecutamos la consulta seleccionada
+        cursor.execute(query, tuple(params))
+        rows = cursor.fetchall()
+        
+        return self.task_format_list(rows)
+
+
+
+    # FUNC:
     # .. ................................... filter_task_status
     @connection_manager
     def filter_task_status(self, status: str, cursor: sqlite3.Cursor) -> list[Task]:

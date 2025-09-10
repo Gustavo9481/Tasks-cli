@@ -47,6 +47,58 @@ FILTER_TASK_TAG: str = "SELECT * FROM tasks_table WHERE tag = ?;"
 FILTER_TASK_PRIORITY: str = "SELECT * FROM tasks_table WHERE priority = ?;"
 
 
+
+# --- Filtrado por 1 Criterio ---
+FILTER_BY_STATUS: str = """
+    SELECT id, status, tag, content, priority, details
+    FROM tasks_table
+    WHERE status = ?;
+"""
+
+FILTER_BY_TAG: str = """
+    SELECT id, status, tag, content, priority, details
+    FROM tasks_table
+    WHERE tag = ?;
+"""
+
+FILTER_BY_PRIORITY: str = """
+    SELECT id, status, tag, content, priority, details
+    FROM tasks_table
+    WHERE priority = ?;
+"""
+
+# --- Filtrado por 2 Criterios ---
+FILTER_BY_STATUS_AND_TAG: str = """
+    SELECT id, status, tag, content, priority, details
+    FROM tasks_table
+    WHERE status = ?
+    AND tag = ?;
+"""
+
+FILTER_BY_STATUS_AND_PRIORITY: str = """
+    SELECT id, status, tag, content, priority, details
+    FROM tasks_table
+    WHERE status = ?
+    AND priority = ?;
+"""
+
+FILTER_BY_TAG_AND_PRIORITY: str = """
+    SELECT id, status, tag, content, priority, details
+    FROM tasks_table
+    WHERE tag = ?
+    AND priority = ?;
+"""
+
+# --- Filtrado por 3 Criterios ---
+FILTER_BY_ALL: str = """
+    SELECT id, status, tag, content, priority, details
+    FROM tasks_table
+    WHERE status = ?
+    AND tag = ?
+    AND priority = ?;
+"""
+
+
 # .. .......................................................... update_task ..󰌠
 # Actualiza un registro seleccionado por id de la tabla tasks_table.
 UPDATE_TASK: str = "UPDATE tasks_table SET"

@@ -27,10 +27,11 @@ class TaskService:
         """Obtiene las tareas y las formatea para la UI, imitando el formato
         del archivo db_tareas.py original.
         """
-        headers = ("ID", "Status", "Tag", "Contenido", "Prioridad")
+        headers = ("ID", "Status", "Tag", "Contenido", "Prioridad", "Notas")
         task_objects = self.get_all_tasks()
         formatted_tasks = [headers]
         for task in task_objects:
+            details_indicator = "v" if task.details else ""
             formatted_tasks.append(
                 (
                     task.id,
@@ -38,6 +39,7 @@ class TaskService:
                     task.tag,
                     task.content,
                     task.priority,
+                    details_indicator
                 )
             )
         return formatted_tasks
@@ -68,6 +70,37 @@ class TaskService:
     def update_task_service(self, task_id: int, new_data: dict[str, str]) -> None:
         """Servicio para actualizar una tarea existente."""
         self.repository.update_task(task_id, new_data)
+
+
+    # FUNC: filtrar tareas.
+    def filter_tasks_service(
+        self,
+        status: str | None = None,
+        tag: str | None = None,
+        priority: str | None = None,
+    ) -> list[Task]:
+        """Filtra las tareas según los criterios proporcionados, llamando
+        al método correspondiente del repositorio.
+
+        Args:
+            -status (str | None, optional): El estado por el cual filtrar.
+            - tag (str | None, optional): El tag por el cual filtrar.
+            - priority (str | None, optional): La prioridad por la cual filtrar.
+
+        Returns:
+            - list[Task]: Una lista de objetos Task que coinciden con los filtros.
+        """
+        return self.repository.filter_tasks(
+            status=status,
+            tag=tag,
+            priority=priority
+        )
+
+
+
+
+
+
 
 
     # FUNC: eliminar tarea
