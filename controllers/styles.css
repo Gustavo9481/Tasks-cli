@@ -27,7 +27,7 @@ Header {
     margin-bottom: 1;
 }
 
-#leyenda, #prioridad {
+#leyenda, #prioridad, #notas {
     padding: 0 2 1 2; /* Un poco de padding para que no esté pegado a los bordes */
     color: $blue_sky; /* Un color que combine y sea legible */
     height: auto; /* La altura se ajusta al contenido */
@@ -68,8 +68,18 @@ AskIdScreen {
     align: center middle;
 }
 
-AskIdScreen > Label, AskIdScreen > Input {
+AskIdScreen .dialog {
+    align: center middle;
     width: 30%;
+    height: auto;
+    padding: 1 2;
+    background: $background_dark;
+}
+
+
+AskIdScreen .dialog > Label,
+AskIdScreen .dialog > Input {
+    width: 100%;
 }
 
 AskIdScreen > Input {
@@ -77,12 +87,17 @@ AskIdScreen > Input {
     border: round $orange_flu;
 }
 
+AddTaskScreen {
+    align: center middle;
+}
+
+
+
 AddTaskScreen .dialog {
     align: center middle;
     width: 60;
     height: auto;
     padding: 1 2;
-    border: thick $orange_flu;
     background: $background_dark;
 }
 
@@ -90,4 +105,75 @@ AddTaskScreen .buttons {
     align: center middle;
     height: auto;
     margin-top: 1;
+}
+
+#submit, #cancel, #close_details {
+    height: 3;
+    padding: 0;
+    border: round #FF9E64;      /* Tu borde naranja redondeado */
+    background: #16161A;        /* Un fondo oscuro ($background_normal) */
+    color: #A9B1D6;             /* Un texto claro ($blue_sky) */
+}
+
+
+FilterTasksScreen {
+    align: center middle;
+}
+
+FilterTasksScreen .dialog {
+    align: center middle;
+    width: 60;
+    height: auto;
+    padding: 1 2;
+    background: $background_dark;
+}
+
+FilterTasksScreen .buttons {
+    align: center middle;
+    height: auto;
+    margin-top: 1;
+}
+
+
+
+AskTaskEdit {
+    align: center middle;
+}
+
+AskTaskEdit .dialog {
+    align: center middle;
+    width: 60;
+    height: auto;
+    padding: 1 2;
+    background: $background_dark;
+}
+
+AskTaskEdit .buttons {
+    align: center middle;
+    height: auto;
+    margin-top: 1;
+}
+
+
+ViewDetailsScreen {
+    align: center middle;
+}
+
+ViewDetailsScreen .dialog {
+    width: 80%; /* Ancho ajustado al 80% de la pantalla */
+    height: 30;
+    padding: 1 2;
+    background: $background_dark;
+}
+
+ViewDetailsScreen .buttons {
+    align: center middle;
+    height: auto;
+    margin-top: 1;
+}
+
+#markdown_container {
+    background: $background_dark;
+    height: auto;
+    margin-bottom: 1; /* Un poco de espacio antes del botón */
 }

@@ -12,12 +12,17 @@ from textual.widgets import (Button, DataTable, Footer, Header, Input, Label,
                            Static)
 
 from decorators import require_valid_id
-from dinamic_colors import (dinamic_priority_colors, dinamic_status_colors,
-                            get_priority_style, get_status_style)
+from dinamic_colors import (
+    dinamic_priority_colors,
+    dinamic_status_colors,
+    dinamic_notes_leyend,
+    get_priority_style,
+    get_status_style
+)
 from models.model_task import Task
 from services.task_service import TaskService
 from screens import AskIdScreen, AddTaskScreen, AskTaskEdit, FilterTasksScreen, ViewDetailsScreen
-
+from config.config_loader import UI_COLORS
 
 
 class Interface(App):
@@ -38,11 +43,14 @@ class Interface(App):
     def compose(self) -> ComposeResult:
         leyenda_texto_status = Text()
         leyenda_texto_priority = Text()
+        leyenda_texto_notas = Text()
         dinamic_status_colors(leyenda_texto_status)
         dinamic_priority_colors(leyenda_texto_priority)
+        dinamic_notes_leyend(leyenda_texto_notas)
         yield Header()
         yield Static(leyenda_texto_status, id="leyenda")
         yield Static(leyenda_texto_priority, id="prioridad")
+        yield Static(leyenda_texto_notas, id="notas")
         yield DataTable()
         yield Footer()
 
@@ -60,7 +68,7 @@ class Interface(App):
             styled_status.justify = "center"
             styled_priority = get_priority_style(prioridad_texto)
             styled_priority.justify = "center"
-            notes_indicator = Text(styled_row[5], justify="center")
+            notes_indicator = Text(styled_row[5], justify="center", style=UI_COLORS['green'])
             styled_row[1] = styled_status
             styled_row[4] = styled_priority
             styled_row[5] = notes_indicator

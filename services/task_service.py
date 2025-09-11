@@ -7,9 +7,10 @@ Esta capa actúa como un intermediario entre la interfaz de usuario (controllers
 y la capa de acceso a datos (repositories). Orquesta las operaciones y
 asegura que la lógica de la aplicación esté centralizada.
 """
+from rich.text import Text
 from repositories.repository_db import RepositoryDB
 from models.model_task import Task
-
+from config.config_loader import UI_ICONS
 
 class TaskService:
     """Clase de servicio que maneja la lógica de negocio para las tareas. """
@@ -31,7 +32,7 @@ class TaskService:
         task_objects = self.get_all_tasks()
         formatted_tasks = [headers]
         for task in task_objects:
-            details_indicator = "v" if task.details else ""
+            details_indicator = UI_ICONS['nota'] if task.details else ""
             formatted_tasks.append(
                 (
                     task.id,

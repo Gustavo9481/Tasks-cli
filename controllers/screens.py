@@ -146,15 +146,22 @@ class FilterTasksScreen(ModalScreen):
     # FUNC:
     def compose(self) -> ComposeResult:
         with Vertical(classes="dialog"):
-            yield Label("Filtrar Tareas (deja en blanco para no usar un filtro)")
+            yield Label(
+                "Filtrar Tareas (deja en blanco para no usar un filtro)",
+                id="filter_label_1"
+            )
 
-            yield Label("Filtrar por Status (pending, in_progress, completed):")
+            yield Label(
+                "Filtrar por Status (pending, in_progress, completed):",
+                id="filter_label_2"
+            )
             yield Input(id="status_filter", placeholder="E.g., pending")
 
-            yield Label("Filtrar por Tag:")
+            yield Label("Filtrar por Tag:", id="filter_label_3")
             yield Input(id="tag_filter", placeholder="E.g., personal")
 
-            yield Label("Filtrar por Prioridad (baja, media, alta):")
+            yield Label("Filtrar por Prioridad (baja, media, alta):",
+                        id="filter_label_4")
             yield Input(id="priority_filter", placeholder="E.g., alta")
 
             with Horizontal(classes="buttons"):
@@ -193,9 +200,11 @@ class ViewDetailsScreen(ModalScreen):
             # El widget de Markdown renderizará el texto.
             # Si no hay detalles, muestra un mensaje por defecto.
             markdown_text = self.details_content if self.details_content else "*No hay detalles para esta tarea.*"
-            yield Markdown(markdown_text)
+            with Vertical(id="markdown_container"):
+                yield Markdown(markdown_text)
 
-            yield Button("Cerrar", variant="primary", id="close_details")
+            with Horizontal(classes="buttons"):
+                yield Button("Cerrar", variant="primary", id="close_details")
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """Cierra la pantalla modal cuando se presiona el botón."""

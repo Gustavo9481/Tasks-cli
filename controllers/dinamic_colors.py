@@ -20,6 +20,8 @@ PRIORITY_STYLES: dict = {
     "baja": Text( UI_ICONS['baja'], UI_COLORS['green'])
 }
 
+NOTE_STYLE: Text = Text(UI_ICONS['nota'], style=UI_COLORS['green'])
+
 
 # FUNC:
 def _get_styled_text(text_key: str, style_map: dict) -> Text | str:
@@ -60,5 +62,13 @@ def dinamic_priority_colors(leyenda_texto: Text) -> Text | str:
     leyenda_texto.append(f"{UI_ICONS['media']} media", style=UI_COLORS['orange'])
     leyenda_texto.append(" | ", style="dim")
     leyenda_texto.append(f"{UI_ICONS['baja']} baja", style=UI_COLORS['green'])
+
+    return leyenda_texto
+
+def dinamic_notes_leyend(leyenda_texto: Text) -> Text | str:
+
+    leyenda_texto.append("Notas: ")
+    leyenda_texto.append(f"{UI_ICONS['nota']} ", style=UI_COLORS['green'])
+    leyenda_texto.append("-> La nota posee detalles, para consultar presionar 'v'")
 
     return leyenda_texto
