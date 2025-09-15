@@ -10,6 +10,7 @@ TO-DO.md
 .venv/
 venv/
 ENV/
+Tags/
 
 # Cachés de herramientas de Python
 # Archivos temporales para acelerar herramientas como pytest y mypy.

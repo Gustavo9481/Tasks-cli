@@ -1,14 +1,8 @@
-/* MODULO: controllers
- * Creación de interfaces para terminal.
- * Estilos generales para la interfaz.
- *
- * DataTable: Para estilizar el contenedor principal de la tabla (bordes, márgenes, fondo general).
- * .datatable--header: Para la fila de la cabecera.
- * .datatable--cell: Para las celdas individuales.
- * .datatable--cursor: Para la celda o fila que está actualmente seleccionada por el cursor.
- * .datatable--highlighted: Para la fila resaltada.
- * .datatable--striped: Para crear el efecto "cebra" de colores alternos en las filas y mejorar la legibilidad.
- * */
+/* MODULO: controllers */
+/* ............................................................... styles   */
+/* Estilos para interfaz. */
+
+/* OK: */
 
 $background_normal: #16161A;
 $background_dark: #0C0C0F;
@@ -16,23 +10,29 @@ $orange_flu: #FF9E64;
 $dark_grey: #32344A;
 $blue_sky: #A9B1D6;
 
+/* Pantalla General */
 Screen {
     background: $background_normal;
     layout: vertical;
     padding: 1 2;
 }
 
+
+/* ........................................ Cabecera | Leyendas de íconos   */
 Header {
     background: $background_normal;
     margin-bottom: 1;
 }
 
+/* Leyendas */
 #leyenda, #prioridad, #notas {
-    padding: 0 2 1 2; /* Un poco de padding para que no esté pegado a los bordes */
-    color: $blue_sky; /* Un color que combine y sea legible */
-    height: auto; /* La altura se ajusta al contenido */
+    padding: 0 2 1 2;
+    color: $blue_sky;
+    height: auto;
 }
 
+
+/* ...................................................... Tabla de tareas   */
 DataTable {
     margin-top: 1;
     background: $background_dark;
@@ -58,12 +58,8 @@ DataTable > .datatable--cursor {
     text-style: bold;
 }
 
-Footer {
-    padding: 0 3;
-    background: $dark_grey;
-    text-align: center;
-}
 
+/* .......................................... Pantalla de solicitud de ID   */
 AskIdScreen {
     align: center middle;
 }
@@ -76,7 +72,6 @@ AskIdScreen .dialog {
     background: $background_dark;
 }
 
-
 AskIdScreen .dialog > Label,
 AskIdScreen .dialog > Input {
     width: 100%;
@@ -87,11 +82,11 @@ AskIdScreen > Input {
     border: round $orange_flu;
 }
 
+
+/* .................................... Pantalla para agregar tarea nueva   */
 AddTaskScreen {
     align: center middle;
 }
-
-
 
 AddTaskScreen .dialog {
     align: center middle;
@@ -107,15 +102,8 @@ AddTaskScreen .buttons {
     margin-top: 1;
 }
 
-#submit, #cancel, #close_details {
-    height: 3;
-    padding: 0;
-    border: round #FF9E64;      /* Tu borde naranja redondeado */
-    background: #16161A;        /* Un fondo oscuro ($background_normal) */
-    color: #A9B1D6;             /* Un texto claro ($blue_sky) */
-}
 
-
+/* ...................................... Pantalla para filtrado de tarea   */
 FilterTasksScreen {
     align: center middle;
 }
@@ -135,7 +123,7 @@ FilterTasksScreen .buttons {
 }
 
 
-
+/* ......................................... Pantalla de Edición de tarea   */
 AskTaskEdit {
     align: center middle;
 }
@@ -154,13 +142,12 @@ AskTaskEdit .buttons {
     margin-top: 1;
 }
 
-
 ViewDetailsScreen {
     align: center middle;
 }
 
 ViewDetailsScreen .dialog {
-    width: 80%; /* Ancho ajustado al 80% de la pantalla */
+    width: 80%;
     height: 30;
     padding: 1 2;
     background: $background_dark;
@@ -172,8 +159,28 @@ ViewDetailsScreen .buttons {
     margin-top: 1;
 }
 
+
+/* .............................................................. Botones   */
+#submit, #cancel, #close_details {
+    height: 3;
+    padding: 0;
+    border: round #FF9E64;
+    background: #16161A;
+    color: #A9B1D6;
+}
+
+
+/* .............................. Contenedor Markdown - Detalles de notas   */
 #markdown_container {
     background: $background_dark;
     height: auto;
-    margin-bottom: 1; /* Un poco de espacio antes del botón */
+    margin-bottom: 1;
+}
+
+
+/* ........................................................ Menu Inferior   */
+Footer {
+    padding: 0 3;
+    background: $dark_grey;
+    text-align: center;
 }

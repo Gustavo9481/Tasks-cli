@@ -1,37 +1,33 @@
 # MODULO: config
+# .. ........................................................ config_loader ..󰌠
+"""Módulo para cargar y exponer la configuración de la aplicación.
+
+Este módulo lee el archivo `settings.toml` y expone las configuraciones
+necesarias (como el nombre de la base de datos y los ajustes de la UI)
+como constantes para que otros módulos puedan importarlas fácilmente.
 """
-Carga la configuración del proyecto desde el archivo settings.toml.
-"""
+
+# OK: 
+
 import tomllib
 from pathlib import Path
+from typing import Any
 
-# Carga del archivo con los datos de la configuración.
+# Ruta al archivo de configuración, construida de forma relativa al script.
 _CONFIG_FILE_PATH = Path(__file__).parent / "settings.toml"
 
+# Carga el contenido del archivo .toml en un diccionario.
+_config_data: dict[str, Any]
 with open(_CONFIG_FILE_PATH, "rb") as f:
     _config_data = tomllib.load(f)
 
 
-# Definición de la base de datos.
-# Uso de .get() con valor por defecto 'tasks.db' por si la clave 'database_name' no existiera.
+# .. .................................... Carga de valores de configuración ..󰌠
+# Expone el nombre de la base de datos. Usa un valor por defecto 'tasks.db' si
+# no se encuentra.
 DATABASE_NAME = _config_data.get("database_name", "tasks.db")
 
-# Configuraciones y personalización de la interfaz.
+# Expone las configuraciones de la interfaz de usuario (colores e íconos).
 _ui_config = _config_data.get("ui", {})
 UI_COLORS = _ui_config.get("colors", {})
 UI_ICONS = _ui_config.get("icons", {})
-
-# Verificación de la carga de valores.
-if __name__ == "__main__":
-    print("--- Configuración Cargada ---")
-    print(f"Nombre de la BD: {DATABASE_NAME}")
-
-    print("\n[Colores de UI]")
-    # Imprime todos los colores bajo un solo encabezado
-    for color, value in UI_COLORS.items():
-        print(f"  - {color}: {value}")
-
-        print("\n[Iconos de UI]")
-    # Imprime todos los íconos bajo un solo encabezado
-    for icon, value in UI_ICONS.items():
-        print(f"  - {icon}: {value}")

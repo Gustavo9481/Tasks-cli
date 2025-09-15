@@ -1,25 +1,28 @@
-# MODULO: controllers/
-# .. ............................ decorators.py ............................. ..
+# MODULO: controllers
+# .. ........................................................... decorators ..󰌠
 """
 Contiene los decoradores personalizados para la aplicación.
 """
-
+# OK: 
 from functools import wraps
+from typing import Callable, Any
 from services.task_service import TaskService
 
-def require_valid_id(func):
-    """
-    Decorador que valida el ID y muestra notificaciones de error.
+
+def require_valid_id(func: Callable[..., Any]) -> Callable[..., Any]:
+    """Decorador que valida el ID y muestra notificaciones de error.
 
     Realiza 3 comprobaciones:
-    1. Que el ID no esté vacío.
-    2. Que el ID sea un número entero.
-    3. Que el ID exista en la base de datos.
+        1. Que el ID no esté vacío.
+        2. Que el ID sea un número entero.
+        3. Que el ID exista en la base de datos.
+
     Si alguna falla, muestra una notificación y detiene la ejecución.
     Si todo es correcto, llama a la función original con el ID (int).
     """
     @wraps(func)
     def wrapper(self, task_id_str: str):
+
         # 1. Comprobar si el string está vacío
         if not task_id_str:
             self.app.notify(
@@ -52,8 +55,8 @@ def require_valid_id(func):
                 timeout=3
             )
             return
-        
+
         # Si todas las comprobaciones pasan, ejecuta la función original
         return func(self, task_id_int)
-            
+
     return wrapper

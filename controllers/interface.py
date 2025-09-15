@@ -1,32 +1,50 @@
 # MODULO: controllers
 # .. ............................................................ interface ..
 """
-Gestor de interface. Contiene la clase Interface quecrea la interfaz usando la
-herramienta 'textual' para la terminal.
+Punto de entrada y controlador principal de la interfaz de Textual.
+
+Este módulo define la clase `Interface`, que hereda de `textual.app.App`.
+Orquesta la composición de la UI, gestiona los eventos del usuario (bindings)
+y coordina las diferentes pantallas (modales) de la aplicación.
 """
 from rich.text import Text
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.screen import ModalScreen
-from textual.widgets import (Button, DataTable, Footer, Header, Input, Label,
-                           Static)
-
-from decorators import require_valid_id
-from dinamic_colors import (
+from textual.widgets import (
+    Button, DataTable, Footer, Header, Input, Label, Static
+)
+from .decorators import require_valid_id
+from .dinamic_colors import (
     dinamic_priority_colors,
     dinamic_status_colors,
     dinamic_notes_leyend,
     get_priority_style,
     get_status_style
 )
+from .screens import (
+    AskIdScreen,
+    AddTaskScreen,
+    AskTaskEdit,
+    FilterTasksScreen,
+    ViewDetailsScreen
+)
+from config.config_loader import UI_COLORS
 from models.model_task import Task
 from services.task_service import TaskService
-from screens import AskIdScreen, AddTaskScreen, AskTaskEdit, FilterTasksScreen, ViewDetailsScreen
-from config.config_loader import UI_COLORS
 
 
 class Interface(App):
-    """Una app de Textual que muestra una tabla con estilos dinámicos."""
+    """La clase principal de la aplicación Tasks-Cli.
+
+    Como clase principal, se encarga de:
+    - Componer la layout inicial con widgets (Header, DataTable, Footer).
+    - Definir los atajos de teclado globales (BINDINGS).
+    - Lanzar acciones (`action_*`) que muestran pantallas modales para la
+      interacción con el usuario.
+    - Recibir los resultados de las pantallas modales y ejecutar la lógica
+      de negocio correspondiente a través de `TaskService`.
+    """
     BINDINGS = [
         ("q", "quit", "Salir"),
         ("n", "add_task", "Nueva Tarea"),
@@ -37,10 +55,15 @@ class Interface(App):
         ("r", "reset_filters", "Refrescar tareas"),
         ("v", "view_details", "Ver Detalles")
     ]
-    CSS_PATH = "styles.css"
-    TITLE = "TASKS CLI - Tabla de Tareas"
+    CSS_PATH = "../config/styles.css"
+    TITLE = "TASKS CLI - Lista de Tareas  "
+
 
     def compose(self) -> ComposeResult:
+        """Método conpositor de la Interfaz.
+
+        Posee los componentes que conforman la interfaz en terminal.
+        """
         leyenda_texto_status = Text()
         leyenda_texto_priority = Text()
         leyenda_texto_notas = Text()
@@ -54,12 +77,14 @@ class Interface(App):
         yield DataTable()
         yield Footer()
 
+
     def _update_table(self) -> None:
         """Limpia y vuelve a cargar la tabla de tareas con datos frescos."""
         table = self.query_one(DataTable)
         service = TaskService()
         table.clear()
         tareas = service.get_tasks_for_ui()
+
         for row_data in tareas[1:]:
             styled_row = list(row_data)
             status_texto = styled_row[1]
@@ -68,16 +93,22 @@ class Interface(App):
             styled_status.justify = "center"
             styled_priority = get_priority_style(prioridad_texto)
             styled_priority.justify = "center"
-            notes_indicator = Text(styled_row[5], justify="center", style=UI_COLORS['green'])
+            notes_indicator = Text(
+                styled_row[5], 
+                justify="center", 
+                style=UI_COLORS['green']
+            )
             styled_row[1] = styled_status
             styled_row[4] = styled_priority
             styled_row[5] = notes_indicator
             table.add_row(*styled_row)
 
+
     def on_mount(self) -> None:
         """Configura la tabla al iniciar la app."""
         table = self.query_one(DataTable)
         headers = ("ID", "Status", "Tag", "Contenido", "Prioridad", "Notas")
+
         for label in headers:
             if label == "Contenido":
                 table.add_column(label, width=90)
@@ -89,78 +120,148 @@ class Interface(App):
                 table.add_column(label)
         self._update_table()
 
-    # --- Lógica de Acciones ---
+    # .. ................... Acciones y Notificaciones .................... ..󰌠
+    # Sección con la lógica necesaria para las funciones de la app.
 
+    # .. ............................................................. add_task
     def action_add_task(self) -> None:
         """Muestra la pantalla modal para añadir una nueva tarea."""
-        self.push_screen(AddTaskScreen(), self.notification_add_task)
+        self.push_screen(
+            AddTaskScreen(),
+            self.notification_add_task
+        )
 
     def notification_add_task(self, new_task_data: dict | None) -> None:
-        """Crea la nueva tarea después de recibir los datos del modal."""
+        """Crea la nueva tarea después de recibir los datos del modal.
+
+        Args:
+            new_task_data (dict | None): Diccionario con la data para crear la
+            nueva tarea.
+
+        Returns:
+            None.
+        """
         if new_task_data:
             if not new_task_data["content"]:
-                self.app.notify("El contenido no puede estar vacío.", title="Error", severity="error")
+                self.app.notify(
+                    "El contenido no puede estar vacío.",
+                    title="Error",
+                    severity="error"
+                )
                 return
             service = TaskService()
             service.new_task_service(Task(**new_task_data))
-            self.app.notify(f"Tarea '{new_task_data['content']}' agregada.", title="Nueva Tarea")
+            self.app.notify(
+                f"Tarea '{new_task_data['content']}' agregada.",
+                title="Nueva Tarea"
+            )
             self._update_table()
 
+
+    # .. ................................................ check_or_uncheck_task
     def action_check_or_uncheck_task(self) -> None:
         """Pide un ID para marcar/desmarcar una tarea."""
-        self.push_screen(AskIdScreen(), self.notification_check_or_uncheck_task)
+        self.push_screen(
+            AskIdScreen(),
+            self.notification_check_or_uncheck_task
+        )
 
     @require_valid_id
     def notification_check_or_uncheck_task(self, task_id: int) -> None:
-        """Cambia el estado de la tarea y refresca la tabla."""
+        """Cambia el estado de la tarea y refresca la tabla.
+
+        Args:
+            task_id (int): Número entero identificador de la tarea a tratar.
+
+        Returns:
+            None.
+        """
         service = TaskService()
         service.check_or_uncheck_task_service(task_id)
-        self.app.notify(f"Tarea ID: {task_id} ha cambiado de estado.", title="Status Actualizado")
+        self.app.notify(
+            f"Tarea ID: {task_id} ha cambiado de estado.",
+            title="Status Actualizado"
+        )
         self._update_table()
 
+
+    # .. .......................................................... delete_task
     def action_delete_task(self) -> None:
         """Pide un ID para eliminar una tarea."""
         self.push_screen(AskIdScreen(), self.notification_delete_task)
 
     @require_valid_id
     def notification_delete_task(self, task_id: int) -> None:
-        """Elimina la tarea y refresca la tabla."""
+        """Elimina la tarea y refresca la tabla.
+
+        Emplea el decorador require_valid_id para verificar la integridad del
+        ID de la tarea.
+
+        Args:
+             task_id (int): Número entero identificador de la tarea a eliminar.
+
+        Returns:
+            None.
+        """
         service = TaskService()
         service.delete_task_service(task_id)
-        self.app.notify(f"Tarea ID: {task_id} Eliminada.", title="Tarea Eliminada", severity="warning")
+        self.app.notify(
+            f"Tarea ID: {task_id} Eliminada.", 
+            title="Tarea Eliminada", 
+            severity="warning"
+        )
         self._update_table()
 
-    # FUNC:
+
+    # .. ......................................................... filter_tasks
     def action_filter_tasks(self) -> None:
         """Filtra las tareas según los parámetros que ingrese el usuario. """
-        self.push_screen(FilterTasksScreen(), self.notification_filter_tasks)
-
+        self.push_screen(
+            FilterTasksScreen(), 
+            self.notification_filter_tasks
+        )
 
     def notification_filter_tasks(self, filter_data: dict | None) -> None:
-        """
-        Recibe los criterios de filtro, llama al servicio y actualiza la tabla.
+        """Recibe los criterios de filtro, llama al servicio y actualiza la 
+        tabla de tareas con el filtro aplicado.
+
+        El método formtea los argumentos como diccionario para dar flexibilidad
+        al filtro, permitiendo fitrar por varias combinaciones entre los campos
+        de status, tag y prioridad.
+
+        Args:
+            filter_data (dict | None): diccionario de filtros para aplicar.
+
+        Returns:
+            None.
         """
         if filter_data:
-            # 1. Limpiamos el diccionario: si un valor está vacío, lo convertimos
-            #    a None para que el servicio no lo use como filtro.
+            # 1. formato para el diccionario: si un valor está vacío se
+            # convierte a None para que el servicio no lo use como filtro.
             filters = {
                 key: value if value else None
                 for key, value in filter_data.items()
             }
 
-            # 2. Llamamos al servicio con los filtros desempaquetados
+            # 2. Llamada al servicio con los filtros desempaquetados.
             service = TaskService()
             filtered_tasks_objects = service.filter_tasks_service(**filters)
 
-            # 3. Formateamos los resultados para la tabla (incluyendo cabeceras)
+            # 3. Formateo de los resultados para la tabla
+            # (incluyendo cabeceras).
             headers = ("ID", "Status", "Tag", "Contenido", "Prioridad")
             results_for_ui = [headers]
             for task in filtered_tasks_objects:
                 results_for_ui.append(
-                    (task.id, task.status, task.tag, task.content, task.priority)
+                    (task.id,
+                     task.status,
+                     task.tag,
+                     task.content,
+                     task.priority
+                     )
                 )
 
-            # 4. Actualizamos la tabla con los datos filtrados
+            # 4. Actualización de la tabla con los datos filtrados.
             table = self.query_one(DataTable)
             table.clear() # Limpiamos filas anteriores
 
@@ -177,52 +278,88 @@ class Interface(App):
                 styled_row[4] = styled_priority
                 table.add_row(*styled_row)
 
-            self.app.notify(f"Mostrando {len(filtered_tasks_objects)} tareas filtradas.")
+            self.app.notify(
+                f"Mostrando {len(filtered_tasks_objects)} tareas filtradas."
+            )
 
 
-
+    # .. ............................................................ edit_task
     def action_edit_task(self) -> None:
         """Pide un ID para empezar el proceso de edición."""
-        self.push_screen(AskIdScreen(), self._start_edit_process)
+        self.push_screen(
+            AskIdScreen(),
+            self._start_edit_process
+        )
 
     @require_valid_id
     def _start_edit_process(self, task_id: int) -> None:
-        """Obtiene la tarea y muestra la pantalla de edición."""
+        """Obtiene la tarea y muestra la pantalla de edición.
+
+        Usa el decorador require_valid_id para verificar la integridad del ID.
+
+        Args:
+            task_id (int): Número identificador de la tarea.
+
+        Returns:
+            None.
+        """
         service = TaskService()
         task_to_edit = service.get_task_by_id_service(task_id)
         if task_to_edit:
-            self.push_screen(AskTaskEdit(task_to_edit), self._save_edit_changes)
+            self.push_screen(
+                AskTaskEdit(task_to_edit),
+                self._save_edit_changes
+            )
 
     def _save_edit_changes(self, updated_data: dict | None) -> None:
-        """Guarda los cambios de la edición y refresca la tabla."""
+        """Guarda los cambios de la edición y refresca la tabla.
+
+        Args:
+            updated_data (dict | None): Diccionario con la nueva data a
+            insertar en la tarea.
+
+        Returns:
+            None.
+        """
         if updated_data:
             task_id = updated_data.pop("id")
             new_data = updated_data
             service = TaskService()
             service.update_task_service(task_id, new_data)
-            self.app.notify(f"Tarea ID: '{task_id}' ha sido actualizada.", title="Tarea Editada")
+            self.app.notify(
+                f"Tarea ID: '{task_id}' ha sido actualizada.",
+                title="Tarea Editada"
+            )
             self._update_table()
 
 
-    # FUNC:
+    # .. ......................................................... view_details
     def action_view_details(self) -> None:
         """Pide un ID para ver los detalles de una tarea."""
-        self.push_screen(AskIdScreen(), self._show_details_screen)
+        self.push_screen(
+            AskIdScreen(),
+            self._show_details_screen
+        )
 
 
     @require_valid_id
     def _show_details_screen(self, task_id: int) -> None:
+        """Obtiene la tarea y muestra la pantalla de detalles.
+
+        Usa el decorador require_valid_id para asegurar la integridaddel ID.
+
+        Args:
+            task_id (int): Número identificador de la tarea a consultar.
+
+        Returns:
+            None.
         """
-        Obtiene la tarea y muestra la pantalla de detalles.
-        """
-        # El decorador ya ha validado que el ID es un entero y existe.
         service = TaskService()
         task = service.get_task_by_id_service(task_id)
 
-        # Aunque el decorador ya lo valida, es una buena práctica comprobar
-        # que el objeto se ha recuperado correctamente.
+        # Comprobación de que la tarea se extrajo correctamente.
         if task:
-            # Llama a la nueva pantalla, pasándole el contenido de los detalles.
+            # Mostrar la pantalla de detalles con la tarea extraída.
             self.push_screen(
                 ViewDetailsScreen(
                     details_content=task.details,
@@ -230,17 +367,15 @@ class Interface(App):
                 )
             )
 
-    
+
+    # .. ........................................................ reset_filters
     def action_reset_filters(self) -> None:
-        """Limpia los filtros y muestra todas las tareas."""
-        # Simplemente llamamos a nuestro método de refresco, que por
-        # defecto ya carga todas las tareas.
+        """Limpia los filtros y muestra todas las tareas.
+
+        Returns:
+            None.
+        """
         self._update_table()
-        self.app.notify("Filtros limpiados. Mostrando todas las tareas.")
-
-
-
-# EXE:
-if __name__ == "__main__":
-    app = Interface()
-    app.run()
+        self.app.notify(
+            "Filtros limpiados. Mostrando todas las tareas."
+        )
