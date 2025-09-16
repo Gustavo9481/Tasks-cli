@@ -158,9 +158,9 @@ class Interface(App):
         la tabla visual.
 
         Args:
-            new_task_data (dict | None): Diccionario con los datos de la tarea
-                enviado desde el modal. Es `None` si el usuario canceló la
-                operación.
+            - new_task_data (dict | None): Diccionario con los datos de la
+              tarea enviado desde el modal. Es `None` si el usuario canceló la
+              operación.
         """
         if new_task_data:
             if not new_task_data["content"]:
@@ -199,8 +199,8 @@ class Interface(App):
         para cambiar el estado de la tarea y refresca la tabla.
 
         Args:
-            task_id (int): El ID de la tarea a modificar, validado por el
-                decorador `@require_valid_id`.
+            - task_id (int): El ID de la tarea a modificar, validado por el
+              decorador `@require_valid_id`.
         """
         service = TaskService()
         service.check_or_uncheck_task_service(task_id)
@@ -228,8 +228,8 @@ class Interface(App):
         para eliminar la tarea y actualiza la tabla.
 
         Args:
-             task_id (int): El ID de la tarea a eliminar, validado por el
-                decorador `@require_valid_id`.
+             - task_id (int): El ID de la tarea a eliminar, validado por el
+               decorador `@require_valid_id`.
         """
         service = TaskService()
         service.delete_task_service(task_id)
@@ -261,9 +261,9 @@ class Interface(App):
         resultados.
 
         Args:
-            filter_data (dict | None): Diccionario con los filtros a aplicar.
-                Ej: `{'status': 'pending', 'priority': 'alta'}`.
-                Es `None` si el usuario canceló la pantalla de filtros.
+            - filter_data (dict | None): Diccionario con los filtros a aplicar.
+              Ej: `{'status': 'pending', 'priority': 'alta'}`.
+              Es `None` si el usuario canceló la pantalla de filtros.
         """
         if filter_data:
             # 1. formato para el diccionario: si un valor está vacío se
@@ -336,8 +336,8 @@ class Interface(App):
         `_save_edit_changes` como el siguiente callback.
 
         Args:
-            task_id (int): ID de la tarea a editar, validado por
-                `@require_valid_id`.
+            - task_id (int): ID de la tarea a editar, validado por
+              `@require_valid_id`.
         """
         service = TaskService()
         task_to_edit = service.get_task_by_id_service(task_id)
@@ -354,9 +354,9 @@ class Interface(App):
         llama al servicio para actualizar la tarea y refresca la tabla.
 
         Args:
-            updated_data (dict | None): Diccionario con los datos actualizados.
-                Contiene un campo 'id' y los demás campos modificados. Es `None`
-                si el usuario canceló la edición.
+            - updated_data (dict | None): Diccionario con datos actualizados.
+              Contiene un campo 'id' y los demás campos modificados. Es `None`
+              si el usuario canceló la edición.
         """
         if updated_data:
             task_id = updated_data.pop("id")
@@ -391,8 +391,8 @@ class Interface(App):
         muestra la pantalla `ViewDetailsScreen` con su contenido.
 
         Args:
-            task_id (int): ID de la tarea a consultar, validado por
-                `@require_valid_id`.
+            - task_id (int): ID de la tarea a consultar, validado por
+              `@require_valid_id`.
         """
         service = TaskService()
         task = service.get_task_by_id_service(task_id)

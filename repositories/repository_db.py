@@ -1,5 +1,5 @@
-# MODULO: repositories/
-# .. ........................... repository_db ............................ ..󰌠
+# MODULO: repositories
+# .. ........................................................ repository_db ..󰌠
 """
 Contiene la clase RepositoryDB, la cual posee los métodos de consultas a la
 base de datos.
@@ -12,7 +12,6 @@ from repositories.connection_manager import connection_manager
 from models.model_task import Task
 
 
-# CLASS:
 class RepositoryDB:
     """Clase contenedora de los métodos de consulta sql a la base de datos.
 
@@ -59,8 +58,8 @@ class RepositoryDB:
             for row in rows_list
         ]
 
-    # FUNC:
-    # .. ......................................... create_table
+
+    # .. ......................................................... create_table
     @connection_manager
     def create_table(self, cursor=sqlite3.Cursor) -> None:
         """Verifica si la tabla existe, si no, la crea.
@@ -78,8 +77,7 @@ class RepositoryDB:
         cursor.execute(sql.CREATE_TABLE)
 
 
-
-    # FUNC:
+    # .. ........................................................ get_all_tasks
     @connection_manager
     def get_all_tasks(self, cursor: sqlite3.Cursor) -> list[Task]:
         """Recupera todas las tareas de la base de datos.
@@ -88,15 +86,15 @@ class RepositoryDB:
             - cursor (sqlite3.Cursor): Proporcionado por el decorador.
 
         Returns:
-            - list[Task]: Una lista de todos los objetos Task en la base de datos.
+            - list[Task]: Una lista de todos los objetos Task en la base de 
+              datos.
         """
         cursor.execute(sql.GET_ALL_TASKS)
         all_rows = cursor.fetchall()
         return self.task_format_list(all_rows)
 
 
-    # FUNC:
-    # .. ............................................. new_task
+    # .. ............................................................. new_task
     @connection_manager
     def new_task(self, task_instance: Task, cursor: sqlite3.Cursor) -> int:
         """Crea una nueva tarea en la base de datos.
@@ -125,8 +123,8 @@ class RepositoryDB:
         assert new_id is not None, "No se pudo obtener el ID de la nueva tarea."
         return new_id
 
-    # FUNC:
-    # filter_task (general)
+
+    # .. ......................................................... filter_tasks
     @connection_manager
     def filter_tasks(
             self,
@@ -141,9 +139,9 @@ class RepositoryDB:
         # El diccionario mapea una clave de filtros activos a una estrategia
         strategy_map = {
         # (tiene_status, tiene_tag, tiene_prioridad): (consulta, [orden_parametros])
-            (True, False, False): (sql.FILTER_BY_STATUS, ['status']),
-            (False, True, False): (sql.FILTER_BY_TAG, ['tag']),
-            (False, False, True): (sql.FILTER_BY_PRIORITY, ['priority']),
+            (True, False, False): (sql.FILTER_TASK_STATUS, ['status']),
+            (False, True, False): (sql.FILTER_TASK_TAG, ['tag']),
+            (False, False, True): (sql.FILTER_TASK_PRIORITY, ['priority']),
             (True, True, False): (sql.FILTER_BY_STATUS_AND_TAG, ['status', 'tag']),
             (True, False, True): (sql.FILTER_BY_STATUS_AND_PRIORITY, ['status', 'priority']),
             (False, True, True): (sql.FILTER_BY_TAG_AND_PRIORITY, ['tag', 'priority']),
@@ -168,82 +166,11 @@ class RepositoryDB:
         # 4. Ejecutamos la consulta seleccionada
         cursor.execute(query, tuple(params))
         rows = cursor.fetchall()
-        
+
         return self.task_format_list(rows)
 
 
-
-    # FUNC:
-    # .. ................................... filter_task_status
-    @connection_manager
-    def filter_task_status(self, status: str, cursor: sqlite3.Cursor) -> list[Task]:
-        """Filtar una tarea por status.
-
-        Args:
-            - status_task (Status): El estado por el cual filtrar las tareas
-              (e.g., "pending", "completed").
-            - cursor (sqlite3.Cursor): Objeto cursor de la base de datos,
-              proporcionado automáticamente por el decorador.
-
-        Returns:
-            - List[Tuple[Any, ...]]: Una lista de tuplas, donde cada tupla
-              representauna fila de la tarea encontrada.
-        """
-        cursor.execute(sql.FILTER_TASK_STATUS, (status,))
-        filtered_rows = cursor.fetchall()
-
-        task_list = self.task_format_list(filtered_rows)
-
-        return task_list
-
-    # FUNC:
-    # .. ...................................... filter_task_tag
-    @connection_manager
-    def filter_task_tag(self, tag: str, cursor: sqlite3.Cursor) -> list[Task]:
-        """Filtar una tarea por tag.
-
-        Args:
-            - tag_task (Status): El tag por el cual filtrar las tareas
-              (e.g., "personal", "proyecto", "trabajo", "calendario").
-            - cursor (sqlite3.Cursor): Objeto cursor de la base de datos,
-              proporcionado automáticamente por el decorador.
-
-        Returns:
-            - List[Tuple[Any, ...]]: Una lista de tuplas, donde cada tupla
-              representauna fila de la tarea encontrada.
-        """
-        cursor.execute(sql.FILTER_TASK_TAG, (tag,))
-        filtered_rows = cursor.fetchall()
-
-        task_list = self.task_format_list(filtered_rows)
-
-        return task_list
-
-    # FUNC:
-    # .. ................................. filter_task_priority
-    @connection_manager
-    def filter_task_priority(self, priority: str, cursor: sqlite3.Cursor) -> list[Task]:
-        """Filtar una tarea por prioridad.
-
-        Args:
-            - priority (Status): La prioridad por la cual filtrar las
-              tareas (e.g., "baja", "media", "alta").
-            - cursor (sqlite3.Cursor): Objeto cursor de la base de datos,
-              proporcionado automáticamente por el decorador.
-
-        Returns:
-            - List[Tuple[Any, ...]]: Una lista de tuplas, donde cada tupla
-              representauna fila de la tarea encontrada.
-        """
-        cursor.execute(sql.FILTER_TASK_PRIORITY, (priority,))
-        filtered_rows = cursor.fetchall()
-
-        task_list = self.task_format_list(filtered_rows)
-
-        return task_list
-
-    # FUNC:
-    # .. .......................................... update_task
+    # .. .......................................................... update_task
     @connection_manager
     def update_task(
         self, task_id: int, new_data: dict[str, str], cursor: sqlite3.Cursor
@@ -264,21 +191,17 @@ class RepositoryDB:
             print("No hay datos para actualizar la tarea.")
             return
 
-        # 01
+        # Crea un str ej.: "content = ?, priority = ?, etc...".
         set_clause = ", ".join([f"{key} = ?" for key in new_data.keys()])
-        # 02
+        # Crea una tupla como: ('Nuevo contenido', 'alta', 5).
         values = tuple(new_data.values()) + (task_id,)
-        # 03
+        # Se arma el string de la consulta.
         query = f"{sql.UPDATE_TASK} {set_clause} WHERE id = ?;"
 
         cursor.execute(query, values)
 
-        # 01: Crea un str ej.: "content = ?, priority = ?, etc...".
-        # 02: Crea una tupla como: ('Nuevo contenido', 'alta', 5).
-        # 03: Se arma el string de la consulta.
 
-    # FUNC:
-    # .. ................................ check_or_uncheck_task
+    # .. ................................................ check_or_uncheck_task
     @connection_manager
     def check_or_uncheck_task(self, id_task: int, cursor: sqlite3.Cursor) -> None:
         """Marcar como completada o desmaracar como pendiente una tarea.
@@ -299,8 +222,8 @@ class RepositoryDB:
 
         cursor.execute(sql.UPDATE_STATUS_TOGGLE, (id_task,))
 
-    # FUNC:
-    # .. ....................................... get_task_by_id
+
+    # .. ....................................................... get_task_by_id
     @connection_manager
     def get_task_by_id(self, id_task: int, cursor: sqlite3.Cursor) -> Task | None:
         """Selecciona una tarea existente por su id.
@@ -321,8 +244,8 @@ class RepositoryDB:
         else:
             return None
 
-    # FUNC:
-    # .. .......................................... delete_task
+
+    # .. .......................................................... delete_task
     @connection_manager
     def delete_task(self, id_task: int, cursor: sqlite3.Cursor) -> None:
         """Eliminar una tarea existente.

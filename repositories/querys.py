@@ -1,14 +1,15 @@
-# MODULO: repositories/
-# .. ............................... querys ............................... ..󰌠
-# """
-# Módulo contenedor de las cadenas de texto correspondientes a las consultas
-# sql para repository_db.
-# """
+# MODULO: repositories
+# .. ............................................................... querys ..󰌠
+"""Centraliza todas las sentencias SQL utilizadas en la aplicación.
 
+Este módulo actúa como una única fuente de verdad para las consultas SQL,
+lo que facilita su mantenimiento, lectura y previene la dispersión de
+sentencias SQL a través de la lógica de la aplicación.
+"""
+# OK:
 
 # .. ......................................................... create_table ..󰌠
-# Verifica si la tabla tasks_table existe en la base de datos, si no existe la
-# crea.
+# Crea la tabla 'tasks_table' si no existe, definiendo su estructura.
 CREATE_TABLE: str = """
     CREATE TABLE IF NOT EXISTS tasks_table (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -20,11 +21,18 @@ CREATE_TABLE: str = """
     );
 """
 
-# todas las tareas.
-GET_ALL_TASKS = "SELECT id, status, tag, content, priority, details FROM tasks_table;"
+
+# .. ........................................................ get_all_tasks ..󰌠
+# Obtiene todas las tareas de la base de datos.
+GET_ALL_TASKS = """
+    SELECT id, status, tag, content, priority, details
+    FROM tasks_table;
+"""
+
 
 # .. ............................................................. new_task ..󰌠
-# Inserta un nuevo registro (tarea) en la tabla tasks_table.
+# Inserta una nueva tarea en la tabla.
+# Placeholders: status, tag, content, priority, details
 NEW_TASK: str = """
     INSERT INTO tasks_table (
         status, tag, content, priority, details
@@ -32,42 +40,31 @@ NEW_TASK: str = """
 """
 
 
-# .. ................................................... filter_task_status ..󰌠
-# Filtra los registros de la tabla tasks_table por campo 'status'.
-FILTER_TASK_STATUS: str = "SELECT * FROM tasks_table WHERE status = ?;"
-
-
-# .. ...................................................... filter_task_tag ..󰌠
-# Fltra los registros de la tabla tasks_table por campo 'tag'.
-FILTER_TASK_TAG: str = "SELECT * FROM tasks_table WHERE tag = ?;"
-
-
-# .. ................................................. filter_task_priority ..󰌠
-# Filtra los registros de la tabla tasks_table por campo 'priority'.
-FILTER_TASK_PRIORITY: str = "SELECT * FROM tasks_table WHERE priority = ?;"
-
-
-
+# .. ......................................................... filter_tasks ..󰌠
 # --- Filtrado por 1 Criterio ---
-FILTER_BY_STATUS: str = """
+# Selecciona tareas que coincidan con un 'status' específico.
+FILTER_TASK_STATUS: str = """
     SELECT id, status, tag, content, priority, details
     FROM tasks_table
     WHERE status = ?;
 """
 
-FILTER_BY_TAG: str = """
+# Selecciona tareas que coincidan con un 'tag' específico.
+FILTER_TASK_TAG: str = """
     SELECT id, status, tag, content, priority, details
     FROM tasks_table
     WHERE tag = ?;
 """
 
-FILTER_BY_PRIORITY: str = """
+# Selcciona tareas que coincidan con uns 'priority' específica.
+FILTER_TASK_PRIORITY: str = """
     SELECT id, status, tag, content, priority, details
     FROM tasks_table
     WHERE priority = ?;
 """
 
 # --- Filtrado por 2 Criterios ---
+# Selecciona tareas por 'status' y 'tag' específicos.
 FILTER_BY_STATUS_AND_TAG: str = """
     SELECT id, status, tag, content, priority, details
     FROM tasks_table
@@ -75,6 +72,7 @@ FILTER_BY_STATUS_AND_TAG: str = """
     AND tag = ?;
 """
 
+# Selecciona tareas por 'status' y 'priority' específicos.
 FILTER_BY_STATUS_AND_PRIORITY: str = """
     SELECT id, status, tag, content, priority, details
     FROM tasks_table
@@ -82,6 +80,7 @@ FILTER_BY_STATUS_AND_PRIORITY: str = """
     AND priority = ?;
 """
 
+# Selecciona tareas por 'tag' y 'priority' específicos.
 FILTER_BY_TAG_AND_PRIORITY: str = """
     SELECT id, status, tag, content, priority, details
     FROM tasks_table
@@ -90,6 +89,7 @@ FILTER_BY_TAG_AND_PRIORITY: str = """
 """
 
 # --- Filtrado por 3 Criterios ---
+# Selecciona tareas por 'status', 'tag' y 'priority' específicos.
 FILTER_BY_ALL: str = """
     SELECT id, status, tag, content, priority, details
     FROM tasks_table
@@ -100,30 +100,19 @@ FILTER_BY_ALL: str = """
 
 
 # .. .......................................................... update_task ..󰌠
-# Actualiza un registro seleccionado por id de la tabla tasks_table.
+# Query base para actualizar una tarea. Se completa dinámicamente.
 UPDATE_TASK: str = "UPDATE tasks_table SET"
 
+
 # .. ................................................ check_or_uncheck_task ..󰌠
-# Selecciona un registro de la tabla tasks_table por su 'id'.
+# Selecciona una tarea por su 'id'.
 SELECT_TASK: str = "SELECT * FROM tasks_table WHERE id = ?"
 
-# Actualiza seleccionado estado 'status' de un registro seleccionado por id de
-# la tabla tasks_table.
+# Actualiza el 'status' de una tarea específica por su 'id'.
 UPDATE_STATUS: str = "UPDATE tasks_table SET status = ? WHERE id = ?;"
 
-# Consulta dinámica. La consukta CASE perimite condicionar el valor
-# seleccionado (pending | completed) y lo cambiara por su contrario usando la
-# sentencia WHEN - THEN - ELSE.
-'''
-UPDATE_STATUS_TOGGLE = """
-    UPDATE tasks_table
-    SET status = CASE
-    WHEN status = 'completed' THEN 'pending'
-    ELSE 'completed'
-    END
-    WHERE id = ?;
-"""
-'''
+# Cambia el 'status' de una tarea de forma cíclica.
+# (pending -> in_progress -> completed -> pending)
 UPDATE_STATUS_TOGGLE = """
     UPDATE tasks_table
     SET status = CASE
@@ -137,13 +126,14 @@ UPDATE_STATUS_TOGGLE = """
 
 
 # .. ....................................................... get_task_by_id ..󰌠
-# Selecciona registros de la tabla tasks_table identificados por un id.
+# Selecciona una tarea por su 'id'.
 GET_TASK_BY_ID = """
     SELECT id, status, tag, content, priority, details 
     FROM tasks_table 
     WHERE id = ?;
 """
 
+
 # .. .......................................................... delete_task ..󰌠
-# Elimina el registro seleccionado por id de la tabla tasks_table.
+# Elimina una tarea de la tabla identificada por su 'id'.
 DELETE_TASK = "DELETE FROM tasks_table WHERE id= ?;"

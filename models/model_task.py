@@ -2,9 +2,9 @@
 # .. ............................. model_task ............................. ..󰌠
 """Define el modelo de datos principal para una Tarea.
 
-Este módulo contiene la clase `Task`, que actúa como un Data Transfer Object (DTO)
-y modelo de validación usando Pydantic. También define los tipos `Literal`
-para restringir los valores permitidos en los campos de la tarea.
+Este módulo contiene la clase `Task`, que actúa como un Data Transfer Object
+(DTO) y modelo de validación usando Pydantic. También define los tipos 
+`Literal` para restringir los valores permitidos en los campos de la tarea.
 """
 # OK: 
 
@@ -25,14 +25,14 @@ class Task(BaseModel):
     válidos.
 
     Attributes:
-        id (Optional[int]): El identificador único de la tarea, generado por la
-            base de datos. Es `None` para tareas nuevas aún no guardadas.
-        status (Status): El estado actual de la tarea. Default: "pending".
-        tag (Tag): La categoría o etiqueta de la tarea. Default: "personal".
-        content (str): La descripción principal de lo que se debe hacer.
-        priority (Priority): El nivel de prioridad de la tarea. Default: "baja".
-        details (Optional[str]): Notas o información adicional sobre la tarea,
-            que puede contener formato Markdown. Default: `None`.
+        - id (Optional[int]): El identificador único de la tarea, generado por
+          la base de datos. Es `None` para tareas nuevas aún no guardadas.
+        - status (Status): El estado actual de la tarea. Default: "pending".
+        - tag (Tag): La categoría o etiqueta de la tarea. Default: "personal".
+        - content (str): La descripción principal de lo que se debe hacer.
+        - priority (Priority): Nivel de prioridad de la tarea. Default: "baja".
+        - details (Optional[str]): Notas o información adicional sobre la
+          tarea, que puede contener formato Markdown. Default: `None`.
     """
     id: Optional[int] = None
     status: Status = "pending"

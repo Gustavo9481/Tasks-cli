@@ -1,8 +1,12 @@
 # MODULO: repositories/
 # .. ......................... connection_manager ......................... ..󰌠
+"""Define un decorador para la gestión automática de conexiones a SQLite.
+
+Este módulo proporciona el decorador `connection_manager`, que abstrae el
+ciclo de vida de la conexión (apertura, commit/rollback, cierre) para
+los métodos que interactúan con la base de datos.
 """
-Decorador gestor de conexión a base de datos.
-"""
+# OK:
 
 import sqlite3
 import logging
@@ -15,46 +19,48 @@ logging.basicConfig(
 
 
 def connection_manager(func: Callable[..., Any]) -> Callable[..., Any]:
-    """
-    Decorador para manejar la conexión a la base de datos SQLite y el cursor
+    """Gestiona el ciclo de vida de la conexión a la base de datos para un
+    método.
 
-    Abre una conexión a la base de datos SQLite, crea un cursor, ejecuta la
-    función decorada pasando el cursor como argumento y luego cierra el cursor
-    Además, captura cualquier error de la base de datos que pueda ocurrir
-    durante la ejecución de la función decorada.
+    Este decorador está diseñado para envolver métodos de una clase que
+    necesitan interactuar con la base de datos. Se asume que la instancia de la
+    clase (`self`) tiene un atributo `db_path` con la ruta al archivo de la
+    base de datos.
+
+    El decorador se encarga de:
+    1. Abrir una conexión a la base de datos usando `sqlite3.connect`.
+    2. Crear un cursor.
+    3. Ejecutar el método decorado, inyectándole el `cursor` como un argumento
+       de palabra clave (keyword argument).
+    4. Cerrar el cursor de forma segura.
+    5. Hacer commit de la transacción si tiene éxito (implícito en `with`).
+    6. Capturar y registrar cualquier `sqlite3.Error`, evitando que el programa
+       se detenga.
 
     Args:
-        - func (Callable[..., Any]): Función a decorar. Debe aceptar un
-          argumento adicional 'cursor' que será proporcionado automáticamente
-          por eldecorador.
+        func (Callable): El método a decorar. Debe ser un método de instancia
+            y estar preparado para recibir un argumento de palabra clave
+            `cursor`.
 
     Returns:
-        - (Callable[..., Any]) La función decorada con manejo automático de la
-          conexión a la base de datos.
-
-    Raises:
-        - sqlite3.Error: Si ocurre un error al acceder a la base de datos.
+        Callable: El nuevo método envuelto con la gestión de conexión.
     """
 
     def db_decorator(self, *args: Any, **kwargs: Any) -> Any:
-        """
-        Función envoltorio que gestiona la conexión y el cursor de SQLite.
-
-        Espera que 'self' tenga un atributo 'db_path' que apunte a la ruta
-        del archivo de la base de datos SQLite.
-        """
         try:
             with sqlite3.connect(self.db_path) as db_connect:
                 cursor = db_connect.cursor()
                 try:
-                    # Aseguramos que el cursor se pase como argumento de
-                    # palabra clave.
+                    # El cursos debe pasar como argumento de palabra clave.
                     return func(self, *args, cursor=cursor, **kwargs)
                 finally:
                     cursor.close()
         except sqlite3.Error as e:
             # Registra el error con el módulo logging, incluyendo el traceback.
-            logging.error(f"Error al acceder a la base de datos: {e}", exc_info=True)
+            logging.error(
+                f"Error al acceder a la base de datos: {e}",
+                exc_info=True
+            )
 
             return None
 

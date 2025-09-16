@@ -37,8 +37,8 @@ def _get_styled_text(text_key: str, style_map: dict[str, Text]) -> Text | str:
     """Función interna para buscar un estilo en un mapa de estilos.
 
     Args:
-        text_key: La clave que identifica el estilo a buscar (ej. "pending").
-        style_map: El diccionario donde se buscará el estilo.
+        - text_key: La clave que identifica el estilo a buscar (ej. "pending").
+        - style_map: El diccionario donde se buscará el estilo.
 
     Returns:
         El objeto Text estilizado si se encuentra la clave, o la clave
@@ -51,7 +51,7 @@ def get_status_style(status_text: str) -> Text | str:
     """Devuelve un objeto Text estilizado para un estado de tarea.
 
     Args:
-        status_text: El texto del estado a estilizar (ej. "completed").
+        - status_text: El texto del estado a estilizar (ej. "completed").
 
     Returns:
         Un objeto Text con el ícono y color correspondientes.
@@ -63,7 +63,7 @@ def get_priority_style(priority_text: str) -> Text | str:
     """Devuelve un objeto Text estilizado para una prioridad de tarea.
 
     Args:
-        priority_text: El texto de la prioridad a estilizar (ej. "alta").
+        - priority_text: El texto de la prioridad a estilizar (ej. "alta").
 
     Returns:
         Un objeto Text con el ícono y color correspondientes.
@@ -77,7 +77,7 @@ def dinamic_status_colors(legend_text: Text) -> Text:
     Esta función modifica el objeto `legend_text` que se le pasa.
 
     Args:
-        legend_text: El objeto Text al que se le añadirá la leyenda.
+        - legend_text: El objeto Text al que se le añadirá la leyenda.
 
     Returns:
         El mismo objeto Text modificado con la leyenda de estados.
@@ -107,7 +107,7 @@ def dinamic_priority_colors(legend_text: Text) -> Text:
     Esta función modifica el objeto `legend_text` que se le pasa.
 
     Args:
-        legend_text: El objeto Text al que se le añadirá la leyenda.
+        - legend_text: El objeto Text al que se le añadirá la leyenda.
 
     Returns:
         El mismo objeto Text modificado con la leyenda de prioridades.
@@ -137,7 +137,7 @@ def dinamic_notes_leyend(legend_text: Text) -> Text:
     Nota: Esta función modifica el objeto `legend_text` que se le pasa.
 
     Args:
-        legend_text: El objeto Text al que se le añadirá la leyenda.
+        - legend_text: El objeto Text al que se le añadirá la leyenda.
 
     Returns:
         El mismo objeto Text modificado con la leyenda de notas.
