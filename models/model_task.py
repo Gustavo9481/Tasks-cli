@@ -1,42 +1,39 @@
 # MODULO: models
 # .. ............................. model_task ............................. ..󰌠
+"""Define el modelo de datos principal para una Tarea.
+
+Este módulo contiene la clase `Task`, que actúa como un Data Transfer Object (DTO)
+y modelo de validación usando Pydantic. También define los tipos `Literal`
+para restringir los valores permitidos en los campos de la tarea.
 """
-Data Tranfer Object -> class Task: objeto contenedor de la data de una tarea
-Se usa pydantic para asegurar el tipo de datos.
-Los objetos Literal(typing) contienen los valores permitidos para dichas
-propiedades.
-"""
+# OK: 
 
 from typing import Optional, Literal
 from pydantic import BaseModel
 
-# NOTE: Restricción de datos.
-# Los objetos Literal contienen una lista de los valores admitidos para las
-# propiedades de Task.
+
 Status = Literal["pending", "in_progress", "completed"]
 Tag = Literal["personal", "proyecto", "trabajo", "calendario"]
 Priority = Literal["baja", "media", "alta"]
 
 
 class Task(BaseModel):
-    """Clase contenedora del objeto Task.
+    """Representa una única tarea y define su esquema de datos.
 
-    El objeto contiene los datos para gestionar una tarea, tanto registros en
-    base de datos como renderizado en interfaz.
+    Utiliza Pydantic para la validación automática, asegurando que cualquier
+    objeto `Task` en la aplicación sea siempre consistente y contenga datos
+    válidos.
 
     Attributes:
-        - id (Optional[str]): Identificador opcional, generado por la base de
-          datos.
-        - status (Status): Estado de la tarea. Valores válidos definidos en
-          `Status` (Literal).
-        - tag (Tag): Etiqueta de la tarea. Valores válidos definidos en
-          `Tag` (Literal).
-        - content (str): Contenido o descripción de la tarea.
-        - priority (Priority): Prioridad de la tarea. Valores válidos definidos
-          en `Priority` (Literal).
-        - details (Optional[str]): Detalles o notas extensas para la tarea.
+        id (Optional[int]): El identificador único de la tarea, generado por la
+            base de datos. Es `None` para tareas nuevas aún no guardadas.
+        status (Status): El estado actual de la tarea. Default: "pending".
+        tag (Tag): La categoría o etiqueta de la tarea. Default: "personal".
+        content (str): La descripción principal de lo que se debe hacer.
+        priority (Priority): El nivel de prioridad de la tarea. Default: "baja".
+        details (Optional[str]): Notas o información adicional sobre la tarea,
+            que puede contener formato Markdown. Default: `None`.
     """
-
     id: Optional[int] = None
     status: Status = "pending"
     tag: Tag = "personal"
@@ -49,6 +46,6 @@ class Task(BaseModel):
         lectura.
 
         Returns:
-            - str: Cadena de caracteres con la información de la tarea.
+            str: Cadena de caracteres con la información de la tarea.
         """
         return f"{self.status} - {self.tag} | {self.content} | {self.priority}"

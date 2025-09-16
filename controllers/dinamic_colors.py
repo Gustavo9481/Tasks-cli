@@ -7,7 +7,6 @@ Este módulo centraliza la creación de objetos `Text` de la librería Rich,
 combinando los íconos colores definidos en la configuración para representar
 visualmente diferentes estados de la aplicación (status, prioridad, etc.).
 """
-
 # OK:
 
 from rich.text import Text

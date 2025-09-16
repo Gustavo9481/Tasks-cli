@@ -9,7 +9,7 @@ $background_dark: #0C0C0F;
 $orange_flu: #FF9E64;
 $dark_grey: #32344A;
 $blue_sky: #A9B1D6;
-
+$dark_grey_2: rgba(50, 52, 74, 0.5);
 /* Pantalla General */
 Screen {
     background: $background_normal;
@@ -37,6 +37,7 @@ DataTable {
     margin-top: 1;
     background: $background_dark;
     padding: 1 2;
+    color: $blue_sky;
 }
 
 DataTable > .datatable--header {
@@ -53,8 +54,8 @@ DataTable > .datatable--cell {
 }
 
 DataTable > .datatable--cursor {
-    background: $orange_flu;
-    color: $background_dark;
+    background: $dark_grey_2;
+    color: white;
     text-style: bold;
 }
 
