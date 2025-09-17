@@ -46,7 +46,8 @@ class AskIdScreen(ModalScreen):
 
 
     def on_input_submitted(self, event: Input.Submitted) -> None:
-        """Gestiona el envío del Input y cierra la pantalla devolviendo el valor.
+        """Gestiona el envío del Input y cierra la pantalla devolviendo el
+        valor ingresado.
 
         Este callback de Textual se activa al presionar Enter. El valor del Input
         se pasa al método `dismiss()`, que lo devuelve a quien llamó la pantalla.
@@ -115,7 +116,7 @@ class AskTaskEdit(ModalScreen):
         existente.
 
         Args:
-            - task_to_edit (Task): El objeto de la tarea que se va a editar.
+            - task_to_edit (Task): Objeto de la tarea que se va a editar.
               Sus datos se usarán para pre-rellenar los campos de la pantalla.
         """
         super().__init__()
@@ -226,7 +227,7 @@ class ViewDetailsScreen(ModalScreen):
         """Inicializa la pantalla de visualización de detalles.
 
         Args:
-            - details_content (str): El contenido de los detalles de la tarea,
+            - details_content (str): Contenido de los detalles de la tarea,
               que puede contener formato Markdown.
             - task_id (int): ID de la tarea, usado para mostrarlo en el título.
         """

@@ -4,7 +4,7 @@
 Módulo para gestionar y proveer estilos dinámicos para la interfaz.
 
 Este módulo centraliza la creación de objetos `Text` de la librería Rich,
-combinando los íconos colores definidos en la configuración para representar
+combinando los íconos y  colores definidos en la configuración para representar
 visualmente diferentes estados de la aplicación (status, prioridad, etc.).
 """
 # OK:
@@ -37,11 +37,11 @@ def _get_styled_text(text_key: str, style_map: dict[str, Text]) -> Text | str:
     """Función interna para buscar un estilo en un mapa de estilos.
 
     Args:
-        - text_key: La clave que identifica el estilo a buscar (ej. "pending").
-        - style_map: El diccionario donde se buscará el estilo.
+        - text_key: Clave que identifica el estilo a buscar (ej. "pending").
+        - style_map: Diccionario donde se buscará el estilo.
 
     Returns:
-        El objeto Text estilizado si se encuentra la clave, o la clave
+        Objeto Text estilizado si se encuentra la clave, o la clave
         original como texto plano si no se encuentra.
     """
     return style_map.get(text_key, text_key)
@@ -51,10 +51,10 @@ def get_status_style(status_text: str) -> Text | str:
     """Devuelve un objeto Text estilizado para un estado de tarea.
 
     Args:
-        - status_text: El texto del estado a estilizar (ej. "completed").
+        - status_text: Texto del estado a estilizar (ej. "completed").
 
     Returns:
-        Un objeto Text con el ícono y color correspondientes.
+        Objeto Text con el ícono y color correspondientes.
     """
     return _get_styled_text(status_text, STATUS_STYLES)
 
@@ -63,10 +63,10 @@ def get_priority_style(priority_text: str) -> Text | str:
     """Devuelve un objeto Text estilizado para una prioridad de tarea.
 
     Args:
-        - priority_text: El texto de la prioridad a estilizar (ej. "alta").
+        - priority_text: Texto de la prioridad a estilizar (ej. "alta").
 
     Returns:
-        Un objeto Text con el ícono y color correspondientes.
+        Objeto Text con el ícono y color correspondientes.
     """
     return _get_styled_text(priority_text, PRIORITY_STYLES)
 
@@ -77,10 +77,10 @@ def dinamic_status_colors(legend_text: Text) -> Text:
     Esta función modifica el objeto `legend_text` que se le pasa.
 
     Args:
-        - legend_text: El objeto Text al que se le añadirá la leyenda.
+        - legend_text: Objeto Text al que se le añadirá la leyenda.
 
     Returns:
-        El mismo objeto Text modificado con la leyenda de estados.
+        Objeto Text modificado con la leyenda de estados.
     """
     legend_text.append("Status:    ")
     legend_text.append(
@@ -107,10 +107,10 @@ def dinamic_priority_colors(legend_text: Text) -> Text:
     Esta función modifica el objeto `legend_text` que se le pasa.
 
     Args:
-        - legend_text: El objeto Text al que se le añadirá la leyenda.
+        - legend_text: Objeto Text al que se le añadirá la leyenda.
 
     Returns:
-        El mismo objeto Text modificado con la leyenda de prioridades.
+        Objeto Text modificado con la leyenda de prioridades.
     """
     legend_text.append("Prioridad: ")
     legend_text.append(
@@ -137,10 +137,10 @@ def dinamic_notes_leyend(legend_text: Text) -> Text:
     Nota: Esta función modifica el objeto `legend_text` que se le pasa.
 
     Args:
-        - legend_text: El objeto Text al que se le añadirá la leyenda.
+        - legend_text: Objeto Text al que se le añadirá la leyenda.
 
     Returns:
-        El mismo objeto Text modificado con la leyenda de notas.
+        Objeto Text modificado con la leyenda de notas.
     """
     legend_text.append("Notas:     ")
     legend_text.append(

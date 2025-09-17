@@ -1,13 +1,13 @@
 # MODULO: config
 # .. ........................................................ config_loader ..󰌠
-"""Módulo para cargar y exponer la configuración de la aplicación.
+"""Módulo para cargar y hacer disponible la configuración de la aplicación.
 
-Este módulo lee el archivo `settings.toml` y expone las configuraciones
-necesarias (como el nombre de la base de datos y los ajustes de la UI)
-como constantes para que otros módulos puedan importarlas fácilmente.
+El módulo se encarga de leer el archivo 'settings.toml' y extraer los datos de
+él, dando la posibilidad de usar esos datos para establecer la configuración de
+la aplicación facilitando la importación desde otros módulos.
 """
 
-# OK: 
+# OK:
 
 import tomllib
 from pathlib import Path

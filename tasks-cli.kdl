@@ -1,0 +1,24 @@
+// tasks-cli.kdl
+layout {
+    // Define el directorio de trabajo para todas las pestañas
+    cwd "/home/guscode/Code/Tasks-cli/"
+
+    tab name="Editor" {
+        pane command="zsh" {
+            name "Neovim -> Tasks-cli (Código)"
+            args "-c" "source .venv/bin/activate && nvim ."
+        }
+    }
+    tab name="Ejecuciones" {
+        pane command="zsh" {
+            name "Ejecuciones"
+            args "-c" "source .venv/bin/activate; zsh"
+        }
+    }
+    tab name="Gemini" {
+        pane command="zsh" {
+            name "Gemini - Tasks-cli"
+            args "-c" "source .venv/bin/activate && gemini"
+        }
+    }
+}

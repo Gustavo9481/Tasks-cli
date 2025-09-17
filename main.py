@@ -8,7 +8,6 @@ usuario de la aplicación.
 from controllers.interface import Interface
 
 
-
 def main() -> None:
     """Inicializa y ejecuta la aplicación.
 

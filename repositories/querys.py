@@ -2,9 +2,9 @@
 # .. ............................................................... querys ..󰌠
 """Centraliza todas las sentencias SQL utilizadas en la aplicación.
 
-Este módulo actúa como una única fuente de verdad para las consultas SQL,
-lo que facilita su mantenimiento, lectura y previene la dispersión de
-sentencias SQL a través de la lógica de la aplicación.
+Este módulo actúa como una única fuente de consultas SQL, lo que facilita su
+mantenimiento y lectura. Previene la dispersión de sentencias SQL a través de
+la lógica de la aplicación.
 """
 # OK:
 

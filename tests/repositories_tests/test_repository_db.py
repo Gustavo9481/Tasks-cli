@@ -132,7 +132,7 @@ def test_filter_task_by_status(test_repo: RepositoryDB) -> None:
     test_repo.new_task(Task(content="Tarea completada 2", status="completed"))
 
     # 01
-    filtered_tasks = test_repo.filter_task_status(status="completed")
+    filtered_tasks = test_repo.filter_tasks(status="completed")
     # 02
     assert len(filtered_tasks) == 2
     # 03
@@ -163,7 +163,7 @@ def test_filter_task_by_tag(test_repo: RepositoryDB) -> None:
     test_repo.new_task(Task(content="Tarea proyecto 2", tag="proyecto"))
 
     # 01
-    filtered_tasks = test_repo.filter_task_tag(tag="proyecto")
+    filtered_tasks = test_repo.filter_tasks(tag="proyecto")
     # 02
     assert len(filtered_tasks) == 2
     # 03
@@ -194,7 +194,7 @@ def test_filter_task_by_priority(test_repo: RepositoryDB) -> None:
     test_repo.new_task(Task(content="Tarea Baja 1", priority="baja"))
 
     # 01
-    filtered_tasks = test_repo.filter_task_priority(priority="alta")
+    filtered_tasks = test_repo.filter_tasks(priority="alta")
     # 02
     assert len(filtered_tasks) == 2
     # 03

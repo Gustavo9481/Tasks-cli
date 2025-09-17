@@ -3,7 +3,7 @@
 """Punto de entrada y controlador principal de la interfaz de Textual.
 
 Este módulo define la clase `Interface`, que hereda de `textual.app.App`.
-Orquesta la composición de la UI, gestiona los eventos del usuario (bindings)
+Define la composición de la UI, gestiona los eventos del usuario (bindings)
 y coordina las diferentes pantallas (modales) de la aplicación.
 """
 # OK:
@@ -12,7 +12,10 @@ from typing import Any
 from rich.text import Text
 from textual.app import App, ComposeResult
 from textual.widgets import (
-    DataTable, Footer, Header, Static
+    DataTable,
+    Footer,
+    Header,
+    Static
 )
 from .decorators import require_valid_id
 from .dinamic_colors import (
@@ -35,7 +38,8 @@ from services.task_service import TaskService
 
 
 class Interface(App):
-    """La clase principal de la aplicación Textual para la lista de tareas.
+    """Clase principal de la interfaz Textual para la app 'Tasks-cli' de lista
+    de tareas.
 
     Como clase principal, se encarga de:
     - Componer la layout inicial con widgets (Header, DataTable, Footer).
@@ -61,10 +65,10 @@ class Interface(App):
 
 
     def compose(self) -> ComposeResult:
-        """Compone la layout inicial de la aplicación.
+        """Compone el layout inicial de la aplicación.
 
         Este método de Textual se llama una vez al iniciar la app para
-        renderizar los widgets estáticos como el Header, Footer y la tabla.
+        renderizar los widgets estáticos como el Header, Footer y DataTable.
         """
         leyenda_texto_status = Text()
         leyenda_texto_priority = Text()
@@ -83,7 +87,7 @@ class Interface(App):
     def _update_table(self) -> None:
         """Refresca el contenido del widget DataTable.
 
-        Este método interno se encarga de limpiar la tabla, obtener la lista
+        El método se encarga de limpiar la tabla, obtener la lista
         actualizada de tareas desde el `TaskService`, aplicar estilos dinámicos
         y volver a poblar las filas.
         """
@@ -134,6 +138,7 @@ class Interface(App):
                 table.add_column(label)
         self._update_table()
 
+
     # .. ................... Acciones y Notificaciones .................... ..󰌠
     # Sección con la lógica necesaria para las funciones de la app.
 
@@ -181,7 +186,7 @@ class Interface(App):
 
     # .. ................................................ check_or_uncheck_task
     def action_check_or_uncheck_task(self) -> None:
-        """Maneja el atajo 'm' para marcar/desmarcar una tarea.
+        """Maneja el atajo 'm' para marcar/desmarcar una tarea (cambiar status)
 
         Abre la pantalla modal `AskIdScreen` para solicitar el ID de la tarea
         y asigna `notification_check_or_uncheck_task` como callback.
@@ -199,7 +204,7 @@ class Interface(App):
         para cambiar el estado de la tarea y refresca la tabla.
 
         Args:
-            - task_id (int): El ID de la tarea a modificar, validado por el
+            - task_id (int): ID de la tarea a modificar, validado por el
               decorador `@require_valid_id`.
         """
         service = TaskService()
@@ -228,7 +233,7 @@ class Interface(App):
         para eliminar la tarea y actualiza la tabla.
 
         Args:
-             - task_id (int): El ID de la tarea a eliminar, validado por el
+             - task_id (int): ID de la tarea a eliminar, validado por el
                decorador `@require_valid_id`.
         """
         service = TaskService()
@@ -293,7 +298,8 @@ class Interface(App):
 
             # 4. Actualización de la tabla con los datos filtrados.
             table = self.query_one(DataTable)
-            table.clear() # Limpiamos filas anteriores
+            # Limpia las filas anteriores.
+            table.clear()
 
             # Añadimos solo las filas filtradas
             for row_data in results_for_ui[1:]:
