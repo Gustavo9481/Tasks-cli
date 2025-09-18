@@ -3,7 +3,6 @@
 """
 Contiene los decoradores personalizados para la aplicación.
 """
-# OK: 
 from functools import wraps
 from typing import Callable, Any
 from services.task_service import TaskService

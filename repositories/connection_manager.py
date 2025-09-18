@@ -6,11 +6,10 @@ Este módulo proporciona el decorador `connection_manager`, que abstrae el
 ciclo de vida de la conexión (apertura, commit/rollback, cierre) para
 los métodos que interactúan con la base de datos.
 """
-# OK:
-
 import sqlite3
 import logging
 from typing import Callable, Any
+
 
 # Configuración básica del logger.
 logging.basicConfig(

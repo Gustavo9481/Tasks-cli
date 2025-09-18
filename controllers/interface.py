@@ -6,8 +6,6 @@ Este módulo define la clase `Interface`, que hereda de `textual.app.App`.
 Define la composición de la UI, gestiona los eventos del usuario (bindings)
 y coordina las diferentes pantallas (modales) de la aplicación.
 """
-# OK:
-
 from typing import Any
 from rich.text import Text
 from textual.app import App, ComposeResult

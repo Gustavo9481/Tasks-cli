@@ -6,12 +6,10 @@ El módulo se encarga de leer el archivo 'settings.toml' y extraer los datos de
 él, dando la posibilidad de usar esos datos para establecer la configuración de
 la aplicación facilitando la importación desde otros módulos.
 """
-
-# OK:
-
 import tomllib
 from pathlib import Path
 from typing import Any
+
 
 # Ruta al archivo de configuración, construida de forma relativa al script.
 _CONFIG_FILE_PATH = Path(__file__).parent / "settings.toml"

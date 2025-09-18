@@ -5,8 +5,6 @@
 # Para configurar un aspecto personalizado, los cambios deben hacerse en éste
 # archivo.
 
-# OK: 
-
 # .. .................................... Configuración de la base de datos ..
 # almacena el nombre de la base de datos a usar.
 database_name = "data_dev2.db"

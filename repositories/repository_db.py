@@ -6,8 +6,6 @@ Este módulo contiene la clase RepositoryDB, que implementa todos los métodos
 necesarios para interactuar con la base de datos SQLite (crear, leer,
 actualizar, eliminar tareas).
 """
-# OK:
-
 import sqlite3
 import repositories.querys as sql
 from pathlib import Path

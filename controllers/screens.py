@@ -6,15 +6,12 @@ Cada clase en este módulo representa una pantalla modal (un pop-up) con un
 propósito específico, como solicitar un ID, pedir datos para una nueva tarea
 o mostrar detalles. Heredan de `textual.screen.ModalScreen`.
 """
-# OK:
-
 from typing import Any
 from textual.screen import ModalScreen
 from textual.app import ComposeResult
 from textual.widgets import Button, Input, Label, Markdown, TextArea
 from textual.containers import Vertical, Horizontal
 from models.model_task import Task
-
 
 
 class AskIdScreen(ModalScreen):

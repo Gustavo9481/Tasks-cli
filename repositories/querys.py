@@ -6,7 +6,6 @@ Este módulo actúa como una única fuente de consultas SQL, lo que facilita su
 mantenimiento y lectura. Previene la dispersión de sentencias SQL a través de
 la lógica de la aplicación.
 """
-# OK:
 
 # .. ......................................................... create_table ..󰌠
 # Crea la tabla 'tasks_table' si no existe, definiendo su estructura.

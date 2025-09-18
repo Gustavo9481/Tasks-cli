@@ -7,8 +7,6 @@ Esta capa actúa como un intermediario entre la interfaz de usuario (controllers
 y la capa de acceso a datos (repositories). Orquesta las operaciones y
 asegura que la lógica de la aplicación esté centralizada.
 """
-# OK:
-
 from typing import Any
 from repositories.repository_db import RepositoryDB
 from models.model_task import Task

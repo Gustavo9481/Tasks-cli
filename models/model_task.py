@@ -6,8 +6,6 @@ Este módulo contiene la clase `Task`, que actúa como un Data Transfer Object
 (DTO) y modelo de validación usando Pydantic. También define los tipos 
 `Literal` para restringir los valores permitidos en los campos de la tarea.
 """
-# OK: 
-
 from typing import Optional, Literal
 from pydantic import BaseModel
 

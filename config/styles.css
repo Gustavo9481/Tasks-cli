@@ -2,14 +2,13 @@
 /* ............................................................... styles   */
 /* Estilos para interfaz. */
 
-/* OK: */
-
 $background_normal: #16161A;
 $background_dark: #0C0C0F;
 $orange_flu: #FF9E64;
 $dark_grey: #32344A;
 $blue_sky: #A9B1D6;
 $dark_grey_2: rgba(50, 52, 74, 0.15);
+
 /* Pantalla General */
 Screen {
     background: $background_normal;
