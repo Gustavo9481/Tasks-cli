@@ -5,6 +5,8 @@
 Este script es el responsable de inicializar y ejecutar la interfaz de
 usuario de la aplicación.
 """
+# OK:
+
 from controllers.interface import Interface
 
 

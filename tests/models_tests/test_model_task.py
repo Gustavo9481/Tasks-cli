@@ -4,7 +4,6 @@
 Tests unitarios para la clase Task.
 total de pruebas: 10.
 """
-
 import pytest
 from pydantic import ValidationError
 from models.model_task import Status, Tag, Priority, Task
