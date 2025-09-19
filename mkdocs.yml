@@ -1,9 +1,46 @@
 site_name: Tareas-CLI Documentación
-theme:
-  name: material
-  language: es
 
 dev_addr: 127.0.0.1:8001
+
+repo_url: https://github.com/Gustavo9481/Tasks-cli.git
+
+theme:
+  logo: /images/logo.svg
+  language: es
+  name: material
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      primary: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    code: JetBrainsMono Nerd Font
+
+  icon:
+    repo: fontawesome/brands/git-alt
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.instant.preview
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - content.code.copy
+
+extra_css:
+  - stylesheets/extra.css
 
 plugins:
   - search
