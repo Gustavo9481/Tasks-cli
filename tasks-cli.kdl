@@ -9,16 +9,22 @@ layout {
             args "-c" "source .venv/bin/activate && nvim ."
         }
     }
+    tab name="Gemini" {
+        pane command="zsh" {
+            name "Gemini - Tasks-cli"
+            args "-c" "source .venv/bin/activate && gemini"
+        }
+    }
     tab name="Ejecuciones" {
         pane command="zsh" {
             name "Ejecuciones"
             args "-c" "source .venv/bin/activate; zsh"
         }
     }
-    tab name="Gemini" {
+    tab name="Documentación" {
         pane command="zsh" {
-            name "Gemini - Tasks-cli"
-            args "-c" "source .venv/bin/activate && gemini"
+            name "Documentacióin"
+            args "-c" "uv run mkdocs serve; zsh"
         }
     }
 }

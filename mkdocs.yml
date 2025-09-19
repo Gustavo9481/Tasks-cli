@@ -1,0 +1,38 @@
+site_name: Tareas-CLI Documentación
+theme:
+  name: material
+  language: es
+
+dev_addr: 127.0.0.1:8001
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          setup_commands:
+            - import sys
+            - sys.path.append('.')
+          options:
+            docstring_style: google
+
+nav:
+  - 'Inicio': index.md
+  - 'Guía de Usuario': guia_usuario.md
+  - 'Guía de Desarrollo': guia_desarrollo.md
+  - 'Arquitectura': arquitectura.md
+  - 'Referencia de la API':
+    - 'Controladores':
+      - 'Interface': referencia_api/controllers/interface.md
+      - 'Pantallas': referencia_api/controllers/screens.md
+    - 'Modelos':
+      - 'Task': referencia_api/models/model_task.md
+    - 'Repositorios':
+      - 'Repository DB': referencia_api/repositories/repository_db.md
+      - 'Connection Manager': referencia_api/repositories/connection_manager.md
+      - 'Querys': referencia_api/repositories/querys.md
+    - 'Servicios':
+      - 'Task Service': referencia_api/services/task_service.md
+    - 'Pruebas':
+      - 'Pruebas del Modelo': referencia_api/tests/models_tests/test_model_task.md
+      - 'Pruebas del Repositorio': referencia_api/tests/repositories_tests/test_repository_db.md
