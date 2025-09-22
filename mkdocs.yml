@@ -1,4 +1,9 @@
-site_name: Tareas-CLI Documentación
+# MODULO: root
+# .. ............................................................... mkdocs ..
+# Configuración de sitio web para documentación estática.
+
+
+site_name: Tasks-CLI Documentación
 
 dev_addr: 127.0.0.1:8001
 

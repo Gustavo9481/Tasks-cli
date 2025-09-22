@@ -5,13 +5,14 @@ tasks-cli.kdl
 
 # Directorio de notas de Obsidian
 .obsidian/
+Tags/
 
 # Entornos Virtuales de Python
 # Directorios que contienen las librerías instaladas, no son parte del código.
 .venv/
 venv/
 ENV/
-Tags/
+
 
 # Cachés de herramientas de Python
 # Archivos temporales para acelerar herramientas como pytest y mypy.
@@ -34,3 +35,13 @@ __pycache__/
 # Archivos generados por herramientas desconocidas
 .makemd
 .space
+
+# --- SECCIÓN SUGERIDA ---
+# Empaquetado y Distribución
+# Carpetas generadas al construir el paquete
+build/
+dist/
+*.egg-info/
+
+# Archivos de cobertura de tests
+.coverage

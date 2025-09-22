@@ -1,0 +1,63 @@
+# MODULO: root
+# .. ............................................................ pyproject ..
+# Configuración del proyecto.
+
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tasks-cli"
+version = "0.1.0"
+authors = [
+    { name="Gustavo Colmenares (GUScode)", email="g_colmenares9481@proton.me" },
+]
+description = "Aplicación de lista de tareas en la terminal, construida con Textual."
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Topic :: Utilities",
+]
+
+# Dependencias principales de la aplicación.
+dependencies = [
+    "textual",
+    "pydantic",
+]
+
+[project.optional-dependencies]
+# Dependencias extra para desarrollo (testing, linting, docs).
+dev = [
+    "pytest",
+    "ruff",
+    "mypy",
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+]
+
+[project.scripts]
+# Crea el comando 'tareas-cli' al instalar el paquete.
+# Asume que en 'main.py' hay una función 'run_app()' que inicia la app.
+tasks-cli = "main:main"
+
+[tool.setuptools]
+# Le decimos a setuptools exactamente qué paquetes incluir.
+packages = ["controllers", "models", "repositories", "services", "config"]
+
+[tool.mypy]
+# Ejemplo de configuración de mypy.
+ignore_missing_imports = true
+exclude = [
+    "build/",
+    "dist/",
+    ".venv/",
+    ".ruff_cache/",
+    ".pytest_cache/",
+    "docs/",
+]
