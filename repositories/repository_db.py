@@ -77,17 +77,23 @@ class RepositoryDB:
     def get_all_tasks(self, cursor: sqlite3.Cursor) -> list[Task]:
         """Recupera todas las tareas de la base de datos.
 
+        Si la tabla no existe o hay un error, devuelve una lista vacía.
+
         Args:
             - cursor (sqlite3.Cursor): Cursor de la base de datos, inyectado 
               por el decorador.
 
         Returns:
             - list[Task]: Una lista de objetos `Task` que representan todas las
-              tareas en la base de datos.
+              tareas en la base de datos. Estará vacía si sqlite3 devuelve
+              error.
         """
-        cursor.execute(sql.GET_ALL_TASKS)
-        all_rows = cursor.fetchall()
-        return self.task_format_list(all_rows)
+        try:
+            cursor.execute(sql.GET_ALL_TASKS)
+            all_rows = cursor.fetchall()
+            return self.task_format_list(all_rows)
+        except sqlite3.Error:
+            return []
 
 
     # .. ............................................................. new_task

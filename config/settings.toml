@@ -7,7 +7,7 @@
 
 # .. .................................... Configuración de la base de datos ..
 # almacena el nombre de la base de datos a usar.
-database_name = "data_dev2.db"
+database_name = "tercera_data.db"
 
 
 # .. ......................................... Configuración de la interfaz ..

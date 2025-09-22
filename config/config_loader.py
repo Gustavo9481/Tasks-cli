@@ -23,7 +23,7 @@ with open(_CONFIG_FILE_PATH, "rb") as f:
 # .. .................................... Carga de valores de configuración ..󰌠
 # Expone el nombre de la base de datos. Usa un valor por defecto 'tasks.db' si
 # no se encuentra.
-DATABASE_NAME = _config_data.get("database_name", "tasks.db")
+DATABASE_NAME = _config_data.get("database_name") or "tasks-cli.db"
 
 # Expone las configuraciones de la interfaz de usuario (colores e íconos).
 _ui_config = _config_data.get("ui", {})
