@@ -1,0 +1,13 @@
+/* MODULO: docs
+ * Estilos custom para documentación estática [Mkdocs]
+ * */
+
+:root {
+    --md-primary-fg-color: #32344A;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
