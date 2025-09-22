@@ -1409,7 +1409,7 @@ que la capa de servicio interactúe con la base de datos.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>- db_name</code>
+                <code>db_name</code>
             </td>
             <td>
                   <code><span title="str">str</span></code>
@@ -1462,7 +1462,7 @@ objetos <code>Task</code> validados por Pydantic.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>- rows_list</code>
+                <code>rows_list</code>
             </td>
             <td>
                   <code><span title="list">list</span></code>
@@ -1496,9 +1496,7 @@ consulta a la base de datos.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <ul>
-<li>list[Task]: Lista de objetos <code>Task</code> completamente formados.</li>
-</ul>
+                <p>list[Task]: Lista de objetos <code>Task</code> completamente formados.</p>
               </div>
             </td>
           </tr>
@@ -1539,7 +1537,7 @@ La gestión de la conexión y el commit es manejada por el decorador.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>- cursor</code>
+                <code>cursor</code>
             </td>
             <td>
                   <code><span title="sqlite3.Cursor">Cursor</span></code>
@@ -1551,7 +1549,7 @@ por el decorador <code>connection_manager</code>.</p>
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code><span title="sqlite3.Cursor">Cursor</span></code>
             </td>
           </tr>
       </tbody>
@@ -1590,7 +1588,7 @@ por el decorador <code>connection_manager</code>.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>- cursor</code>
+                <code>cursor</code>
             </td>
             <td>
                   <code><span title="sqlite3.Cursor">Cursor</span></code>
@@ -1624,11 +1622,9 @@ por el decorador.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <ul>
-<li>list[Task]: Una lista de objetos <code>Task</code> que representan todas las
+                <p>list[Task]: Una lista de objetos <code>Task</code> que representan todas las
 tareas en la base de datos. Estará vacía si sqlite3 devuelve
-error.</li>
-</ul>
+error.</p>
               </div>
             </td>
           </tr>
@@ -1667,7 +1663,7 @@ error.</li>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>- task_instance</code>
+                <code>task_instance</code>
             </td>
             <td>
                   <code><a class="autorefs autorefs-internal" href="../../models/model_task/#models.model_task.Task">Task</a></code>
@@ -1683,7 +1679,7 @@ error.</li>
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>- cursor</code>
+                <code>cursor</code>
             </td>
             <td>
                   <code><span title="sqlite3.Cursor">Cursor</span></code>
@@ -1706,20 +1702,18 @@ por el decorador.</p>
     <table>
       <thead>
         <tr>
-          <th>Type</th>
+<th>Name</th>          <th>Type</th>
           <th>Description</th>
         </tr>
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td>
+<td><code>int</code></td>            <td>
                   <code><span title="int">int</span></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <ul>
-<li>int: ID de la fila de la tarea recién creada.</li>
-</ul>
+                <p>ID de la fila de la tarea recién creada.</p>
               </div>
             </td>
           </tr>
@@ -1761,7 +1755,7 @@ filtro, devuelve todas las tareas.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>- cursor</code>
+                <code>cursor</code>
             </td>
             <td>
                   <code><span title="sqlite3.Cursor">Cursor</span></code>
@@ -1778,7 +1772,7 @@ por el decorador.</p>
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>- status</code>
+                <code>status</code>
             </td>
             <td>
                   <code><span title="str">str</span> | None</code>
@@ -1789,12 +1783,12 @@ por el decorador.</p>
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>- tag</code>
+                <code>tag</code>
             </td>
             <td>
                   <code><span title="str">str</span> | None</code>
@@ -1805,12 +1799,12 @@ por el decorador.</p>
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>- priority</code>
+                <code>priority</code>
             </td>
             <td>
                   <code><span title="str">str</span> | None</code>
@@ -1821,7 +1815,7 @@ por el decorador.</p>
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -1843,10 +1837,8 @@ por el decorador.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <ul>
-<li>list[Task]: Lista de objetos <code>Task</code> que coinciden con los
-criterios de filtrado.</li>
-</ul>
+                <p>list[Task]: Lista de objetos <code>Task</code> que coinciden con los
+criterios de filtrado.</p>
               </div>
             </td>
           </tr>
@@ -1887,7 +1879,7 @@ proporcionados en el diccionario <code>new_data</code>.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>- task_id</code>
+                <code>task_id</code>
             </td>
             <td>
                   <code><span title="int">int</span></code>
@@ -1903,7 +1895,7 @@ proporcionados en el diccionario <code>new_data</code>.</p>
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>- new_data</code>
+                <code>new_data</code>
             </td>
             <td>
                   <code><span title="dict">dict</span>[<span title="str">str</span>, <span title="str">str</span>]</code>
@@ -1921,7 +1913,7 @@ Ejemplo: {"content": "Nuevo contenido", "priority": "alta"}</p>
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>- cursor</code>
+                <code>cursor</code>
             </td>
             <td>
                   <code><span title="sqlite3.Cursor">Cursor</span></code>
@@ -1973,7 +1965,7 @@ por el decorador.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>- id_task</code>
+                <code>id_task</code>
             </td>
             <td>
                   <code><span title="int">int</span></code>
@@ -1989,7 +1981,7 @@ por el decorador.</p>
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>- cursor</code>
+                <code>cursor</code>
             </td>
             <td>
                   <code><span title="sqlite3.Cursor">Cursor</span></code>
@@ -2039,7 +2031,7 @@ por el decorador.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>- id_task</code>
+                <code>id_task</code>
             </td>
             <td>
                   <code><span title="int">int</span></code>
@@ -2055,7 +2047,7 @@ por el decorador.</p>
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>- cursor</code>
+                <code>cursor</code>
             </td>
             <td>
                   <code><span title="sqlite3.Cursor">Cursor</span></code>
@@ -2089,10 +2081,8 @@ por el decorador.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <ul>
-<li>Task | None: Objeto <code>Task</code> si se encuentra la tarea, o <code>None</code>
-si no existe ninguna tarea con ese ID.</li>
-</ul>
+                <p>Task | None: Objeto <code>Task</code> si se encuentra la tarea, o <code>None</code>
+si no existe ninguna tarea con ese ID.</p>
               </div>
             </td>
           </tr>
@@ -2131,7 +2121,7 @@ si no existe ninguna tarea con ese ID.</li>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>- id_task</code>
+                <code>id_task</code>
             </td>
             <td>
                   <code><span title="int">int</span></code>
@@ -2147,7 +2137,7 @@ si no existe ninguna tarea con ese ID.</li>
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>- cursor</code>
+                <code>cursor</code>
             </td>
             <td>
                   <code><span title="sqlite3.Cursor">Cursor</span></code>

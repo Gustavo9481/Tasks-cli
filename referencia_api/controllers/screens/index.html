@@ -1681,7 +1681,7 @@
 <span class="sd">        se pasa al método `dismiss()`, que lo devuelve a quien llamó la pantalla.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            - event (Input.Submitted): Evento que contiene el valor del Input.</span>
+<span class="sd">            event (Input.Submitted): Evento que contiene el valor del Input.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dismiss</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -1812,7 +1812,7 @@ se pasa al método <code>dismiss()</code>, que lo devuelve a quien llamó la pan
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>- event</code>
+                <code>event</code>
             </td>
             <td>
                   <code><span title="textual.widgets.Input.Submitted">Submitted</span></code>
@@ -1850,7 +1850,7 @@ se pasa al método <code>dismiss()</code>, que lo devuelve a quien llamó la pan
 <span class="sd">    se pasa al método `dismiss()`, que lo devuelve a quien llamó la pantalla.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        - event (Input.Submitted): Evento que contiene el valor del Input.</span>
+<span class="sd">        event (Input.Submitted): Evento que contiene el valor del Input.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">dismiss</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -1970,7 +1970,7 @@ Es un componente específico para la funcionalidad de nueva tarea.</p>
 <span class="sd">        Si se presiona &#39;cancel&#39;, cierra la pantalla devolviendo `None`.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            - event (Button.Pressed): Evento que identifica botón presionado.</span>
+<span class="sd">            event (Button.Pressed): Evento que identifica botón presionado.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s2">&quot;submit&quot;</span><span class="p">:</span>
             <span class="n">new_task_data</span> <span class="o">=</span> <span class="p">{</span>
@@ -2083,7 +2083,7 @@ Si se presiona 'cancel', cierra la pantalla devolviendo <code>None</code>.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>- event</code>
+                <code>event</code>
             </td>
             <td>
                   <code><span title="textual.widgets.Button.Pressed">Pressed</span></code>
@@ -2130,7 +2130,7 @@ Si se presiona 'cancel', cierra la pantalla devolviendo <code>None</code>.</p>
 <span class="sd">    Si se presiona &#39;cancel&#39;, cierra la pantalla devolviendo `None`.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        - event (Button.Pressed): Evento que identifica botón presionado.</span>
+<span class="sd">        event (Button.Pressed): Evento que identifica botón presionado.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s2">&quot;submit&quot;</span><span class="p">:</span>
         <span class="n">new_task_data</span> <span class="o">=</span> <span class="p">{</span>
@@ -2241,8 +2241,8 @@ Si se presiona 'cancel', cierra la pantalla devolviendo <code>None</code>.</p>
 <span class="sd">        existente.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            - task_to_edit (Task): Objeto de la tarea que se va a editar.</span>
-<span class="sd">              Sus datos se usarán para pre-rellenar los campos de la pantalla.</span>
+<span class="sd">            task_to_edit (Task): Objeto de la tarea que se va a editar.</span>
+<span class="sd">                Sus datos se usarán para pre-rellenar los campos de la pantalla.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">task_to_edit</span> <span class="o">=</span> <span class="n">task_to_edit</span>
@@ -2275,7 +2275,7 @@ Si se presiona 'cancel', cierra la pantalla devolviendo <code>None</code>.</p>
 <span class="sd">        Si se presiona &#39;cancel&#39;, cierra la pantalla devolviendo `None`.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            - event (Button.Pressed): Evento que identifica botón presionado.</span>
+<span class="sd">            event (Button.Pressed): Evento que identifica botón presionado.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s2">&quot;submit&quot;</span><span class="p">:</span>
             <span class="n">updated_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
@@ -2333,7 +2333,7 @@ existente.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>- task_to_edit</code>
+                <code>task_to_edit</code>
             </td>
             <td>
                   <code><a class="autorefs autorefs-internal" href="../../models/model_task/#models.model_task.Task">Task</a></code>
@@ -2368,8 +2368,8 @@ Sus datos se usarán para pre-rellenar los campos de la pantalla.</p>
 <span class="sd">    existente.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        - task_to_edit (Task): Objeto de la tarea que se va a editar.</span>
-<span class="sd">          Sus datos se usarán para pre-rellenar los campos de la pantalla.</span>
+<span class="sd">        task_to_edit (Task): Objeto de la tarea que se va a editar.</span>
+<span class="sd">            Sus datos se usarán para pre-rellenar los campos de la pantalla.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">task_to_edit</span> <span class="o">=</span> <span class="n">task_to_edit</span>
@@ -2464,7 +2464,7 @@ Si se presiona 'cancel', cierra la pantalla devolviendo <code>None</code>.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>- event</code>
+                <code>event</code>
             </td>
             <td>
                   <code><span title="textual.widgets.Button.Pressed">Pressed</span></code>
@@ -2513,7 +2513,7 @@ Si se presiona 'cancel', cierra la pantalla devolviendo <code>None</code>.</p>
 <span class="sd">    Si se presiona &#39;cancel&#39;, cierra la pantalla devolviendo `None`.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        - event (Button.Pressed): Evento que identifica botón presionado.</span>
+<span class="sd">        event (Button.Pressed): Evento que identifica botón presionado.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s2">&quot;submit&quot;</span><span class="p">:</span>
         <span class="n">updated_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
@@ -2649,7 +2649,7 @@ Si se presiona 'cancel', cierra la pantalla devolviendo <code>None</code>.</p>
 <span class="sd">        Si se presiona &#39;cancel&#39;, cierra la pantalla devolviendo `None`.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            - event (Button.Pressed): Evento que identifica botón presionado.</span>
+<span class="sd">            event (Button.Pressed): Evento que identifica botón presionado.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s2">&quot;submit&quot;</span><span class="p">:</span>
             <span class="c1"># Recopilamos los criterios de filtro en un diccionario</span>
@@ -2777,7 +2777,7 @@ Si se presiona 'cancel', cierra la pantalla devolviendo <code>None</code>.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>- event</code>
+                <code>event</code>
             </td>
             <td>
                   <code><span title="textual.widgets.Button.Pressed">Pressed</span></code>
@@ -2825,7 +2825,7 @@ Si se presiona 'cancel', cierra la pantalla devolviendo <code>None</code>.</p>
 <span class="sd">    Si se presiona &#39;cancel&#39;, cierra la pantalla devolviendo `None`.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        - event (Button.Pressed): Evento que identifica botón presionado.</span>
+<span class="sd">        event (Button.Pressed): Evento que identifica botón presionado.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s2">&quot;submit&quot;</span><span class="p">:</span>
         <span class="c1"># Recopilamos los criterios de filtro en un diccionario</span>
@@ -2914,9 +2914,9 @@ Si se presiona 'cancel', cierra la pantalla devolviendo <code>None</code>.</p>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Inicializa la pantalla de visualización de detalles.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            - details_content (str): Contenido de los detalles de la tarea,</span>
-<span class="sd">              que puede contener formato Markdown.</span>
-<span class="sd">            - task_id (int): ID de la tarea, usado para mostrarlo en el título.</span>
+<span class="sd">            details_content (str): Contenido de los detalles de la tarea,</span>
+<span class="sd">                que puede contener formato Markdown.</span>
+<span class="sd">            task_id (int): ID de la tarea, usado para mostrarlo en el título.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">details_content</span> <span class="o">=</span> <span class="n">details_content</span>
@@ -2984,7 +2984,7 @@ Si se presiona 'cancel', cierra la pantalla devolviendo <code>None</code>.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>- details_content</code>
+                <code>details_content</code>
             </td>
             <td>
                   <code><span title="str">str</span></code>
@@ -3001,7 +3001,7 @@ que puede contener formato Markdown.</p>
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>- task_id</code>
+                <code>task_id</code>
             </td>
             <td>
                   <code><span title="int">int</span></code>
@@ -3035,9 +3035,9 @@ que puede contener formato Markdown.</p>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Inicializa la pantalla de visualización de detalles.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        - details_content (str): Contenido de los detalles de la tarea,</span>
-<span class="sd">          que puede contener formato Markdown.</span>
-<span class="sd">        - task_id (int): ID de la tarea, usado para mostrarlo en el título.</span>
+<span class="sd">        details_content (str): Contenido de los detalles de la tarea,</span>
+<span class="sd">            que puede contener formato Markdown.</span>
+<span class="sd">        task_id (int): ID de la tarea, usado para mostrarlo en el título.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">details_content</span> <span class="o">=</span> <span class="n">details_content</span>
