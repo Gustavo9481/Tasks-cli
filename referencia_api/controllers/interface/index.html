@@ -1430,6 +1430,785 @@ de tareas.</p>
 
 
 
+              <details class="quote">
+                <summary>Source code in <code>controllers/interface.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span>
+<span class="normal">373</span>
+<span class="normal">374</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span>
+<span class="normal">380</span>
+<span class="normal">381</span>
+<span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span>
+<span class="normal">388</span>
+<span class="normal">389</span>
+<span class="normal">390</span>
+<span class="normal">391</span>
+<span class="normal">392</span>
+<span class="normal">393</span>
+<span class="normal">394</span>
+<span class="normal">395</span>
+<span class="normal">396</span>
+<span class="normal">397</span>
+<span class="normal">398</span>
+<span class="normal">399</span>
+<span class="normal">400</span>
+<span class="normal">401</span>
+<span class="normal">402</span>
+<span class="normal">403</span>
+<span class="normal">404</span>
+<span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span>
+<span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Interface</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Clase principal de la interfaz Textual para la app &#39;Tasks-cli&#39; de lista</span>
+<span class="sd">    de tareas.</span>
+
+<span class="sd">    Como clase principal, se encarga de:</span>
+<span class="sd">    - Componer la layout inicial con widgets (Header, DataTable, Footer).</span>
+<span class="sd">    - Definir los atajos de teclado globales (BINDINGS).</span>
+<span class="sd">    - Lanzar acciones (`action_*`) que muestran pantallas modales para la</span>
+<span class="sd">      interacción con el usuario.</span>
+<span class="sd">    - Recibir los resultados de las pantallas modales y ejecutar la lógica</span>
+<span class="sd">      de negocio correspondiente a través de `TaskService`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">BINDINGS</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="s2">&quot;quit&quot;</span><span class="p">,</span> <span class="s2">&quot;Salir&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="s2">&quot;add_task&quot;</span><span class="p">,</span> <span class="s2">&quot;Nueva Tarea&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="s2">&quot;edit_task&quot;</span><span class="p">,</span> <span class="s2">&quot;Editar Tarea&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="s2">&quot;filter_tasks&quot;</span><span class="p">,</span> <span class="s2">&quot;Filtrar Tareas&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="s2">&quot;delete_task&quot;</span><span class="p">,</span> <span class="s2">&quot;Eliminar Tarea&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;check_or_uncheck_task&quot;</span><span class="p">,</span> <span class="s2">&quot;Marcar/Desmarcar&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;reset_filters&quot;</span><span class="p">,</span> <span class="s2">&quot;Refrescar tareas&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;v&quot;</span><span class="p">,</span> <span class="s2">&quot;view_details&quot;</span><span class="p">,</span> <span class="s2">&quot;Ver Detalles&quot;</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">CSS_PATH</span> <span class="o">=</span> <span class="s2">&quot;../config/styles.css&quot;</span>
+    <span class="n">TITLE</span> <span class="o">=</span> <span class="s2">&quot;TASKS CLI - Lista de Tareas  &quot;</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">compose</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ComposeResult</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compone el layout inicial de la aplicación.</span>
+
+<span class="sd">        Este método de Textual se llama una vez al iniciar la app para</span>
+<span class="sd">        renderizar los widgets estáticos como el Header, Footer y DataTable.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">leyenda_texto_status</span> <span class="o">=</span> <span class="n">Text</span><span class="p">()</span>
+        <span class="n">leyenda_texto_priority</span> <span class="o">=</span> <span class="n">Text</span><span class="p">()</span>
+        <span class="n">leyenda_texto_notas</span> <span class="o">=</span> <span class="n">Text</span><span class="p">()</span>
+        <span class="n">dinamic_status_colors</span><span class="p">(</span><span class="n">leyenda_texto_status</span><span class="p">)</span>
+        <span class="n">dinamic_priority_colors</span><span class="p">(</span><span class="n">leyenda_texto_priority</span><span class="p">)</span>
+        <span class="n">dinamic_notes_leyend</span><span class="p">(</span><span class="n">leyenda_texto_notas</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">Header</span><span class="p">()</span>
+        <span class="k">yield</span> <span class="n">Static</span><span class="p">(</span><span class="n">leyenda_texto_status</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;leyenda&quot;</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">Static</span><span class="p">(</span><span class="n">leyenda_texto_priority</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;prioridad&quot;</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">Static</span><span class="p">(</span><span class="n">leyenda_texto_notas</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;notas&quot;</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">DataTable</span><span class="p">()</span>
+        <span class="k">yield</span> <span class="n">Footer</span><span class="p">()</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_table</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Refresca el contenido del widget DataTable.</span>
+
+<span class="sd">        El método se encarga de limpiar la tabla, obtener la lista</span>
+<span class="sd">        actualizada de tareas desde el `TaskService`, aplicar estilos dinámicos</span>
+<span class="sd">        y volver a poblar las filas.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_one</span><span class="p">(</span><span class="n">DataTable</span><span class="p">)</span>
+        <span class="n">service</span> <span class="o">=</span> <span class="n">TaskService</span><span class="p">()</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">tareas</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">get_tasks_for_ui</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">row_data</span> <span class="ow">in</span> <span class="n">tareas</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">styled_row</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">row_data</span><span class="p">)</span>
+            <span class="n">status_texto</span> <span class="o">=</span> <span class="n">styled_row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">prioridad_texto</span> <span class="o">=</span> <span class="n">styled_row</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+            <span class="n">styled_status</span> <span class="o">=</span> <span class="n">get_status_style</span><span class="p">(</span><span class="n">status_texto</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">styled_status</span><span class="p">,</span> <span class="n">Text</span><span class="p">):</span>
+                <span class="n">styled_status</span><span class="o">.</span><span class="n">justify</span> <span class="o">=</span> <span class="s2">&quot;center&quot;</span>
+            <span class="n">styled_priority</span> <span class="o">=</span> <span class="n">get_priority_style</span><span class="p">(</span><span class="n">prioridad_texto</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">styled_priority</span><span class="p">,</span> <span class="n">Text</span><span class="p">):</span>
+                <span class="n">styled_priority</span><span class="o">.</span><span class="n">justify</span> <span class="o">=</span> <span class="s2">&quot;center&quot;</span>
+            <span class="n">notes_indicator</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span>
+                <span class="n">styled_row</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> 
+                <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> 
+                <span class="n">style</span><span class="o">=</span><span class="n">UI_COLORS</span><span class="p">[</span><span class="s1">&#39;green&#39;</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">styled_row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">styled_status</span>
+            <span class="n">styled_row</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">styled_priority</span>
+            <span class="n">styled_row</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">notes_indicator</span>
+            <span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="o">*</span><span class="n">styled_row</span><span class="p">)</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_mount</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Se ejecuta cuando la app se monta en el DOM.</span>
+
+<span class="sd">        Este método de Textual se usa para realizar configuraciones iniciales,</span>
+<span class="sd">        como definir las cabeceras de la tabla y cargar los datos por primera vez.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_one</span><span class="p">(</span><span class="n">DataTable</span><span class="p">)</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">cursor_type</span> <span class="o">=</span> <span class="s2">&quot;row&quot;</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;ID&quot;</span><span class="p">,</span> <span class="s2">&quot;Status&quot;</span><span class="p">,</span> <span class="s2">&quot;Tag&quot;</span><span class="p">,</span> <span class="s2">&quot;Contenido&quot;</span><span class="p">,</span> <span class="s2">&quot;Prioridad&quot;</span><span class="p">,</span> <span class="s2">&quot;Notas&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;Contenido&quot;</span><span class="p">:</span>
+                <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;Tag&quot;</span><span class="p">:</span>
+                <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;Nota&quot;</span><span class="p">:</span>
+                <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_table</span><span class="p">()</span>
+
+
+    <span class="c1"># .. ................... Acciones y Notificaciones .................... ..󰌠</span>
+    <span class="c1"># Sección con la lógica necesaria para las funciones de la app.</span>
+
+    <span class="c1"># .. ............................................................. add_task</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">action_add_task</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Maneja el atajo de teclado &#39;n&#39; para añadir una nueva tarea.</span>
+
+<span class="sd">        Esta acción abre la pantalla modal `AddTaskScreen` y le asigna el método</span>
+<span class="sd">        `notification_add_task` como callback para procesar el resultado.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">push_screen</span><span class="p">(</span>
+            <span class="n">AddTaskScreen</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">notification_add_task</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">notification_add_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_task_data</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Callback que procesa los datos recibidos de `AddTaskScreen`.</span>
+
+<span class="sd">        Este método es llamado por Textual cuando la pantalla `AddTaskScreen`</span>
+<span class="sd">        se cierra.</span>
+<span class="sd">        Valida los datos, utiliza `TaskService` para crear la tarea y actualiza</span>
+<span class="sd">        la tabla visual.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_task_data (dict | None): Diccionario con los datos de la</span>
+<span class="sd">                tarea enviado desde el modal. Es `None` si el usuario canceló</span>
+<span class="sd">                la operación.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">new_task_data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">new_task_data</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">notify</span><span class="p">(</span>
+                    <span class="s2">&quot;El contenido no puede estar vacío.&quot;</span><span class="p">,</span>
+                    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span>
+                    <span class="n">severity</span><span class="o">=</span><span class="s2">&quot;error&quot;</span>
+                <span class="p">)</span>
+                <span class="k">return</span>
+            <span class="n">service</span> <span class="o">=</span> <span class="n">TaskService</span><span class="p">()</span>
+            <span class="n">service</span><span class="o">.</span><span class="n">new_task_service</span><span class="p">(</span><span class="n">Task</span><span class="p">(</span><span class="o">**</span><span class="n">new_task_data</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">notify</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Tarea &#39;</span><span class="si">{</span><span class="n">new_task_data</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39; agregada.&quot;</span><span class="p">,</span>
+                <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Nueva Tarea&quot;</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_table</span><span class="p">()</span>
+
+
+    <span class="c1"># .. ................................................ check_or_uncheck_task</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">action_check_or_uncheck_task</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Maneja el atajo &#39;m&#39; para marcar/desmarcar una tarea (cambiar status)</span>
+
+<span class="sd">        Abre la pantalla modal `AskIdScreen` para solicitar el ID de la tarea</span>
+<span class="sd">        y asigna `notification_check_or_uncheck_task` como callback.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">push_screen</span><span class="p">(</span>
+            <span class="n">AskIdScreen</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">notification_check_or_uncheck_task</span>
+        <span class="p">)</span>
+
+    <span class="nd">@require_valid_id</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">notification_check_or_uncheck_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Callback que cambia el estado de la tarea.</span>
+
+<span class="sd">        Es llamado por Textual al cerrar `AskIdScreen`. Utiliza `TaskService`</span>
+<span class="sd">        para cambiar el estado de la tarea y refresca la tabla.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            task_id (int): ID de la tarea a modificar, validado por el</span>
+<span class="sd">                decorador `@require_valid_id`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">service</span> <span class="o">=</span> <span class="n">TaskService</span><span class="p">()</span>
+        <span class="n">service</span><span class="o">.</span><span class="n">check_or_uncheck_task_service</span><span class="p">(</span><span class="n">task_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">notify</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Tarea ID: </span><span class="si">{</span><span class="n">task_id</span><span class="si">}</span><span class="s2"> ha cambiado de estado.&quot;</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Status Actualizado&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_table</span><span class="p">()</span>
+
+
+    <span class="c1"># .. .......................................................... delete_task</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">action_delete_task</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Maneja el atajo &#39;d&#39; para eliminar una tarea.</span>
+
+<span class="sd">        Abre la pantalla modal `AskIdScreen` para solicitar el ID y asigna</span>
+<span class="sd">        `notification_delete_task` como callback.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">push_screen</span><span class="p">(</span><span class="n">AskIdScreen</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">notification_delete_task</span><span class="p">)</span>
+
+    <span class="nd">@require_valid_id</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">notification_delete_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Callback que elimina la tarea especificada.</span>
+
+<span class="sd">        Es llamado por Textual al cerrar `AskIdScreen`. Emplea `TaskService`</span>
+<span class="sd">        para eliminar la tarea y actualiza la tabla.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            task_id (int): ID de la tarea a eliminar, validado por el</span>
+<span class="sd">                 decorador `@require_valid_id`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">service</span> <span class="o">=</span> <span class="n">TaskService</span><span class="p">()</span>
+        <span class="n">service</span><span class="o">.</span><span class="n">delete_task_service</span><span class="p">(</span><span class="n">task_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">notify</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Tarea ID: </span><span class="si">{</span><span class="n">task_id</span><span class="si">}</span><span class="s2"> Eliminada.&quot;</span><span class="p">,</span> 
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Tarea Eliminada&quot;</span><span class="p">,</span> 
+            <span class="n">severity</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_table</span><span class="p">()</span>
+
+
+    <span class="c1"># .. ......................................................... filter_tasks</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">action_filter_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Maneja el atajo &#39;f&#39; para filtrar tareas.</span>
+
+<span class="sd">        Abre la pantalla modal `FilterTasksScreen` y asigna</span>
+<span class="sd">        `notification_filter_tasks` como callback.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">push_screen</span><span class="p">(</span>
+            <span class="n">FilterTasksScreen</span><span class="p">(),</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">notification_filter_tasks</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">notification_filter_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_data</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Callback que recibe los criterios de filtro y actualiza la tabla.</span>
+
+<span class="sd">        Limpia y estandariza los datos del filtro, llama al servicio para</span>
+<span class="sd">        obtener las tareas filtradas y actualiza el `DataTable` con los</span>
+<span class="sd">        resultados.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filter_data (dict | None): Diccionario con los filtros a aplicar.</span>
+<span class="sd">                Ej: `{&#39;status&#39;: &#39;pending&#39;, &#39;priority&#39;: &#39;alta&#39;}`.</span>
+<span class="sd">                Es `None` si el usuario canceló la pantalla de filtros.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">filter_data</span><span class="p">:</span>
+            <span class="c1"># 1. formato para el diccionario: si un valor está vacío se</span>
+            <span class="c1"># convierte a None para que el servicio no lo use como filtro.</span>
+            <span class="n">filters</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">key</span><span class="p">:</span> <span class="n">value</span> <span class="k">if</span> <span class="n">value</span> <span class="k">else</span> <span class="kc">None</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">filter_data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="p">}</span>
+
+            <span class="c1"># 2. Llamada al servicio con los filtros desempaquetados.</span>
+            <span class="n">service</span> <span class="o">=</span> <span class="n">TaskService</span><span class="p">()</span>
+            <span class="n">filtered_tasks_objects</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">filter_tasks_service</span><span class="p">(</span><span class="o">**</span><span class="n">filters</span><span class="p">)</span>
+
+            <span class="c1"># 3. Formateo de los resultados para la tabla</span>
+            <span class="c1"># (incluyendo cabeceras).</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;ID&quot;</span><span class="p">,</span> <span class="s2">&quot;Status&quot;</span><span class="p">,</span> <span class="s2">&quot;Tag&quot;</span><span class="p">,</span> <span class="s2">&quot;Contenido&quot;</span><span class="p">,</span> <span class="s2">&quot;Prioridad&quot;</span><span class="p">)</span>
+            <span class="n">results_for_ui</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">headers</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">filtered_tasks_objects</span><span class="p">:</span>
+                <span class="n">results_for_ui</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                     <span class="n">task</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+                     <span class="n">task</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span>
+                     <span class="n">task</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
+                     <span class="n">task</span><span class="o">.</span><span class="n">priority</span>
+                     <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="c1"># 4. Actualización de la tabla con los datos filtrados.</span>
+            <span class="n">table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_one</span><span class="p">(</span><span class="n">DataTable</span><span class="p">)</span>
+            <span class="c1"># Limpia las filas anteriores.</span>
+            <span class="n">table</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+            <span class="c1"># Añadimos solo las filas filtradas</span>
+            <span class="k">for</span> <span class="n">row_data</span> <span class="ow">in</span> <span class="n">results_for_ui</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="n">styled_row</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">row_data</span><span class="p">)</span>
+                <span class="n">status_texto</span> <span class="o">=</span> <span class="n">styled_row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">prioridad_texto</span> <span class="o">=</span> <span class="n">styled_row</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+                <span class="n">styled_status</span> <span class="o">=</span> <span class="n">get_status_style</span><span class="p">(</span><span class="n">status_texto</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">styled_status</span><span class="p">,</span> <span class="n">Text</span><span class="p">):</span>
+                    <span class="n">styled_status</span><span class="o">.</span><span class="n">justify</span> <span class="o">=</span> <span class="s2">&quot;center&quot;</span>
+                <span class="n">styled_priority</span> <span class="o">=</span> <span class="n">get_priority_style</span><span class="p">(</span><span class="n">prioridad_texto</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">styled_priority</span><span class="p">,</span> <span class="n">Text</span><span class="p">):</span>
+                    <span class="n">styled_priority</span><span class="o">.</span><span class="n">justify</span> <span class="o">=</span> <span class="s2">&quot;center&quot;</span>
+                <span class="n">styled_row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">styled_status</span>
+                <span class="n">styled_row</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">styled_priority</span>
+                <span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="o">*</span><span class="n">styled_row</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">notify</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Mostrando </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">filtered_tasks_objects</span><span class="p">)</span><span class="si">}</span><span class="s2"> tareas filtradas.&quot;</span>
+            <span class="p">)</span>
+
+
+    <span class="c1"># .. ............................................................ edit_task</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">action_edit_task</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Maneja el atajo &#39;e&#39; para iniciar la edición de una tarea.</span>
+
+<span class="sd">        Abre `AskIdScreen` para obtener el ID de la tarea a editar y asigna</span>
+<span class="sd">        `_start_edit_process` como callback.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">push_screen</span><span class="p">(</span>
+            <span class="n">AskIdScreen</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_start_edit_process</span>
+        <span class="p">)</span>
+
+    <span class="nd">@require_valid_id</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_start_edit_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Callback que obtiene la tarea y muestra la pantalla de edición.</span>
+
+<span class="sd">        Es llamado al cerrar `AskIdScreen`. Obtiene el objeto de la tarea</span>
+<span class="sd">        y abre la pantalla `AskTaskEdit`, pasándole la tarea y asignando</span>
+<span class="sd">        `_save_edit_changes` como el siguiente callback.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            task_id (int): ID de la tarea a editar, validado por</span>
+<span class="sd">                `@require_valid_id`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">service</span> <span class="o">=</span> <span class="n">TaskService</span><span class="p">()</span>
+        <span class="n">task_to_edit</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">get_task_by_id_service</span><span class="p">(</span><span class="n">task_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">task_to_edit</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">push_screen</span><span class="p">(</span>
+                <span class="n">AskTaskEdit</span><span class="p">(</span><span class="n">task_to_edit</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_save_edit_changes</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_save_edit_changes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">updated_data</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Callback final que guarda los cambios de la edición.</span>
+
+<span class="sd">        Es llamado al cerrar `AskTaskEdit`. Si hay datos, extrae el ID,</span>
+<span class="sd">        llama al servicio para actualizar la tarea y refresca la tabla.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            updated_data (dict | None): Diccionario con datos actualizados.</span>
+<span class="sd">                Contiene un campo &#39;id&#39; y los demás campos modificados. Es `None`</span>
+<span class="sd">                si el usuario canceló la edición.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">updated_data</span><span class="p">:</span>
+            <span class="n">task_id</span> <span class="o">=</span> <span class="n">updated_data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
+            <span class="n">new_data</span> <span class="o">=</span> <span class="n">updated_data</span>
+            <span class="n">service</span> <span class="o">=</span> <span class="n">TaskService</span><span class="p">()</span>
+            <span class="n">service</span><span class="o">.</span><span class="n">update_task_service</span><span class="p">(</span><span class="n">task_id</span><span class="p">,</span> <span class="n">new_data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">notify</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Tarea ID: &#39;</span><span class="si">{</span><span class="n">task_id</span><span class="si">}</span><span class="s2">&#39; ha sido actualizada.&quot;</span><span class="p">,</span>
+                <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Tarea Editada&quot;</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_table</span><span class="p">()</span>
+
+
+    <span class="c1"># .. ......................................................... view_details</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">action_view_details</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Maneja el atajo &#39;v&#39; para ver los detalles de una tarea.</span>
+
+<span class="sd">        Abre `AskIdScreen` para obtener el ID y asigna `_show_details_screen`</span>
+<span class="sd">        como callback.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">push_screen</span><span class="p">(</span>
+            <span class="n">AskIdScreen</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_show_details_screen</span>
+        <span class="p">)</span>
+
+
+    <span class="nd">@require_valid_id</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_show_details_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Callback que obtiene la tarea y muestra la pantalla de detalles.</span>
+
+<span class="sd">        Es llamado al cerrar `AskIdScreen`. Obtiene la tarea completa y</span>
+<span class="sd">        muestra la pantalla `ViewDetailsScreen` con su contenido.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            task_id (int): ID de la tarea a consultar, validado por</span>
+<span class="sd">                `@require_valid_id`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">service</span> <span class="o">=</span> <span class="n">TaskService</span><span class="p">()</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">get_task_by_id_service</span><span class="p">(</span><span class="n">task_id</span><span class="p">)</span>
+
+        <span class="c1"># Comprobación de que la tarea y sus atributos requeridos no son nulos.</span>
+        <span class="k">if</span> <span class="n">task</span> <span class="ow">and</span> <span class="n">task</span><span class="o">.</span><span class="n">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">task</span><span class="o">.</span><span class="n">details</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Mostrar la pantalla de detalles con la tarea extraída.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">push_screen</span><span class="p">(</span>
+                <span class="n">ViewDetailsScreen</span><span class="p">(</span>
+                    <span class="n">details_content</span><span class="o">=</span><span class="n">task</span><span class="o">.</span><span class="n">details</span><span class="p">,</span>
+                    <span class="n">task_id</span><span class="o">=</span><span class="n">task</span><span class="o">.</span><span class="n">id</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+
+    <span class="c1"># .. ........................................................ reset_filters</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">action_reset_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Maneja el atajo &#39;r&#39; para limpiar filtros y refrescar la tabla.</span>
+
+<span class="sd">        Llama directamente a `_update_table()` para recargar la lista</span>
+<span class="sd">        completa de tareas.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_table</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">notify</span><span class="p">(</span>
+            <span class="s2">&quot;Filtros limpiados. Mostrando todas las tareas.&quot;</span>
+        <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
 
 
 
@@ -1460,6 +2239,29 @@ de tareas.</p>
 <code>notification_add_task</code> como callback para procesar el resultado.</p>
 
 
+            <details class="quote">
+              <summary>Source code in <code>controllers/interface.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">action_add_task</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Maneja el atajo de teclado &#39;n&#39; para añadir una nueva tarea.</span>
+
+<span class="sd">    Esta acción abre la pantalla modal `AddTaskScreen` y le asigna el método</span>
+<span class="sd">    `notification_add_task` como callback para procesar el resultado.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">push_screen</span><span class="p">(</span>
+        <span class="n">AddTaskScreen</span><span class="p">(),</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notification_add_task</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
     </div>
 
 </div>
@@ -1480,6 +2282,29 @@ de tareas.</p>
 y asigna <code>notification_check_or_uncheck_task</code> como callback.</p>
 
 
+            <details class="quote">
+              <summary>Source code in <code>controllers/interface.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">action_check_or_uncheck_task</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Maneja el atajo &#39;m&#39; para marcar/desmarcar una tarea (cambiar status)</span>
+
+<span class="sd">    Abre la pantalla modal `AskIdScreen` para solicitar el ID de la tarea</span>
+<span class="sd">    y asigna `notification_check_or_uncheck_task` como callback.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">push_screen</span><span class="p">(</span>
+        <span class="n">AskIdScreen</span><span class="p">(),</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notification_check_or_uncheck_task</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
     </div>
 
 </div>
@@ -1500,6 +2325,23 @@ y asigna <code>notification_check_or_uncheck_task</code> como callback.</p>
 <code>notification_delete_task</code> como callback.</p>
 
 
+            <details class="quote">
+              <summary>Source code in <code>controllers/interface.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">action_delete_task</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Maneja el atajo &#39;d&#39; para eliminar una tarea.</span>
+
+<span class="sd">    Abre la pantalla modal `AskIdScreen` para solicitar el ID y asigna</span>
+<span class="sd">    `notification_delete_task` como callback.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">push_screen</span><span class="p">(</span><span class="n">AskIdScreen</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">notification_delete_task</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
     </div>
 
 </div>
@@ -1520,6 +2362,29 @@ y asigna <code>notification_check_or_uncheck_task</code> como callback.</p>
 <code>_start_edit_process</code> como callback.</p>
 
 
+            <details class="quote">
+              <summary>Source code in <code>controllers/interface.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">action_edit_task</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Maneja el atajo &#39;e&#39; para iniciar la edición de una tarea.</span>
+
+<span class="sd">    Abre `AskIdScreen` para obtener el ID de la tarea a editar y asigna</span>
+<span class="sd">    `_start_edit_process` como callback.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">push_screen</span><span class="p">(</span>
+        <span class="n">AskIdScreen</span><span class="p">(),</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_edit_process</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
     </div>
 
 </div>
@@ -1540,6 +2405,29 @@ y asigna <code>notification_check_or_uncheck_task</code> como callback.</p>
 <code>notification_filter_tasks</code> como callback.</p>
 
 
+            <details class="quote">
+              <summary>Source code in <code>controllers/interface.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">action_filter_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Maneja el atajo &#39;f&#39; para filtrar tareas.</span>
+
+<span class="sd">    Abre la pantalla modal `FilterTasksScreen` y asigna</span>
+<span class="sd">    `notification_filter_tasks` como callback.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">push_screen</span><span class="p">(</span>
+        <span class="n">FilterTasksScreen</span><span class="p">(),</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">notification_filter_tasks</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
     </div>
 
 </div>
@@ -1560,6 +2448,29 @@ y asigna <code>notification_check_or_uncheck_task</code> como callback.</p>
 completa de tareas.</p>
 
 
+            <details class="quote">
+              <summary>Source code in <code>controllers/interface.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">action_reset_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Maneja el atajo &#39;r&#39; para limpiar filtros y refrescar la tabla.</span>
+
+<span class="sd">    Llama directamente a `_update_table()` para recargar la lista</span>
+<span class="sd">    completa de tareas.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_update_table</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">notify</span><span class="p">(</span>
+        <span class="s2">&quot;Filtros limpiados. Mostrando todas las tareas.&quot;</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
     </div>
 
 </div>
@@ -1580,6 +2491,29 @@ completa de tareas.</p>
 como callback.</p>
 
 
+            <details class="quote">
+              <summary>Source code in <code>controllers/interface.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">378</span>
+<span class="normal">379</span>
+<span class="normal">380</span>
+<span class="normal">381</span>
+<span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">action_view_details</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Maneja el atajo &#39;v&#39; para ver los detalles de una tarea.</span>
+
+<span class="sd">    Abre `AskIdScreen` para obtener el ID y asigna `_show_details_screen`</span>
+<span class="sd">    como callback.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">push_screen</span><span class="p">(</span>
+        <span class="n">AskIdScreen</span><span class="p">(),</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_details_screen</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
     </div>
 
 </div>
@@ -1600,6 +2534,45 @@ como callback.</p>
 renderizar los widgets estáticos como el Header, Footer y DataTable.</p>
 
 
+            <details class="quote">
+              <summary>Source code in <code>controllers/interface.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">compose</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ComposeResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compone el layout inicial de la aplicación.</span>
+
+<span class="sd">    Este método de Textual se llama una vez al iniciar la app para</span>
+<span class="sd">    renderizar los widgets estáticos como el Header, Footer y DataTable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">leyenda_texto_status</span> <span class="o">=</span> <span class="n">Text</span><span class="p">()</span>
+    <span class="n">leyenda_texto_priority</span> <span class="o">=</span> <span class="n">Text</span><span class="p">()</span>
+    <span class="n">leyenda_texto_notas</span> <span class="o">=</span> <span class="n">Text</span><span class="p">()</span>
+    <span class="n">dinamic_status_colors</span><span class="p">(</span><span class="n">leyenda_texto_status</span><span class="p">)</span>
+    <span class="n">dinamic_priority_colors</span><span class="p">(</span><span class="n">leyenda_texto_priority</span><span class="p">)</span>
+    <span class="n">dinamic_notes_leyend</span><span class="p">(</span><span class="n">leyenda_texto_notas</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">Header</span><span class="p">()</span>
+    <span class="k">yield</span> <span class="n">Static</span><span class="p">(</span><span class="n">leyenda_texto_status</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;leyenda&quot;</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">Static</span><span class="p">(</span><span class="n">leyenda_texto_priority</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;prioridad&quot;</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">Static</span><span class="p">(</span><span class="n">leyenda_texto_notas</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;notas&quot;</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">DataTable</span><span class="p">()</span>
+    <span class="k">yield</span> <span class="n">Footer</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+            </details>
     </div>
 
 </div>
@@ -1655,6 +2628,65 @@ la operación.</p>
     </table>
 
 
+            <details class="quote">
+              <summary>Source code in <code>controllers/interface.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">notification_add_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_task_data</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback que procesa los datos recibidos de `AddTaskScreen`.</span>
+
+<span class="sd">    Este método es llamado por Textual cuando la pantalla `AddTaskScreen`</span>
+<span class="sd">    se cierra.</span>
+<span class="sd">    Valida los datos, utiliza `TaskService` para crear la tarea y actualiza</span>
+<span class="sd">    la tabla visual.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        new_task_data (dict | None): Diccionario con los datos de la</span>
+<span class="sd">            tarea enviado desde el modal. Es `None` si el usuario canceló</span>
+<span class="sd">            la operación.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">new_task_data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_task_data</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">notify</span><span class="p">(</span>
+                <span class="s2">&quot;El contenido no puede estar vacío.&quot;</span><span class="p">,</span>
+                <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span>
+                <span class="n">severity</span><span class="o">=</span><span class="s2">&quot;error&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">service</span> <span class="o">=</span> <span class="n">TaskService</span><span class="p">()</span>
+        <span class="n">service</span><span class="o">.</span><span class="n">new_task_service</span><span class="p">(</span><span class="n">Task</span><span class="p">(</span><span class="o">**</span><span class="n">new_task_data</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">notify</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Tarea &#39;</span><span class="si">{</span><span class="n">new_task_data</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39; agregada.&quot;</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Nueva Tarea&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_table</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+            </details>
     </div>
 
 </div>
@@ -1707,6 +2739,45 @@ decorador <code>@require_valid_id</code>.</p>
     </table>
 
 
+            <details class="quote">
+              <summary>Source code in <code>controllers/interface.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@require_valid_id</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">notification_check_or_uncheck_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback que cambia el estado de la tarea.</span>
+
+<span class="sd">    Es llamado por Textual al cerrar `AskIdScreen`. Utiliza `TaskService`</span>
+<span class="sd">    para cambiar el estado de la tarea y refresca la tabla.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        task_id (int): ID de la tarea a modificar, validado por el</span>
+<span class="sd">            decorador `@require_valid_id`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">service</span> <span class="o">=</span> <span class="n">TaskService</span><span class="p">()</span>
+    <span class="n">service</span><span class="o">.</span><span class="n">check_or_uncheck_task_service</span><span class="p">(</span><span class="n">task_id</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">notify</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Tarea ID: </span><span class="si">{</span><span class="n">task_id</span><span class="si">}</span><span class="s2"> ha cambiado de estado.&quot;</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Status Actualizado&quot;</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_update_table</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+            </details>
     </div>
 
 </div>
@@ -1759,6 +2830,47 @@ para eliminar la tarea y actualiza la tabla.</p>
     </table>
 
 
+            <details class="quote">
+              <summary>Source code in <code>controllers/interface.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@require_valid_id</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">notification_delete_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback que elimina la tarea especificada.</span>
+
+<span class="sd">    Es llamado por Textual al cerrar `AskIdScreen`. Emplea `TaskService`</span>
+<span class="sd">    para eliminar la tarea y actualiza la tabla.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        task_id (int): ID de la tarea a eliminar, validado por el</span>
+<span class="sd">             decorador `@require_valid_id`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">service</span> <span class="o">=</span> <span class="n">TaskService</span><span class="p">()</span>
+    <span class="n">service</span><span class="o">.</span><span class="n">delete_task_service</span><span class="p">(</span><span class="n">task_id</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">notify</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Tarea ID: </span><span class="si">{</span><span class="n">task_id</span><span class="si">}</span><span class="s2"> Eliminada.&quot;</span><span class="p">,</span> 
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Tarea Eliminada&quot;</span><span class="p">,</span> 
+        <span class="n">severity</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_update_table</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+            </details>
     </div>
 
 </div>
@@ -1813,6 +2925,131 @@ Es <code>None</code> si el usuario canceló la pantalla de filtros.</p>
     </table>
 
 
+            <details class="quote">
+              <summary>Source code in <code>controllers/interface.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">notification_filter_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_data</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback que recibe los criterios de filtro y actualiza la tabla.</span>
+
+<span class="sd">    Limpia y estandariza los datos del filtro, llama al servicio para</span>
+<span class="sd">    obtener las tareas filtradas y actualiza el `DataTable` con los</span>
+<span class="sd">    resultados.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filter_data (dict | None): Diccionario con los filtros a aplicar.</span>
+<span class="sd">            Ej: `{&#39;status&#39;: &#39;pending&#39;, &#39;priority&#39;: &#39;alta&#39;}`.</span>
+<span class="sd">            Es `None` si el usuario canceló la pantalla de filtros.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">filter_data</span><span class="p">:</span>
+        <span class="c1"># 1. formato para el diccionario: si un valor está vacío se</span>
+        <span class="c1"># convierte a None para que el servicio no lo use como filtro.</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">key</span><span class="p">:</span> <span class="n">value</span> <span class="k">if</span> <span class="n">value</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">filter_data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">}</span>
+
+        <span class="c1"># 2. Llamada al servicio con los filtros desempaquetados.</span>
+        <span class="n">service</span> <span class="o">=</span> <span class="n">TaskService</span><span class="p">()</span>
+        <span class="n">filtered_tasks_objects</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">filter_tasks_service</span><span class="p">(</span><span class="o">**</span><span class="n">filters</span><span class="p">)</span>
+
+        <span class="c1"># 3. Formateo de los resultados para la tabla</span>
+        <span class="c1"># (incluyendo cabeceras).</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;ID&quot;</span><span class="p">,</span> <span class="s2">&quot;Status&quot;</span><span class="p">,</span> <span class="s2">&quot;Tag&quot;</span><span class="p">,</span> <span class="s2">&quot;Contenido&quot;</span><span class="p">,</span> <span class="s2">&quot;Prioridad&quot;</span><span class="p">)</span>
+        <span class="n">results_for_ui</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">headers</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">filtered_tasks_objects</span><span class="p">:</span>
+            <span class="n">results_for_ui</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                 <span class="n">task</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+                 <span class="n">task</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span>
+                 <span class="n">task</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
+                 <span class="n">task</span><span class="o">.</span><span class="n">priority</span>
+                 <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># 4. Actualización de la tabla con los datos filtrados.</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_one</span><span class="p">(</span><span class="n">DataTable</span><span class="p">)</span>
+        <span class="c1"># Limpia las filas anteriores.</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="c1"># Añadimos solo las filas filtradas</span>
+        <span class="k">for</span> <span class="n">row_data</span> <span class="ow">in</span> <span class="n">results_for_ui</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">styled_row</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">row_data</span><span class="p">)</span>
+            <span class="n">status_texto</span> <span class="o">=</span> <span class="n">styled_row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">prioridad_texto</span> <span class="o">=</span> <span class="n">styled_row</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+            <span class="n">styled_status</span> <span class="o">=</span> <span class="n">get_status_style</span><span class="p">(</span><span class="n">status_texto</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">styled_status</span><span class="p">,</span> <span class="n">Text</span><span class="p">):</span>
+                <span class="n">styled_status</span><span class="o">.</span><span class="n">justify</span> <span class="o">=</span> <span class="s2">&quot;center&quot;</span>
+            <span class="n">styled_priority</span> <span class="o">=</span> <span class="n">get_priority_style</span><span class="p">(</span><span class="n">prioridad_texto</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">styled_priority</span><span class="p">,</span> <span class="n">Text</span><span class="p">):</span>
+                <span class="n">styled_priority</span><span class="o">.</span><span class="n">justify</span> <span class="o">=</span> <span class="s2">&quot;center&quot;</span>
+            <span class="n">styled_row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">styled_status</span>
+            <span class="n">styled_row</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">styled_priority</span>
+            <span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="o">*</span><span class="n">styled_row</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">notify</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Mostrando </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">filtered_tasks_objects</span><span class="p">)</span><span class="si">}</span><span class="s2"> tareas filtradas.&quot;</span>
+        <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
     </div>
 
 </div>
@@ -1833,6 +3070,49 @@ Es <code>None</code> si el usuario canceló la pantalla de filtros.</p>
 como definir las cabeceras de la tabla y cargar los datos por primera vez.</p>
 
 
+            <details class="quote">
+              <summary>Source code in <code>controllers/interface.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">on_mount</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Se ejecuta cuando la app se monta en el DOM.</span>
+
+<span class="sd">    Este método de Textual se usa para realizar configuraciones iniciales,</span>
+<span class="sd">    como definir las cabeceras de la tabla y cargar los datos por primera vez.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_one</span><span class="p">(</span><span class="n">DataTable</span><span class="p">)</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">cursor_type</span> <span class="o">=</span> <span class="s2">&quot;row&quot;</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;ID&quot;</span><span class="p">,</span> <span class="s2">&quot;Status&quot;</span><span class="p">,</span> <span class="s2">&quot;Tag&quot;</span><span class="p">,</span> <span class="s2">&quot;Contenido&quot;</span><span class="p">,</span> <span class="s2">&quot;Prioridad&quot;</span><span class="p">,</span> <span class="s2">&quot;Notas&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;Contenido&quot;</span><span class="p">:</span>
+            <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;Tag&quot;</span><span class="p">:</span>
+            <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;Nota&quot;</span><span class="p">:</span>
+            <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_update_table</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+            </details>
     </div>
 
 </div>
