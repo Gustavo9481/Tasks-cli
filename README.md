@@ -19,7 +19,6 @@ Este proyecto es un escaparate de buenas prácticas de desarrollo en Python, inc
 
 ## 📸 Capturas de Pantalla
 
-*(Aquí puedes insertar las capturas de pantalla que has tomado. Por ejemplo:)*
 
 <p align="center">
   <img src="docs/images/tasks-cli_1.webp" alt="Vista principal de la aplicación" width="70%">
