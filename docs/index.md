@@ -1,5 +1,14 @@
 **Tasks-cli** es una aplicación de lista de tareas con interfaz en la terminal, diseñada para ser simple y eficiente.
 
+<p align="center">
+    <img src="../images/tasks-cli_1.webp"
+        alt="Diagrama UML Task"
+        width="700" align="center"/>
+</p>
+
+
+
+
 Este proyecto, aunque sencillo en su funcionalidad, sirve como un mostrario de buenas prácticas de desarrollo en Python, incluyendo:
 
 -   **Arquitectura Limpia:** Separación clara de responsabilidades en modelos, repositorios, servicios y controladores.
