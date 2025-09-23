@@ -3,7 +3,7 @@
 <p align="center">
     <img src="images/tasks-cli_1.webp"
         alt="Tasks-cli | lista de tareas"
-        width="70%" align="center"/>
+        width="90%" align="center"/>
 </p>
 
 
