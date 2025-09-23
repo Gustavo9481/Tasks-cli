@@ -66,13 +66,13 @@ Si prefieres ejecutarlo desde el código fuente, necesitarás Python 3.11+ y `uv
 
 1.  Clona el repositorio:
     ```bash
-    git clone https://github.com/tu-usuario/tasks-cli.git
-    cd tasks-cli
+    git clone https://github.com/Gustavo9481/Tasks-cli.git
+    cd Tasks-cli
     ```
 2.  Crea el entorno virtual e instala las dependencias:
     ```bash
     uv venv
-    uv pip install .
+    uv pip install ".[dev]"
     ```
 3.  Ejecuta la aplicación:
     ```bash
@@ -81,7 +81,7 @@ Si prefieres ejecutarlo desde el código fuente, necesitarás Python 3.11+ y `uv
 
 ## 📚 Documentación
 
-Para una guía de desarrollo detallada, una referencia completa de la API y una explicación de la arquitectura del proyecto, visita el **[sitio de documentación completo](https://Gustavo9481.github.io/tasks-cli/)**.
+Para una guía de desarrollo detallada, una referencia completa de la API y una explicación de la arquitectura del proyecto, visita el **[sitio de documentación completo](https://gustavo9481.github.io/Tasks-cli/)**.
 
 ## ⚖️ Licencia
 
