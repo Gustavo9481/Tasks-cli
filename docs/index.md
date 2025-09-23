@@ -2,7 +2,7 @@
 
 <p align="center">
     <img src="../images/tasks-cli_1.webp"
-        alt="Diagrama UML Task"
+        alt="Tasks-cli | lista de tareas"
         width="700" align="center"/>
 </p>
 
