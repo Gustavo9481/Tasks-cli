@@ -1,6 +1,6 @@
 # MODULO: ROOT.
 # .. ................................................................. main ..󰌠
-"""Punto de entrada principal para la aplicación de Tareas-CLI.
+"""Punto de entrada principal para la aplicación de Tareas-cli.
 
 Este script es el responsable de inicializar y ejecutar la interfaz de
 usuario de la aplicación.

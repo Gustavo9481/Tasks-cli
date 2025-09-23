@@ -15,4 +15,4 @@ Este módulo define la clase principal de la aplicación Textual, que orquesta l
 ::: controllers.interface.Interface
     options:
         show_root_heading: false
-        show_source: false
+        show_source: true

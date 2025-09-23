@@ -1,6 +1,6 @@
 # Guía de Usuario
 
-¡Bienvenido a Tasks-CLI! Esta guía te mostrará cómo instalar y utilizar la aplicación para gestionar tus tareas directamente desde la terminal.
+¡Bienvenido a Tasks-cli ! Esta guía te mostrará cómo instalar y utilizar la aplicación para gestionar tus tareas directamente desde la terminal.
 
 ## 1. Instalación
 

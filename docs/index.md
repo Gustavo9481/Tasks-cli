@@ -1,5 +1,4 @@
-**Tasks-CLI** es una aplicación de lista de tareas con interfaz en la terminal,
-diseñada para ser simple y eficiente.
+**Tasks-cli** es una aplicación de lista de tareas con interfaz en la terminal, diseñada para ser simple y eficiente.
 
 Este proyecto, aunque sencillo en su funcionalidad, sirve como un mostrario de buenas prácticas de desarrollo en Python, incluyendo:
 

@@ -1,8 +1,8 @@
-# Tasks-CLI  Terminal App
+# Tasks-cli 
 
 ![Logo del Proyecto](docs/images/logo.svg)
 
-**Tasks-CLI** es una aplicación de lista de tareas moderna y eficiente que se ejecuta completamente en tu terminal. Construida con [Textual](https://textual.textualize.io/), ofrece una interfaz de usuario rica e interactiva sin sacrificar la velocidad y simplicidad de la línea de comandos.
+**Tasks-cli** es una aplicación de lista de tareas moderna y eficiente que se ejecuta completamente en tu terminal. Construida con [Textual](https://textual.textualize.io/), ofrece una interfaz de usuario rica e interactiva sin sacrificar la velocidad y simplicidad de la línea de comandos.
 
 Este proyecto es un escaparate de buenas prácticas de desarrollo en Python, incluyendo una arquitectura limpia, tipado estático, pruebas automatizadas y una configuración de proyecto profesional.
 
@@ -22,7 +22,7 @@ Este proyecto es un escaparate de buenas prácticas de desarrollo en Python, inc
 *(Aquí puedes insertar las capturas de pantalla que has tomado. Por ejemplo:)*
 
 <p align="center">
-  <img src="docs/images/screenshot_main.png" alt="Vista principal de la aplicación" width="70%">
+  <img src="docs/images/tasks-cli_1.webp" alt="Vista principal de la aplicación" width="70%">
 </p>
 
 ## 🚀 Instalación y Uso

@@ -1,6 +1,6 @@
 # Arquitectura del Proyecto
 
-La arquitectura de **Tasks-CLI** está diseñada siguiendo los principios de
+La arquitectura de **Tasks-cli** está diseñada siguiendo los principios de
 **Separación de Responsabilidades (SoC)**, lo que busca desarrollar un  sistema
 robusto, mantenible y fácil de testear.
 

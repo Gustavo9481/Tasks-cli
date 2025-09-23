@@ -7,7 +7,7 @@
 
 # .. .................................... Configuración de la base de datos ..
 # almacena el nombre de la base de datos a usar.
-database_name = ""
+database_name = "tasks-cli-tests.db"
 # Para configurar bases de datos de prueba solo se debe definir un nombre en la 
 # variable, ejemplo: database_name = "tests.db".
 
