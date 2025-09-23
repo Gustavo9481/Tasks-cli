@@ -1,9 +1,9 @@
 **Tasks-cli** es una aplicación de lista de tareas con interfaz en la terminal, diseñada para ser simple y eficiente.
 
 <p align="center">
-    <img src="../images/tasks-cli_1.webp"
+    <img src="../docs/images/tasks-cli_1.webp"
         alt="Tasks-cli | lista de tareas"
-        width="700" align="center"/>
+        width="70%" align="center"/>
 </p>
 
 
