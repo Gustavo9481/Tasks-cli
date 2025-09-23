@@ -69,7 +69,7 @@ def test_task_creation_with_invalid_status() -> None:
     models/model_task.py en la lista Literal Status.
 
     Raises:
-        - ValidationError: Cuando el status tiene un valor no permitido.
+        ValidationError: Cuando el status tiene un valor no permitido.
     """
     status_invalid: str = "invalid"
     content_text: str = "Contenido de prueba: status inválido"
@@ -87,7 +87,7 @@ def test_task_creation_with_invalid_tag() -> None:
     definen en el módulo models/model_task.py en el Literal Tag.
 
     Raises:
-        - ValidationError: Cuando tag tiene un valor no permitido.
+        ValidationError: Cuando tag tiene un valor no permitido.
     """
     tag_invalid: str = "invalid"
     content_text: str = "Contenido de prueba: tag inválido"
@@ -104,7 +104,7 @@ def test_task_creation_with_invalid_content_type_integer() -> None:
     resulta ser un entero, la tarea no será generada.
 
     Raises:
-        - ValidationError: Cuando content es de tipo int.
+        ValidationError: Cuando content es de tipo int.
     """
     content_invalid: int = 1234567890
 
@@ -120,7 +120,7 @@ def test_task_creation_with_invalid_content_type_float() -> None:
     float para la propiedad content, no será creada.
 
     Raises:
-        - ValidationError: Cuando content es de tipo float.
+        ValidationError: Cuando content es de tipo float.
     """
     content_invalid: float = 1.234567890
 
@@ -136,7 +136,7 @@ def test_task_creation_with_invalid_content_type_boolean() -> None:
     para su propiedad content, no será generada.
 
     Raises:
-        - ValidationError: Cuando content es de tipo booleano.
+        ValidationError: Cuando content es de tipo booleano.
     """
     content_invalid: bool = True
 
@@ -152,7 +152,7 @@ def test_task_creation_with_missing_content() -> None:
     correspondiente de la propiedad content, no será generada.
 
     Raises:
-        - ValidationError: Cuando no se define la propiedad content.
+        ValidationError: Cuando no se define la propiedad content.
     """
     with pytest.raises(ValidationError):
         Task(status="pending", tag="personal", priority="baja")  # type: ignore
@@ -167,8 +167,8 @@ def test_task_creation_with_invalid_priority() -> None:
     definidos en el módulo models/model_task.py en el objeto Literal Priority.
 
     Raises:
-        - ValidationError: Cuando el valor de prioridad no es uno de los
-          permitidos.
+        ValidationError: Cuando el valor de prioridad no es uno de los
+            permitidos.
     """
     priority_invalid: str = "invalid"
     content_text: str = "Contenido de prueba: prioridad inválida"

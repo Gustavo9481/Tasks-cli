@@ -9,8 +9,10 @@ dev_addr: 127.0.0.1:8001
 
 repo_url: https://github.com/Gustavo9481/Tasks-cli.git
 
+site_url: https://Gustavo9481.github.io/tasks-cli/
+
 theme:
-  logo: /images/logo.svg
+  logo: images/logo.svg
   language: es
   name: material
   palette:

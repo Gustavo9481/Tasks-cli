@@ -40,7 +40,7 @@ class TaskService:
         formato.
 
         Returns:
-            - list[Task]: Lista de objetos `Task`.
+            list[Task]: Lista de objetos `Task`.
         """
         return self.repository.get_all_tasks()
 
@@ -54,8 +54,8 @@ class TaskService:
         incluyendo cabeceras y un indicador visual para las notas extras.
 
         Returns:
-            - list[tuple[Any, ...]: Lista de tuplas donde el primer elemento es
-              la fila de cabeceras y los siguientes son las filas de tareas.
+            list[tuple[Any, ...]: Lista de tuplas donde el primer elemento es
+                la fila de cabeceras y los siguientes son las filas de tareas.
         """
         headers = ("ID", "Status", "Tag", "Contenido", "Prioridad", "Notas")
         task_objects = self.get_all_tasks()
@@ -79,10 +79,10 @@ class TaskService:
         """Busca y devuelve una única tarea por su ID.
 
         Args:
-            - task_id (int): ID de la tarea a buscar.
+            task_id (int): ID de la tarea a buscar.
 
         Returns:
-            - Task | None: Objeto `Task` si se encuentra, o `None` si no.
+            Task | None: Objeto `Task` si se encuentra, o `None` si no.
         """
         return self.repository.get_task_by_id(task_id)
 
@@ -94,7 +94,7 @@ class TaskService:
         repositorio para su inserción en la base de datos.
 
         Args:
-            - task_instance (Task): Objeto `Task` (sin ID) a crear.
+            task_instance (Task): Objeto `Task` (sin ID) a crear.
         """
         self.repository.new_task(task_instance)
 
@@ -106,7 +106,7 @@ class TaskService:
         'pending' a 'in_progress') al repositorio.
 
         Args:
-            - task_id (int): ID de la tarea a modificar.
+            task_id (int): ID de la tarea a modificar.
         """
         self.repository.check_or_uncheck_task(task_id)
 
@@ -122,9 +122,9 @@ class TaskService:
         y se los pasa al repositorio para que aplique los cambios.
 
         Args:
-            - task_id (int): ID de la tarea a actualizar.
-            - new_data (dict[str, str]): Diccionario con los campos a
-              modificar y sus nuevos valores.
+            task_id (int): ID de la tarea a actualizar.
+            new_data (dict[str, str]): Diccionario con los campos a
+                modificar y sus nuevos valores.
         """
         self.repository.update_task(task_id, new_data)
 
@@ -141,13 +141,13 @@ class TaskService:
         ejecute la consulta de búsqueda correspondiente.
 
         Args:
-            - status (str | None, optional): Estado por el cual filtrar.
-            - tag (str | None, optional): Etiqueta por la cual filtrar.
-            - priority (str | None, optional): Prioridad por la cual filtrar.
+            status (str | None, optional): Estado por el cual filtrar.
+            tag (str | None, optional): Etiqueta por la cual filtrar.
+            priority (str | None, optional): Prioridad por la cual filtrar.
 
         Returns:
-            - list[Task]: Lista de objetos `Task` que coinciden con los
-              criterios de filtrado.
+            list[Task]: Lista de objetos `Task` que coinciden con los
+                criterios de filtrado.
         """
         return self.repository.filter_tasks(
             status=status,
@@ -160,6 +160,6 @@ class TaskService:
         """Procesa la eliminación de una tarea por su ID.
 
         Args:
-            - task_id (int): ID de la tarea a eliminar.
+            task_id (int): ID de la tarea a eliminar.
         """
         self.repository.delete_task(task_id)

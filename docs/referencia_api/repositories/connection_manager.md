@@ -7,7 +7,7 @@ Este módulo proporciona el decorador `connection_manager` para la gestión auto
 ### Decorador `connection_manager`
 
 <p align="center">
-    <img src="/images/connection_manager.svg"
+    <img src="../../../images/connection_manager.svg"
         alt="Diagrama UML @connection_manager"
         width="700" align="center"/>
 </p>

@@ -6,7 +6,7 @@ Este módulo define las pantallas modales reutilizables de la aplicación.
 
 
 <p align="center">
-    <img src="/images/class_screens.svg"
+    <img src="../../../images/class_screens.svg"
         alt="Diagrama UML Clases screens"
         width="700" align="center"/>
 </p>

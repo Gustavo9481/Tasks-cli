@@ -17,7 +17,7 @@ de las inferiores.
 
 
 <p align="center">
-    <img src="/images/arquitectura.svg"
+    <img src="../images/arquitectura.svg"
         alt="Diagrama UML Task"
         width="450" align="center"/>
 </p>

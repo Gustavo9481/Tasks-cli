@@ -19,8 +19,8 @@ def test_repo() -> Iterator[RepositoryDB]:
     memoria y la limpia después de que el test se completa.
 
     Yields:
-        - Iterator[RepositoryDB]: Una instancia de RepositoryDB conectada a la 
-          base de datos de prueba.
+        Iterator[RepositoryDB]: Una instancia de RepositoryDB conectada a la 
+            base de datos de prueba.
     """
     db_path: str = "tasks_tests.db"
     # Asegurarse de que no haya una base de datos de prueba antigua

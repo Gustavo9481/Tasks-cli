@@ -7,7 +7,7 @@ Este módulo contiene la lógica de negocio de la aplicación.
 ### Clase `TaskService`
 
 <p align="center">
-    <img src="/images/class_TaskService.svg"
+    <img src="../../../images/class_TaskService.svg"
         alt="Diagrama UML TaskService"
         width="600" align="center"/>
 </p>

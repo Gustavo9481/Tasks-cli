@@ -24,13 +24,13 @@ class Task(BaseModel):
 
     Attributes:
         - id (Optional[int]): Identificador único de la tarea, generado por la
-          base de datos. Es `None` para tareas nuevas aún no guardadas.
+              base de datos. Es `None` para tareas nuevas aún no guardadas.
         - status (Status): Estado actual de la tarea. Default: "pending".
         - tag (Tag): La categoría o etiqueta de la tarea. Default: "personal".
         - content (str): Descripción principal de lo que se debe hacer.
         - priority (Priority): Nivel de prioridad de la tarea. Default: "baja".
         - details (Optional[str]): Notas o información adicional sobre la
-          tarea, que puede contener formato Markdown. Default: `None`.
+              tarea, que puede contener formato Markdown. Default: `None`.
     """
     id: Optional[int] = None
     status: Status = "pending"

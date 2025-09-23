@@ -7,7 +7,7 @@ Este módulo define el modelo de datos principal para una Tarea.
 ### Clase `Task`
 
 <p align="center">
-    <img src="/images/class_Task.svg"
+    <img src="../../../images/class_Task.svg"
         alt="Diagrama UML Task"
         width="400" align="center"/>
 </p>

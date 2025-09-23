@@ -32,7 +32,7 @@ class AskIdScreen(ModalScreen):
 
         Returns:
             ComposeResult: Objeto que describe la composición de widgets que
-              Textual renderizará.
+                Textual renderizará.
         """
         with Vertical(classes="dialog"):
             yield Label(
@@ -50,7 +50,7 @@ class AskIdScreen(ModalScreen):
         se pasa al método `dismiss()`, que lo devuelve a quien llamó la pantalla.
 
         Args:
-            - event (Input.Submitted): Evento que contiene el valor del Input.
+            event (Input.Submitted): Evento que contiene el valor del Input.
         """
         self.dismiss(event.value)
 
@@ -90,7 +90,7 @@ class AddTaskScreen(ModalScreen):
         Si se presiona 'cancel', cierra la pantalla devolviendo `None`.
 
         Args:
-            - event (Button.Pressed): Evento que identifica botón presionado.
+            event (Button.Pressed): Evento que identifica botón presionado.
         """
         if event.button.id == "submit":
             new_task_data = {
@@ -113,8 +113,8 @@ class AskTaskEdit(ModalScreen):
         existente.
 
         Args:
-            - task_to_edit (Task): Objeto de la tarea que se va a editar.
-              Sus datos se usarán para pre-rellenar los campos de la pantalla.
+            task_to_edit (Task): Objeto de la tarea que se va a editar.
+                Sus datos se usarán para pre-rellenar los campos de la pantalla.
         """
         super().__init__()
         self.task_to_edit = task_to_edit
@@ -147,7 +147,7 @@ class AskTaskEdit(ModalScreen):
         Si se presiona 'cancel', cierra la pantalla devolviendo `None`.
 
         Args:
-            - event (Button.Pressed): Evento que identifica botón presionado.
+            event (Button.Pressed): Evento que identifica botón presionado.
         """
         if event.button.id == "submit":
             updated_data: dict[str, Any] = {
@@ -201,7 +201,7 @@ class FilterTasksScreen(ModalScreen):
         Si se presiona 'cancel', cierra la pantalla devolviendo `None`.
 
         Args:
-            - event (Button.Pressed): Evento que identifica botón presionado.
+            event (Button.Pressed): Evento que identifica botón presionado.
         """
         if event.button.id == "submit":
             # Recopilamos los criterios de filtro en un diccionario
@@ -224,9 +224,9 @@ class ViewDetailsScreen(ModalScreen):
         """Inicializa la pantalla de visualización de detalles.
 
         Args:
-            - details_content (str): Contenido de los detalles de la tarea,
-              que puede contener formato Markdown.
-            - task_id (int): ID de la tarea, usado para mostrarlo en el título.
+            details_content (str): Contenido de los detalles de la tarea,
+                que puede contener formato Markdown.
+            task_id (int): ID de la tarea, usado para mostrarlo en el título.
         """
         super().__init__()
         self.details_content = details_content
