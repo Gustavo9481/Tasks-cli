@@ -19,10 +19,26 @@ Este proyecto es un escaparate de buenas prácticas de desarrollo en Python, inc
 
 ## 📸 Capturas de Pantalla
 
-
+### Pantalla Principal.
+Así se ve la lista de tareas, sus status, descripción y prioridad.
 <p align="center">
   <img src="docs/images/tasks-cli_1.webp" alt="Vista principal de la aplicación" width="70%">
 </p>
+
+### Crear nueva tarea.
+En esta pantalla de ingresan los datos para agregar una tarea nueva.
+<p align="center">
+  <img src="docs/images/tasks-cli_2.webp" alt="Pantalla para crear nueva tarea" width="70%">
+</p>
+
+### Vista de detalles de nota.
+Posibilidad de ver anotaciones extras de tus tareas, en formato Markdown.
+<p align="center">
+  <img src="docs/images/tasks-cli_3.webp" alt="Vista de detalles" width="70%">
+</p>
+
+
+
 
 ## 🚀 Instalación y Uso
 
