@@ -39,6 +39,7 @@ dev = [
     "mkdocs",
     "mkdocs-material",
     "mkdocstrings[python]",
+    "pyinstaller",
 ]
 
 [project.scripts]
