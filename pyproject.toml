@@ -28,6 +28,7 @@ classifiers = [
 dependencies = [
     "textual",
     "pydantic",
+    "platformdirs",
 ]
 
 [project.optional-dependencies]

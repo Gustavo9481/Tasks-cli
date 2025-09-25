@@ -22,16 +22,18 @@ def test_repo() -> Iterator[RepositoryDB]:
         Iterator[RepositoryDB]: Una instancia de RepositoryDB conectada a la 
             base de datos de prueba.
     """
-    db_path: str = "tasks_tests.db"
-    # Asegurarse de que no haya una base de datos de prueba antigua
-    Path(db_path).unlink(missing_ok=True)
+    db_path: str = "file:memory:?cache=shared"
     repo = RepositoryDB(db_name=db_path)
-
     repo.create_table()
+
     # Entregar la instancia al test
     yield repo
-    # Limpiar base de datos después del test
-    Path(db_path).unlink(missing_ok=True)
+
+    # Limpiar la tabla de tareas después de cada test
+    with sqlite3.connect(repo.db_path, uri=True) as connection:
+        cursor = connection.cursor()
+        cursor.execute("DELETE FROM tasks_table")
+        connection.commit()
 
 
 # TEST: 01
