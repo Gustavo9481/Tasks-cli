@@ -9,6 +9,7 @@ from typing import Iterator
 from pathlib import Path
 from models.model_task import Task
 from repositories.repository_db import RepositoryDB
+from repositories.database import TEST_DATABASE_PATH
 
 
 @pytest.fixture
@@ -22,16 +23,15 @@ def test_repo() -> Iterator[RepositoryDB]:
         Iterator[RepositoryDB]: Una instancia de RepositoryDB conectada a la 
             base de datos de prueba.
     """
-    db_path: str = "tasks_tests.db"
     # Asegurarse de que no haya una base de datos de prueba antigua
-    Path(db_path).unlink(missing_ok=True)
-    repo = RepositoryDB(db_name=db_path)
+    TEST_DATABASE_PATH.unlink(missing_ok=True)
+    repo = RepositoryDB(db_path=TEST_DATABASE_PATH)
 
     repo.create_table()
     # Entregar la instancia al test
     yield repo
     # Limpiar base de datos después del test
-    Path(db_path).unlink(missing_ok=True)
+    TEST_DATABASE_PATH.unlink(missing_ok=True)
 
 
 # TEST: 01
@@ -254,6 +254,15 @@ def test_check_or_uncheck_task(test_repo: RepositoryDB) -> None:
     assert re_updated_task is not None
     assert re_updated_task.id == task_id
     assert re_updated_task.status == "completed"
+
+    # Ejecución del método check_or_uncheck_task nuevamente para tercera
+    # comprobación (completed -> pending).
+    test_repo.check_or_uncheck_task(task_id)
+    # Verificación de que el status haya cambiado nuevamente a pending.
+    re_re_updated_task = test_repo.get_task_by_id(task_id)
+    assert re_re_updated_task is not None
+    assert re_re_updated_task.id == task_id
+    assert re_re_updated_task.status == "pending"
 
 
 # TEST: 08
