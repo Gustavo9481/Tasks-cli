@@ -20,15 +20,13 @@ class RepositoryDB:
     que la capa de servicio interactúe con la base de datos.
     """
 
-    def __init__(self, db_name: str):
+    def __init__(self, db_path: Path):
         """Inicializa el repositorio y establece la ruta a la base de datos.
 
         Args:
-            db_name (str): El nombre del archivo de la base de datos
-                (ej. "tasks-cli.db").
+            db_path (Path): La ruta completa al archivo de la base de datos.
         """
-        project_dir = Path(__file__).parent.parent
-        self.db_path = project_dir / db_name
+        self.db_path = db_path
 
     def task_format_list(self, rows_list: list) -> list[Task]:
         """Convierte una lista de filas de la BD en una lista de objetos Task.

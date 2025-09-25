@@ -10,7 +10,8 @@ asegura que la lógica de la aplicación esté centralizada.
 from typing import Any
 from repositories.repository_db import RepositoryDB
 from models.model_task import Task
-from config.config_loader import UI_ICONS, DATABASE_NAME
+from config.config_loader import UI_ICONS
+from repositories.database import DATABASE_PATH
 
 
 class TaskService:
@@ -28,7 +29,7 @@ class TaskService:
         datos. El nombre de la base de datos está definido aquí para
         configurar el repositorio que usará este servicio.
         """
-        self.repository = RepositoryDB(DATABASE_NAME)
+        self.repository = RepositoryDB(DATABASE_PATH)
         self.repository.create_table()
 
 
