@@ -11,6 +11,7 @@ import repositories.querys as sql
 from pathlib import Path
 from repositories.connection_manager import connection_manager
 from models.model_task import Task
+from platformdirs import user_data_dir
 
 
 class RepositoryDB:
@@ -27,8 +28,13 @@ class RepositoryDB:
             db_name (str): El nombre del archivo de la base de datos
                 (ej. "tasks-cli.db").
         """
-        project_dir = Path(__file__).parent.parent
-        self.db_path = project_dir / db_name
+        # Usar platformdirs para obtener el directorio de datos del usuario
+        app_data_dir = Path(user_data_dir("tasks-cli", "GUScode"))
+
+        # Crear el directorio si no existe
+        app_data_dir.mkdir(parents=True, exist_ok=True)
+
+        self.db_path = app_data_dir / db_name
 
     def task_format_list(self, rows_list: list) -> list[Task]:
         """Convierte una lista de filas de la BD en una lista de objetos Task.
