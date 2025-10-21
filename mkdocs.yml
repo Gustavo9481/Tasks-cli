@@ -72,6 +72,7 @@ nav:
     - 'Modelos':
       - 'Task': referencia_api/models/model_task.md
     - 'Repositorios':
+      - 'Database': referencia_api/repositories/database.md
       - 'Repository DB': referencia_api/repositories/repository_db.md
       - 'Connection Manager': referencia_api/repositories/connection_manager.md
       - 'Querys': referencia_api/repositories/querys.md
